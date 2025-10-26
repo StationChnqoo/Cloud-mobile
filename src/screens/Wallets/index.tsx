@@ -21,7 +21,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
-import {WalletMaps} from '@src/constants/c';
+import {calculateWalletFormSum, WalletMaps} from '@src/constants/c';
 
 dayjs.extend(isoWeek);
 
@@ -65,30 +65,12 @@ const Wallets: React.FC<MyProps> = memo(props => {
     return function () {};
   }, [focused]);
 
-  const count = (item: TWallet) => {
-    let s: number = Object.keys(WalletMaps).reduce((total, key) => {
-      const value = item[key];
-      if (Array.isArray(value)) {
-        return (
-          total +
-          value.reduce((sum, item) => {
-            return sum + parseFloat(item);
-          }, 0)
-        );
-      } else if (!isNaN(value)) {
-        return total + parseFloat(value);
-      }
-      return total;
-    }, 0);
-    return s.toFixed(1);
-  };
-
   const loadItem = (info: ListRenderItemInfo<TWallet>) => {
     const {item} = info;
     return (
       <TouchableOpacity
         style={styles.item}
-        activeOpacity={0.7}
+        activeOpacity={0.8}
         onPress={() => {
           onWalletPress(item);
         }}>
@@ -99,8 +81,13 @@ const Wallets: React.FC<MyProps> = memo(props => {
             ).isoWeek()}周`}
           </Text>
           {/* <Text style={{fontSize: 14, color: '#999'}}>{count(item)}</Text> */}
-          <Text style={{color: theme, fontSize: 16}}>{count(item)}K</Text>
+          <Text style={{color: theme, fontSize: 16}}>
+            {calculateWalletFormSum(item)}
+            <Text style={{fontSize: 14}}>{` k`}</Text>
+          </Text>
         </Flex>
+        <View style={{height: 10}} />
+        <Text style={{color: '#ccc', fontSize: 14}}>{item.id}</Text>
         <View style={{height: 10}} />
         <Flex
           horizontal
@@ -115,8 +102,8 @@ const Wallets: React.FC<MyProps> = memo(props => {
                 }}>{`${WalletMaps[it]}: `}</Text>
               <Text style={{fontSize: 14, color: '#999'}}>{`${
                 Array.isArray(item[it])
-                  ? `[${item[it].map(it => `${it}K`).join(' & ')}]`
-                  : `${item[it]}K`
+                  ? `[${item[it].map(it => `${it} k`).join(' & ')}]`
+                  : `${item[it]}k`
               }`}</Text>
             </Flex>
           ))}
@@ -127,12 +114,6 @@ const Wallets: React.FC<MyProps> = memo(props => {
 
   return (
     <View style={styles.view}>
-      {/* <ToolBar
-        onBackPress={() => {
-          navigation.goBack();
-        }}
-        title={'钱包'}
-      /> */}
       <FlatList
         ListHeaderComponent={() => <View style={{height: 8}} />}
         refreshControl={
@@ -155,7 +136,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
         keyExtractor={(it, i) => `${it.id}:${i}`}
         onEndReachedThreshold={0.2}
         removeClippedSubviews={false}
-        ItemSeparatorComponent={() => <View style={{height: 5}} />}
+        ItemSeparatorComponent={() => <View style={{height: 6}} />}
         ListEmptyComponent={
           <Flex>
             <Image

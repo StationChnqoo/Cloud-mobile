@@ -27,7 +27,7 @@ import Button from '@src/components/Button';
 import DatePicker from '@src/components/DatePicker';
 import {toast} from '@src/constants/u';
 import {useMutation} from '@tanstack/react-query';
-import {WalletMaps} from '@src/constants/c';
+import {calculateWalletFormSum, WalletMaps} from '@src/constants/c';
 
 dayjs.extend(isoWeek);
 
@@ -63,21 +63,7 @@ const EditWallet: React.FC<MyProps> = props => {
   };
 
   const calculateSelectedSum = useMemo(() => {
-    let s: number = Object.keys(WalletMaps).reduce((total, key) => {
-      const value = form[key];
-      if (Array.isArray(value)) {
-        return (
-          total +
-          value.reduce((sum, item) => {
-            return sum + parseFloat(item);
-          }, 0)
-        );
-      } else if (!isNaN(value)) {
-        return total + parseFloat(value);
-      }
-      return total;
-    }, 0);
-    return s.toFixed(2);
+    return calculateWalletFormSum(form);
   }, [form]);
 
   const onDelete = async () => {
