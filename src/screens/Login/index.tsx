@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {RootStacksProp} from '..';
+import ToolBar from '@src/components/ToolBar';
 
 interface MyProps {
   navigation: RootStacksProp;
@@ -40,35 +41,45 @@ const LoginScreen: React.FC<MyProps> = ({navigation}) => {
   };
 
   return (
-    <View style={styles.view}>
-      <View style={{height: 16}} />
-      <TextInput
-        style={styles.input}
-        placeholder="手机"
-        underlineColorAndroid={'trasparent'}
-        value={params.mobile}
-        onChangeText={s => {
-          setParams({...params, mobile: s});
+    <View style={{flex: 1}}>
+      <ToolBar
+        title={'登录'}
+        onBackPress={() => {
+          navigation.goBack();
         }}
       />
-      <View style={styles.line} />
-      <TextInput
-        style={styles.input}
-        placeholder="密码"
-        secureTextEntry
-        underlineColorAndroid={'trasparent'}
-        value={params.password}
-        onChangeText={s => {
-          setParams({...params, password: s});
-        }}
-      />
+      <View style={{height: 1, backgroundColor: '#ccc'}} />
+      <View style={styles.view}>
+        <View style={{height: 15}} />
+        <TextInput
+          style={styles.input}
+          placeholder="手机"
+          underlineColorAndroid={'trasparent'}
+          value={params.mobile}
+          onChangeText={s => {
+            setParams({...params, mobile: s});
+          }}
+        />
+        <View style={styles.line} />
+        <TextInput
+          style={styles.input}
+          placeholder="密码"
+          secureTextEntry
+          underlineColorAndroid={'trasparent'}
+          value={params.password}
+          onChangeText={s => {
+            setParams({...params, password: s});
+          }}
+        />
+        <View style={{height: 16}} />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={onSubmit}
+          style={styles.button}>
+          <Text style={{color: '#fff', fontSize: 14}}>登录</Text>
+        </TouchableOpacity>
+      </View>
       <View style={{height: 16}} />
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={onSubmit}
-        style={styles.button}>
-        <Text style={{color: '#fff', fontSize: 14}}>登录</Text>
-      </TouchableOpacity>
     </View>
   );
 };

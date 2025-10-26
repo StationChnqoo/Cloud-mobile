@@ -170,15 +170,6 @@ const Wallets: React.FC<MyProps> = memo(props => {
           </Flex>
         }
       />
-      <View
-        style={{
-          height: Platform.select({
-            ios: useSafeAreaInsets().bottom,
-            android: 10,
-          }),
-          backgroundColor: 'white',
-        }}
-      />
     </View>
   );
 });

@@ -1,7 +1,7 @@
 import {toast} from '@src/constants/u';
 import Services from '@src/services';
 import {useCaches} from '@src/stores';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,15 +14,23 @@ import Wallets from '../Wallets';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TWallet} from '@src/constants/t';
 import Button from '@src/components/Button';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface MyProps {
   navigation: RootStacksProp;
 }
 
 const Home: React.FC<MyProps> = ({navigation}) => {
-  const {setToken, theme} = useCaches();
+  const {token, setToken, theme} = useCaches();
 
-  useEffect(() => {}, []);
+  useFocusEffect(
+    useCallback(() => {
+      if (token) {
+      } else {
+        navigation.navigate('Login');
+      }
+    }, [token]),
+  );
 
   const onWalletPress = (item: TWallet) => {
     navigation.navigate('EditWallet', {id: item.id});

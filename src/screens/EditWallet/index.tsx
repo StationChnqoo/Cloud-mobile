@@ -174,7 +174,7 @@ const EditWallet: React.FC<MyProps> = props => {
           navigation.goBack();
         }}
       />
-      <View style={{height: 1, backgroundColor: '#eee'}} />
+      <View style={{height: 1, backgroundColor: '#ccc'}} />
       <ScrollView
         bounces={false}
         style={{flex: 1}}
@@ -259,8 +259,9 @@ const EditWallet: React.FC<MyProps> = props => {
         horizontal
         justify={'space-between'}
         style={{paddingHorizontal: 15, paddingVertical: 10}}>
-        <Text style={{color: '#ff5252', fontSize: 18}}>
-          {calculateSelectedSum}K
+        <Text style={{color: '#ff5252', fontSize: 20}}>
+          {calculateSelectedSum}
+          <Text style={{fontSize: 14}}>{` k `}</Text>
         </Text>
         <Flex horizontal justify={'flex-start'}>
           <Button
@@ -351,7 +352,6 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
-    lineHeight: 20,
     flex: 1,
     padding: 0,
     height: 24,
