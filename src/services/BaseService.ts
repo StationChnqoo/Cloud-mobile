@@ -4,6 +4,8 @@ import {useCaches} from '@src/stores';
 import {navigationRef} from '@src/screens';
 import axios, {AxiosError, AxiosInstance} from 'axios';
 import Config from 'react-native-config';
+import {Alert} from 'react-native';
+import {toast} from '@src/constants/u';
 
 // import {toast} from 'sonner-native';
 
@@ -40,14 +42,25 @@ export default class BaseService {
       },
       (error: AxiosError) => {
         const status = error.response?.status;
+        console.log('Error: ', error.code);
         if (error.code === AxiosError.ERR_NETWORK) {
-          // navigationRef.navigate('NetError');
+          // 服务器没开，手机没网络 ...
+          toast('无法连接服务器');
+          console.log('无法连接服务器 ...');
         } else if (error.code === AxiosError.ECONNABORTED) {
           // navigationRef.navigate('NetError');
+          // 服务器连接超时，用户取消 ...
+          toast('服务器连接超时');
+          console.log('服务器连接超时 ...');
         } else if (
           error.code === AxiosError.ERR_BAD_REQUEST ||
           error.code == AxiosError.ERR_BAD_RESPONSE
         ) {
+          // Request: 状态码错误 -> 4xx
+          // Response: 状态码错误 -> 5xx
+          toast('服务器开小差了');
+          console.log('服务器开小差了 ...');
+          //
           //   toast.error('请求错误', {
           //     description: `${status}: ${JSON.stringify(error.config)}`,
           //   });

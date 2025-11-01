@@ -87,7 +87,9 @@ const Wallets: React.FC<MyProps> = memo(props => {
           </Text>
         </Flex>
         <View style={{height: 10}} />
-        <Text style={{color: '#ccc', fontSize: 14}}>{item.id}</Text>
+        <Text style={{color: '#ccc', fontSize: 14}} numberOfLines={1}>
+          {item.id}
+        </Text>
         <View style={{height: 10}} />
         <Flex
           horizontal

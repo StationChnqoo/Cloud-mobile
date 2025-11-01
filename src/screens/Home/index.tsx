@@ -15,6 +15,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TWallet} from '@src/constants/t';
 import Button from '@src/components/Button';
 import {useFocusEffect} from '@react-navigation/native';
+import Tabs from './components';
 
 interface MyProps {
   navigation: RootStacksProp;
@@ -22,6 +23,7 @@ interface MyProps {
 
 const Home: React.FC<MyProps> = ({navigation}) => {
   const {token, setToken, theme} = useCaches();
+  const [tabIndex, setTabIndex] = useState(0);
 
   useFocusEffect(
     useCallback(() => {
@@ -38,6 +40,11 @@ const Home: React.FC<MyProps> = ({navigation}) => {
   return (
     <View style={styles.view}>
       <View style={{height: useSafeAreaInsets().top}} />
+      <Tabs
+        tabs={[{label: '钱包', value: 1}]}
+        onPress={setTabIndex}
+        index={tabIndex}
+      />
       <Wallets onWalletPress={onWalletPress} />
       <Button
         title={'新增'}

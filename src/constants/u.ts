@@ -1,13 +1,17 @@
-import {Dimensions} from 'react-native';
-import Toast from 'react-native-simple-toast';
+import {Dimensions, Platform, ToastAndroid} from 'react-native';
+import {NativeModules} from 'react-native';
+
+const {Toast} = NativeModules;
 
 export const toast = (s: string) => {
-  Toast.showWithGravityAndOffset(
-    s,
-    // '[Privacy Manifest Aggregation] Appending aggregated reasons to existing PrivacyInfo.xcprivacy file.',
-    Toast.SHORT,
-    1,
-    0,
-    Dimensions.get('screen').height * 0.618,
-  );
+  switch (Platform.OS) {
+    case 'android':
+      ToastAndroid.show(s, ToastAndroid.SHORT);
+      break;
+    case 'ios':
+      Toast.show(s, 1);
+      break;
+    default:
+      break;
+  }
 };
