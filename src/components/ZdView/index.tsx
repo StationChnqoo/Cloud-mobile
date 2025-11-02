@@ -1,4 +1,3 @@
-import x from '@src/constants/x';
 import {memo, useEffect, useState} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 
@@ -17,8 +16,8 @@ const ZDView = memo((props: MyProps) => {
     const timer = performance.now();
     let frameId: number;
     const updateColor = () => {
-      let color = value > n ? x.Color.RED : value < n ? x.Color.GREEN : '#fff';
-      setBackgroundColor(x.Colors.hex2Rgba(color, 0.18));
+      let color = value > n ? '#ff0000' : value < n ? '#00ff00' : '#fff';
+      // setBackgroundColor(x.Colors.hex2Rgba(color, 0.18));
     };
     const resetColor = () => {
       setBackgroundColor('#fff');

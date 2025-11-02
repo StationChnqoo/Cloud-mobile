@@ -8,6 +8,8 @@ import {RootStacksProp} from '@src/screens';
 import Wallets from '@src/screens/Wallets';
 import Home from '@src/screens/Home';
 import My from '@src/screens/My';
+import Data from '../Data';
+import Financing from '../Financing';
 
 const Tab = createBottomTabNavigator();
 interface MyProps {
@@ -20,10 +22,16 @@ const BottomTabs = (props: MyProps) => {
 
   const screens = [
     {
-      name: 'Home',
-      component: Home,
+      name: 'Financing',
+      component: Financing,
       icon: require('./assets/menu_home.png'),
       label: '首页',
+    },
+    {
+      name: 'Data',
+      component: Data,
+      icon: require('./assets/menu_friends.png'),
+      label: '发现',
     },
     {
       name: 'My',

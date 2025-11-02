@@ -13,6 +13,44 @@ export interface TWallet {
   updateAt: string;
 }
 
+export interface RealTimePrice {
+  /** 股票价格 * 1000 */
+  f43?: number;
+  /** 股票代号 */
+  f57?: string;
+  /** 股票名字 */
+  f58?: string;
+  /** 当前净值 */
+  f60?: number;
+  /** 成交量 */
+  f47?: number;
+  /** 成交额 */
+  f48?: number;
+  /** 精度 */
+  f59?: number;
+  /** 时间 */
+  f86?: number;
+  /** 几级市场 */
+  f107?: number;
+  /** 涨跌额 */
+  f169?: number;
+  /** 涨跌幅 */
+  f170?: number;
+  /** 详情接口或者图片趋势的时候用 */
+  code?: string;
+}
+
+export interface RealtimeCount {
+  /** 涨跌额 */
+  f3: number;
+  /** 股票代码 */
+  f12: string;
+  /** 涨 跌 平 */
+  f104: number;
+  f105: number;
+  f106: number;
+}
+
 export interface PaginationProps {
   currentPage: number;
   pageSize: number;

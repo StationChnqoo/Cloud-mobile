@@ -51,14 +51,14 @@ const InputDialog: React.FC<MyProps> = props => {
         <View style={{height: 30}} />
         <Flex horizontal justify={'flex-end'}>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={onClose}
             hitSlop={{bottom: 12, left: 12, top: 12, right: 12}}>
             <Text style={{color: '#999', fontSize: 16}}>取消</Text>
           </TouchableOpacity>
           <View style={{width: 24}} />
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => {
               onConfirm(text);
             }}

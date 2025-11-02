@@ -1,5 +1,8 @@
 import {TWallet} from './t';
 
+export enum Fonts {
+  Digital = 'digital-7',
+}
 export const WalletMaps = {
   wechat: '微信',
   alipay: '支付宝',

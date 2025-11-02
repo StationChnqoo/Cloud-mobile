@@ -117,7 +117,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
   return (
     <View style={styles.view}>
       <FlatList
-        ListHeaderComponent={() => <View style={{height: 8}} />}
+        // ListHeaderComponent={() => <View style={{height: 1}} />}
         refreshControl={
           <RefreshControl
             refreshing={
@@ -138,7 +138,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
         keyExtractor={(it, i) => `${it.id}:${i}`}
         onEndReachedThreshold={0.2}
         removeClippedSubviews={false}
-        ItemSeparatorComponent={() => <View style={{height: 6}} />}
+        ItemSeparatorComponent={() => <View style={{height: 1}} />}
         ListEmptyComponent={
           <Flex>
             <Image
@@ -165,9 +165,8 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     marginVertical: 1,
-    marginHorizontal: 12,
-    padding: 12,
-    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
 });
 

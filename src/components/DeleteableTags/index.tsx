@@ -17,7 +17,7 @@ const DeleteableTags: React.FC<MyProps> = props => {
             {it}
           </Text>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
             onPress={() => {
               onDelete(i);

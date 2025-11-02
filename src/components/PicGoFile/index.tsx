@@ -16,12 +16,12 @@ interface MyProps {
 
 const PicGoFile: React.FC<MyProps> = props => {
   const {src, onDelete, onPreview, onMoveDown, onMoveUp, onEdit} = props;
-  const {theme, setUser} = useCaches();
+  const {theme} = useCaches();
 
   return (
     <Flex key={src.id} justify="space-between" horizontal style={styles.view}>
       <TouchableOpacity
-        activeOpacity={0.7}
+        activeOpacity={0.8}
         onPress={() => {
           onPreview(src.url);
         }}>
@@ -54,7 +54,7 @@ const PicGoFile: React.FC<MyProps> = props => {
       <Flex horizontal>
         <View>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => {
               onEdit(src.id);
             }}>
@@ -64,7 +64,7 @@ const PicGoFile: React.FC<MyProps> = props => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => {
               onDelete(src.id);
             }}>
@@ -77,7 +77,7 @@ const PicGoFile: React.FC<MyProps> = props => {
         <View style={{width: 4}} />
         <View>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => {
               onMoveUp(src.id);
             }}>
@@ -87,7 +87,7 @@ const PicGoFile: React.FC<MyProps> = props => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => {
               onMoveDown(src.id);
             }}>

@@ -14,6 +14,8 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D86E347A2EB5D0D000850330 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86E34792EB5D0D000850330 /* Toast.swift */; };
 		D86E347D2EB5D16600850330 /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = D86E347C2EB5D16600850330 /* Toast.m */; };
+		9CFC00FF6E38440394036E40 /* digital-7-mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */; };
+		3A9D7BA7DDD74D90AE29D5AF /* digital-7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71533F9F25BC426ABB2CF67F /* digital-7.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		D86E347B2EB5D16600850330 /* Cloud-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cloud-Bridging-Header.h"; sourceTree = "<group>"; };
 		D86E347C2EB5D16600850330 /* Toast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Toast.m; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */ = {isa = PBXFileReference; name = "digital-7-mono.ttf"; path = "../src/assets/fonts/digital-7-mono.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		71533F9F25BC426ABB2CF67F /* digital-7.ttf */ = {isa = PBXFileReference; name = "digital-7.ttf"; path = "../src/assets/fonts/digital-7.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				7AAAA593576D41AFB545E549 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -105,6 +110,16 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		7AAAA593576D41AFB545E549 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */,
+				71533F9F25BC426ABB2CF67F /* digital-7.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -169,6 +184,8 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				52B508EEE3B25E4F842FB88E /* PrivacyInfo.xcprivacy in Resources */,
+				9CFC00FF6E38440394036E40 /* digital-7-mono.ttf in Resources */,
+				3A9D7BA7DDD74D90AE29D5AF /* digital-7.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

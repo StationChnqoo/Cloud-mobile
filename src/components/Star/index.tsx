@@ -1,4 +1,4 @@
-import {useCaches} from '@src/constants/store';
+import {useCaches} from '@src/stores';
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Flex from '../Flex';
@@ -16,7 +16,7 @@ const Star: React.FC<MyProps> = props => {
     <Flex horizontal style={{gap: 4}} justify={'flex-start'}>
       {Array.from({length: 5}, (_, i) => (
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.8}
           key={i}
           onPress={() => {
             onPress(i + 1);

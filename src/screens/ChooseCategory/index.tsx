@@ -49,7 +49,7 @@ const ChooseCategory: React.FC<MyProps> = props => {
     const {item} = info;
     return (
       <TouchableOpacity
-        activeOpacity={0.7}
+        activeOpacity={0.8}
         style={styles.item}
         onPress={() => {
           setCategory(item);

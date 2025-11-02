@@ -1,5 +1,4 @@
 import {useFocusEffect} from '@react-navigation/native';
-import Button from '@src/components/Button';
 import Flex from '@src/components/Flex';
 import {TWallet} from '@src/constants/t';
 import {useCaches} from '@src/stores';
@@ -8,15 +7,15 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Popover from 'react-native-popover-view';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksProp} from '..';
-import Wallets from '../Wallets';
-import Tabs from './components/Tabs';
 import Posts from '../Posts';
+import Wallets from '../Wallets';
+import Tabs from '@src/components/Tabs';
 
 interface MyProps {
   navigation: RootStacksProp;
 }
 
-const Home: React.FC<MyProps> = ({navigation}) => {
+const Data: React.FC<MyProps> = ({navigation}) => {
   const {token, setToken, theme} = useCaches();
   const [tabIndex, setTabIndex] = useState(0);
   const [newPopover, setNewPopover] = useState(false);
@@ -57,7 +56,7 @@ const Home: React.FC<MyProps> = ({navigation}) => {
   }, [tabIndex]);
   return (
     <View style={styles.view}>
-      <View style={{height: useSafeAreaInsets().top, backgroundColor: '#fff'}} />
+      <View style={{height: useSafeAreaInsets().top}} />
       <Flex
         horizontal
         justify={'space-between'}
@@ -115,7 +114,7 @@ const Home: React.FC<MyProps> = ({navigation}) => {
           ))}
         </Popover>
       </Flex>
-      <View style={{height: 1, backgroundColor: '#d8d8d8'}} />
+      {/* <View style={{height: 1, backgroundColor: 'ccc'}} /> */}
       {currentComponent}
     </View>
   );
@@ -150,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Data;

@@ -11,7 +11,9 @@ import Config from 'react-native-config';
 import {useCaches} from './src/stores';
 import {MMKV} from 'react-native-mmkv';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
+dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
 
 const Cloud = () => {

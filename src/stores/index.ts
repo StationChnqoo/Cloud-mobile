@@ -26,6 +26,12 @@ interface States {
   setTheme: (t: string) => void;
   category: Category;
   setCategory: (c: Category) => void;
+  cared: string[];
+  setCared: (c: string[]) => void;
+  global: string[];
+  setGlobal: (g: string[]) => void;
+  holdFundCodes: string[];
+  setHoldFundCodes: (h: string[]) => void;
 }
 
 const initialState = {
@@ -33,6 +39,12 @@ const initialState = {
   config: {},
   theme: '#987123',
   category: CategorySchema.parse({}),
+  cared:
+    '1.511520,1.513100,0.159567,1.513020,1.520600,0.159329,100.NDX,0.300996'.split(
+      ',',
+    ),
+  global: ['1.000001', '0.399006', '1.000300', '100.N225'],
+  holdFundCodes: `BK1040,BK1041,BK0727,BK1044,BK1031,BK0433,BK0438,BK0437`.split(','),
 };
 
 export const useCaches = create<States>()(
@@ -44,6 +56,9 @@ export const useCaches = create<States>()(
         setConfig: config => set({config}),
         setTheme: theme => set({theme}),
         setCategory: category => set({category}),
+        setCared: cared => set({cared}),
+        setGlobal: global => set({global}),
+        setHoldFundCodes: holdFundCodes => set({holdFundCodes}),
       }),
       {
         storage: createJSONStorage(() => mmkvStorage),
