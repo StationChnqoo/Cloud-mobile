@@ -1,21 +1,16 @@
-import {toast} from '@src/constants/u';
-import Services from '@src/services';
+import {useFocusEffect} from '@react-navigation/native';
+import Button from '@src/components/Button';
+import Flex from '@src/components/Flex';
+import {TWallet} from '@src/constants/t';
 import {useCaches} from '@src/stores';
-import {useCallback, useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {useCallback, useMemo, useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Popover from 'react-native-popover-view';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksProp} from '..';
 import Wallets from '../Wallets';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TWallet} from '@src/constants/t';
-import Button from '@src/components/Button';
-import {useFocusEffect} from '@react-navigation/native';
-import Tabs from './components';
+import Tabs from './components/Tabs';
+import Posts from '../Posts';
 
 interface MyProps {
   navigation: RootStacksProp;
@@ -24,6 +19,7 @@ interface MyProps {
 const Home: React.FC<MyProps> = ({navigation}) => {
   const {token, setToken, theme} = useCaches();
   const [tabIndex, setTabIndex] = useState(0);
+  const [newPopover, setNewPopover] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -37,28 +33,90 @@ const Home: React.FC<MyProps> = ({navigation}) => {
   const onWalletPress = (item: TWallet) => {
     navigation.navigate('EditWallet', {id: item.id});
   };
+
+  const menus = [
+    {icon: require('./assets/wallet.png'), label: '记资产'},
+    {icon: require('./assets/notepad.png'), label: '记笔记'},
+  ];
+
+  const onNewPress = (index: number) => {
+    setNewPopover(false);
+    let handlers = {
+      0: () => {
+        navigation.navigate('EditWallet');
+      },
+      1: () => {
+        navigation.navigate('EditPost');
+      },
+    };
+    handlers[index]();
+  };
+
+  const currentComponent = useMemo(() => {
+    return [<Wallets onWalletPress={onWalletPress} />, <Posts />][tabIndex];
+  }, [tabIndex]);
   return (
     <View style={styles.view}>
       <View style={{height: useSafeAreaInsets().top}} />
-      <Tabs
-        tabs={[{label: '钱包', value: 1}]}
-        onPress={setTabIndex}
-        index={tabIndex}
-      />
-      <Wallets onWalletPress={onWalletPress} />
-      <Button
-        title={'新增'}
-        style={{
-          backgroundColor: theme,
-          height: 44,
-          borderRadius: 10,
-          margin: 12,
-        }}
-        textStyle={{color: '#fff'}}
-        onPress={() => {
-          navigation.navigate('EditWallet');
-        }}
-      />
+      <Flex
+        horizontal
+        justify={'space-between'}
+        style={{paddingHorizontal: 16}}>
+        <Tabs
+          tabs={[
+            {label: '钱包', value: 1},
+            {label: '笔记', value: 2},
+          ]}
+          onPress={setTabIndex}
+          index={tabIndex}
+        />
+        <Popover
+          isVisible={newPopover}
+          backgroundStyle={{backgroundColor: 'transparent'}}
+          onRequestClose={() => setNewPopover(false)}
+          popoverStyle={{backgroundColor: 'rgba(0, 0, 0, 0.9)', padding: 12}}
+          from={
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                setNewPopover(true);
+              }}>
+              <Image
+                source={require('./assets/add.png')}
+                style={{height: 16, width: 16, tintColor: theme}}
+              />
+            </TouchableOpacity>
+          }>
+          {menus.map((it, i) => (
+            <TouchableOpacity
+              key={i}
+              activeOpacity={0.8}
+              onPress={() => {
+                onNewPress(i);
+              }}>
+              <Flex horizontal>
+                <Image
+                  source={it.icon}
+                  style={{height: 18, width: 18, tintColor: '#fff'}}
+                />
+                <View style={{width: 12}} />
+                <Text style={{color: '#fff', fontSize: 16}}>{it.label}</Text>
+              </Flex>
+              {i == menus.length - 1 ? null : (
+                <View
+                  style={{
+                    marginVertical: 10,
+                    height: 1,
+                    backgroundColor: '#999',
+                  }}
+                />
+              )}
+            </TouchableOpacity>
+          ))}
+        </Popover>
+      </Flex>
+      <View style={{height: 1, backgroundColor: '#d8d8d8'}} />
+      {currentComponent}
     </View>
   );
 };

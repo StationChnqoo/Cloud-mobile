@@ -86,7 +86,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
             <Text style={{fontSize: 14}}>{` k`}</Text>
           </Text>
         </Flex>
-        <View style={{height: 10}} />
+        <View style={{height: 5}} />
         <Text style={{color: '#ccc', fontSize: 14}} numberOfLines={1}>
           {item.id}
         </Text>
@@ -104,7 +104,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
                 }}>{`${WalletMaps[it]}: `}</Text>
               <Text style={{fontSize: 14, color: '#999'}}>{`${
                 Array.isArray(item[it])
-                  ? `[${item[it].map(it => `${it} k`).join(' & ')}]`
+                  ? `[${item[it].map(it => `${it}k`).join(' ')}]`
                   : `${item[it]}k`
               }`}</Text>
             </Flex>

@@ -12,9 +12,13 @@ import Login from './Login';
 import App from '../../App';
 import EditWallet from './EditWallet';
 import Wallets from './Wallets';
-import BottomTabs from '@src/services/BottomTabs';
+import BottomTabs from '@src/screens/BottomTabs';
 import Home from './Home';
 import My from './My';
+import EditPost from './EditPost';
+import Posts from './Posts';
+import ChooseCategory from './ChooseCategory';
+import EditCategory from './EditCategory';
 
 export type RootStacksParams = {
   BottomTabs: undefined;
@@ -24,6 +28,10 @@ export type RootStacksParams = {
   Wallets: undefined;
   My: undefined;
   Home: undefined;
+  EditPost: {id: string};
+  Posts: undefined;
+  ChooseCategory: {id: string};
+  EditCategory: {id: string};
 };
 
 const RootStack = createNativeStackNavigator<RootStacksParams>();
@@ -50,7 +58,11 @@ export default function Screens() {
         <RootStack.Screen name="EditWallet" component={EditWallet} />
         <RootStack.Screen name="Wallets" component={Wallets} />
         <RootStack.Screen name="My" component={My} />
-      </RootStack.Navigator>
+        <RootStack.Screen name="EditPost" component={EditPost} />
+        <RootStack.Screen name="Posts" component={Posts} />
+        <RootStack.Screen name="ChooseCategory" component={ChooseCategory} />
+        <RootStack.Screen name="EditCategory" component={EditCategory} />
+        </RootStack.Navigator>
     </NavigationContainer>
   );
 }

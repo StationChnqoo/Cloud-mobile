@@ -3,6 +3,7 @@ import {createJSONStorage, devtools, persist} from 'zustand/middleware';
 
 import {MMKV} from 'react-native-mmkv';
 import {StateStorage} from 'zustand/middleware';
+import { Category, CategorySchema } from '@src/constants/t';
 
 // const mmkv = new MMKV({
 //   id: 'useMMKV',
@@ -23,12 +24,15 @@ interface States {
   setConfig: (c: Record<string, string | undefined>) => void;
   theme: string;
   setTheme: (t: string) => void;
+  category: Category;
+  setCategory: (c: Category) => void;
 }
 
 const initialState = {
   token: '',
   config: {},
   theme: '#987123',
+  category: CategorySchema.parse({}),
 };
 
 export const useCaches = create<States>()(
@@ -39,6 +43,7 @@ export const useCaches = create<States>()(
         setToken: token => set({token}),
         setConfig: config => set({config}),
         setTheme: theme => set({theme}),
+        setCategory: category => set({category}),
       }),
       {
         storage: createJSONStorage(() => mmkvStorage),

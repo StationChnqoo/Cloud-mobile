@@ -1,13 +1,9 @@
-import {useCaches} from '@src/constants/store';
+import {useCaches} from '@src/stores';
 import React from 'react';
 import {
   Image,
   StyleProp,
   StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  ViewStyle,
 } from 'react-native';
 
 interface MyProps {

@@ -1,11 +1,8 @@
-import {createNavigationContainerRef} from '@react-navigation/native';
 // import log from '@src/constants/log4j';
+import {toast} from '@src/constants/u';
 import {useCaches} from '@src/stores';
-import {navigationRef} from '@src/screens';
 import axios, {AxiosError, AxiosInstance} from 'axios';
 import Config from 'react-native-config';
-import {Alert} from 'react-native';
-import {toast} from '@src/constants/u';
 
 // import {toast} from 'sonner-native';
 
@@ -17,15 +14,15 @@ export default class BaseService {
     this.instance = axios.create({
       // baseURL: Config.SERVER,
       baseURL: __DEV__
-        ? 'http://192.168.0.102:40092'
+        ? 'http://192.168.0.103:40091'
         : cache.config.SERVICE || Config.SERVICE,
       timeout: 10000,
       headers: {
         token: useCaches.getState().token || '',
       },
     });
-    this.instance.interceptors.request.use(x => {
-      console.log('Request: ', x.url);
+    this.instance.interceptors.request.use((x: any) => {
+      console.log('Request: ', {url: x.url, data: x?.data || x?.params});
       x.meta = x.meta || {};
       x.meta.timer = new Date().getTime();
       return x;

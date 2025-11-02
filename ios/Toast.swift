@@ -44,11 +44,12 @@ class Toast: NSObject {
       let toastWindow = UIWindow(frame: UIScreen.main.bounds)
       toastWindow.windowLevel = .alert + 1
       toastWindow.backgroundColor = .clear
+      toastWindow.isUserInteractionEnabled = false
       
       let vc = UIViewController()
       vc.view.backgroundColor = .clear
       toastWindow.rootViewController = vc
-      toastWindow.makeKeyAndVisible()
+      toastWindow.isHidden = false
       
       // ✅ 使用带 padding 的 Label
       let label = PaddingLabel()
@@ -57,22 +58,23 @@ class Toast: NSObject {
       label.textColor = .white
       label.backgroundColor = UIColor.black.withAlphaComponent(0.75)
       label.textAlignment = .center
-      label.font = UIFont.systemFont(ofSize: 14)
+      label.font = UIFont.systemFont(ofSize: 16)
       label.numberOfLines = 0
       label.alpha = 0
-      label.layer.cornerRadius = 10
+      label.layer.cornerRadius = 5
       label.layer.masksToBounds = true
       
-      // ✅ 自动计算大小并居中显示
+      // ✅ 自动计算大小并垂直居中显示
       let maxSize = CGSize(width: toastWindow.frame.size.width - 80, height: CGFloat.greatestFiniteMagnitude)
       let expectedSize = label.sizeThatFits(maxSize)
+
+      let verticalOffset: CGFloat = 80 // 让 Toast 看起来在中间偏下
       label.frame = CGRect(
         x: (toastWindow.frame.size.width - expectedSize.width) / 2,
-        y: toastWindow.frame.size.height - 150,
+        y: (toastWindow.frame.size.height - expectedSize.height) / 2 + verticalOffset,
         width: expectedSize.width,
         height: expectedSize.height
       )
-      
       vc.view.addSubview(label)
       
       // ✅ 淡入淡出动画

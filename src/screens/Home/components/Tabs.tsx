@@ -16,7 +16,7 @@ const Tabs: React.FC<MyProps> = props => {
         let checked = i == index;
         return (
           <TouchableOpacity
-            key={index}
+            key={i}
             activeOpacity={0.8}
             style={styles.item}
             onPress={() => {
@@ -49,18 +49,15 @@ const Tabs: React.FC<MyProps> = props => {
 
 const styles = StyleSheet.create({
   view: {
-    paddingHorizontal: 12,
-    height: 40,
+    // paddingHorizontal: 12,
+    height: 44,
     flexDirection: 'row',
-    gap: 12,
+    gap: 15,
     backgroundColor: '#fff',
   },
   item: {
     alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  label: {
-    fontSize: 16,
+    justifyContent: 'center',
   },
   dot: {
     height: 2,
@@ -68,4 +65,5 @@ const styles = StyleSheet.create({
     borderRadius: 1,
   },
 });
+
 export default Tabs;

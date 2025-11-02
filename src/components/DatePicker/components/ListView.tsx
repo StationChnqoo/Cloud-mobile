@@ -2,16 +2,13 @@ import {useEffect, useRef} from 'react';
 import {
   FlatList,
   ListRenderItemInfo,
-  StyleProp,
   StyleSheet,
   Text,
-  TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle,
 } from 'react-native';
+import {ITEM_HEIGHT} from '../constants/c';
 import {ListViewOption} from '../constants/t';
-import { ITEM_HEIGHT } from '../constants/c';
 
 interface MyProps {
   data: ListViewOption[];
@@ -24,13 +21,12 @@ const ListView = (props: MyProps) => {
   const listView = useRef<FlatList>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      listView.current?.scrollToIndex({
-        index: Math.max(0, index),
-        animated: true,
-        viewPosition: 0,
-      });
-    }, 1);
+    if (data.length == 0) return;
+    listView.current?.scrollToIndex({
+      index: Math.max(0, index),
+      animated: true,
+      viewPosition: 0,
+    });
 
     return function () {};
   }, [index, data]);
@@ -73,7 +69,7 @@ const ListView = (props: MyProps) => {
         index,
       })}
       ListFooterComponent={() => <View style={{height: ITEM_HEIGHT * 5}} />}
-      nestedScrollEnabled={true}
+      // nestedScrollEnabled={true}
       // scrollEnabled={false}
     />
   );

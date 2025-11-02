@@ -1244,6 +1244,27 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.11.0):
     - React-Core
+  - react-native-image-picker (8.2.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-mmkv (3.3.3):
     - DoubleConversion
     - glog
@@ -1682,6 +1703,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNPermissions (5.4.4):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (4.17.1):
     - DoubleConversion
     - glog
@@ -1773,6 +1815,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
@@ -1806,6 +1849,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1894,6 +1938,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
   react-native-safe-area-context:
@@ -1960,6 +2006,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   Yoga:
@@ -2005,6 +2053,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 9f9819152d22361967a6dfaaca7828af37b0ae70
   react-native-config: 9f48ad1ee7f4fcb9482c66988e30bd60572bb963
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
+  react-native-image-picker: fb2d12cb86e0b3e58caee9aa660ddbd5742c841c
   react-native-mmkv: 56529b171eec4456a3c475bbc6c9187c3e98618e
   react-native-safe-area-context: ad7b31de8373577e003e700340b746fd5645b12c
   react-native-simple-toast: fe8a1112585a6f250ca645b7ce4e1d3abd40539b
@@ -2038,11 +2087,12 @@ SPEC CHECKSUMS:
   ReactCommon: 7ea8ee50e489e9cc75922f19a06ea45c1b59b4bd
   RNGestureHandler: ab7287c9593b75911be221b6c97d7ae6e02652e6
   RNLocalize: 91547fd367dddded9ccb9ddbcbf7210512ecbae8
+  RNPermissions: 57aa1a12500473c96ba9a3e229da72c3a697929c
   RNScreens: cef1aca9a28489a49a4a3563c54597e772d037ed
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   Yoga: 0eb433ccf59c96ae34900f7f49bd6cd22463afa4
 
-PODFILE CHECKSUM: d72017ef843698146d179a4951576e3efe930ead
+PODFILE CHECKSUM: afbe15340391ebebc7da0428151b97573679f55f
 
 COCOAPODS: 1.16.2

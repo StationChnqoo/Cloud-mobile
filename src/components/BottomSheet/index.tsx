@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet} from 'react-native';
-import {Modalize} from 'react-native-modalize';
+import {StyleSheet, View} from 'react-native';
+import Modal from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface MyProps {
@@ -12,46 +12,33 @@ interface MyProps {
 }
 const BottomSheet: React.FC<MyProps> = props => {
   const {children, show, onClose, onHide, onShow} = props;
-  const modalizeRef = useRef<Modalize>(null);
 
-  useEffect(() => {
-    if (show) {
-      modalizeRef.current?.open();
-    } else {
-      modalizeRef.current?.close();
-    }
-  }, [show]);
   return (
-    <Modalize
-      ref={modalizeRef}
+    <Modal
       // animationInTiming={618}
       // animationOutTiming={618 * 2}
-      onClose={onClose}
-      onOpened={onShow}
-      onClosed={onHide}
-      adjustToContentHeight={true}
-      closeOnOverlayTap={true}
-      handlePosition="inside"
-      panGestureComponentEnabled={false}
-      panGestureEnabled={false}
-      modalStyle={{
-        marginHorizontal: 12,
+      isVisible={show}
+      onBackdropPress={onClose}
+      onBackButtonPress={onClose}
+      onShow={onShow}
+      onModalHide={onHide}
+      animationIn={'fadeInUp'}
+      animationOut={'fadeOutDown'}
+      hideModalContentWhileAnimating={true}
+      style={{
         marginBottom: useSafeAreaInsets().bottom + 12,
         padding: 0,
         justifyContent: 'flex-end',
-        ...styles.view
+        ...styles.view,
       }}>
-      {children}
+      <View>{children}</View>
       {/* <View style={{height: useSafeAreaInsets().bottom}} /> */}
-    </Modalize>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  view: {
-    borderRadius: 12,
-    backgroundColor: 'white',
-  },
+  view: {},
 });
 
 export default BottomSheet;

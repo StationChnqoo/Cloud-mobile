@@ -1,11 +1,9 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-import {Flex} from '@src/components';
-import {useCaches} from '@src/constants/store';
+import Flex from '../Flex';
+import {useCaches} from '@src/stores';
 import {PicGoSrc} from '@src/constants/t';
-import {miniPicGo} from '@src/constants/u';
-import moment from 'moment';
 
 interface MyProps {
   src: PicGoSrc;
@@ -28,7 +26,7 @@ const PicGoFile: React.FC<MyProps> = props => {
           onPreview(src.url);
         }}>
         <Image
-          source={{uri: miniPicGo(src.url)}}
+          source={{uri: src.url}}
           style={{
             height: 48,
             width: 48,
@@ -48,9 +46,7 @@ const PicGoFile: React.FC<MyProps> = props => {
         </Text>
         <Flex horizontal justify={'space-between'}>
           <Text style={{fontSize: 12, color: '#666'}}>
-            {`${(src.size / 1024).toFixed(2)}KB | ${moment(
-              src.date,
-            ).fromNow()}`}
+            {`${(src.size / 1024).toFixed(2)}KB | ${src.date}`}
           </Text>
         </Flex>
       </View>

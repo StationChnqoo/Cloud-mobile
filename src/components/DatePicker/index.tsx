@@ -86,7 +86,7 @@ const DatePicker = (props: MyProps) => {
 
   return (
     <BottomSheet show={show} onShow={onShow} onClose={onCancel}>
-      <View style={{padding: 16}}>
+      <View style={{padding: 16, backgroundColor: '#fff', borderRadius: 12}}>
         <View style={{height: 12}} />
         <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
           请选择日期
