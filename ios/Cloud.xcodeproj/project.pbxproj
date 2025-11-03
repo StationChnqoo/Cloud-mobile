@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-Cloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Cloud.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		3A9D7BA7DDD74D90AE29D5AF /* digital-7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71533F9F25BC426ABB2CF67F /* digital-7.ttf */; };
 		52B508EEE3B25E4F842FB88E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9CFC00FF6E38440394036E40 /* digital-7-mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */; };
 		D86E347A2EB5D0D000850330 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86E34792EB5D0D000850330 /* Toast.swift */; };
 		D86E347D2EB5D16600850330 /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = D86E347C2EB5D16600850330 /* Toast.m */; };
-		9CFC00FF6E38440394036E40 /* digital-7-mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */; };
-		3A9D7BA7DDD74D90AE29D5AF /* digital-7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71533F9F25BC426ABB2CF67F /* digital-7.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,14 +26,14 @@
 		3B4392A12AC88292D35C810B /* Pods-Cloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud.debug.xcconfig"; path = "Target Support Files/Pods-Cloud/Pods-Cloud.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Cloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud.release.xcconfig"; path = "Target Support Files/Pods-Cloud/Pods-Cloud.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Cloud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cloud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71533F9F25BC426ABB2CF67F /* digital-7.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "digital-7.ttf"; path = "../src/assets/fonts/digital-7.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Cloud/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Cloud/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "digital-7-mono.ttf"; path = "../src/assets/fonts/digital-7-mono.ttf"; sourceTree = "<group>"; };
 		D86E34792EB5D0D000850330 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		D86E347B2EB5D16600850330 /* Cloud-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cloud-Bridging-Header.h"; sourceTree = "<group>"; };
 		D86E347C2EB5D16600850330 /* Toast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Toast.m; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */ = {isa = PBXFileReference; name = "digital-7-mono.ttf"; path = "../src/assets/fonts/digital-7-mono.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		71533F9F25BC426ABB2CF67F /* digital-7.ttf */ = {isa = PBXFileReference; name = "digital-7.ttf"; path = "../src/assets/fonts/digital-7.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +70,16 @@
 				5DCACB8F33CDC322A6C60F78 /* libPods-Cloud.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7AAAA593576D41AFB545E549 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */,
+				71533F9F25BC426ABB2CF67F /* digital-7.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -110,16 +120,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		7AAAA593576D41AFB545E549 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				B6B2F65657E44CE6BA8EE298 /* digital-7-mono.ttf */,
-				71533F9F25BC426ABB2CF67F /* digital-7.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 

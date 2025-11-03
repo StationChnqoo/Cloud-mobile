@@ -30,7 +30,7 @@ const Cloud = () => {
         <SafeAreaProvider>
           <View style={{flex: 1}}>
             <StatusBar
-              translucent
+              translucent={false}
               backgroundColor="transparent"
               barStyle="dark-content"
             />

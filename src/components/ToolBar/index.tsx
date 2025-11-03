@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     paddingHorizontal: 12,
     justifyContent: 'space-between',
-    height: 52,
+    paddingVertical: 10,
     backgroundColor: '#fff',
   },
   title: {

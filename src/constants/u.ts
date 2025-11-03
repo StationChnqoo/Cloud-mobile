@@ -17,7 +17,7 @@ export const toast = (s: string) => {
 };
 
 export const renderUpOrDown = (n: number) => {
-  let label = n > 0 ? '↗' : n < 0 ? '↘' : '';
+  let label = n > 0 ? '↑' : n < 0 ? '↓' : '';
   let color = n > 0 ? '#f20c00' : n < 0 ? '#0c8918' : 'gray';
   return {label, color};
 };

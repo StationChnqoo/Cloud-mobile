@@ -10,6 +10,7 @@ import MoreButton from '../MoreButton';
 import PicGoFile from '../PicGoFile';
 import {produce} from 'immer';
 import InputDialog from '../InputDialog';
+import { toast } from '@src/constants/u';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -62,7 +63,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
         text: '确定',
         onPress: () => {
           setImages(images.filter(it => it.id !== id));
-          toast.success('删除成功');
+          toast('删除成功');
         },
       },
     ]);

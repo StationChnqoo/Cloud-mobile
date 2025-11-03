@@ -2,7 +2,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import Flex from '@src/components/Flex';
 import {TWallet} from '@src/constants/t';
 import {useCaches} from '@src/stores';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Popover from 'react-native-popover-view';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -10,6 +10,8 @@ import {RootStacksProp} from '..';
 import Posts from '../Posts';
 import Wallets from '../Wallets';
 import Tabs from '@src/components/Tabs';
+import {toast} from '@src/constants/u';
+import {Router} from '@src/navigation';
 
 interface MyProps {
   navigation: RootStacksProp;
@@ -20,14 +22,15 @@ const Data: React.FC<MyProps> = ({navigation}) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [newPopover, setNewPopover] = useState(false);
 
-  useFocusEffect(
-    useCallback(() => {
-      if (token) {
-      } else {
-        navigation.navigate('Login');
-      }
-    }, [token]),
-  );
+  useFocusEffect(useCallback(() => {}, [token]));
+
+  useEffect(() => {
+    if (token) {
+    } else {
+      toast('请登录后使用');
+    }
+    Router.navigate('Login');
+  }, [token]);
 
   const onWalletPress = (item: TWallet) => {
     navigation.navigate('EditWallet', {id: item.id});

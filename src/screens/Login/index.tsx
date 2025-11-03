@@ -48,7 +48,7 @@ const LoginScreen: React.FC<MyProps> = ({navigation}) => {
           navigation.goBack();
         }}
       />
-      <View style={{height: 1, backgroundColor: '#ccc'}} />
+      <View style={{height: 1, backgroundColor: '#d8d8d8'}} />
       <View style={styles.view}>
         <View style={{height: 15}} />
         <TextInput
@@ -79,7 +79,6 @@ const LoginScreen: React.FC<MyProps> = ({navigation}) => {
           <Text style={{color: '#fff', fontSize: 14}}>登录</Text>
         </TouchableOpacity>
       </View>
-      <View style={{height: 16}} />
     </View>
   );
 };
