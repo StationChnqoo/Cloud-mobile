@@ -32,23 +32,11 @@ const ContinuedTrading = (props: MyProps) => {
   const {onPress} = props;
   const {theme} = useCaches();
   const [tabIndex, setTabIndex] = useState(0);
-  const [interval, setInterval] = useState<any>(1000);
-  const [s, setS] = useState(0);
   const tabs = [
     {label: '黄金', value: 'hj'},
     {label: '债券', value: 'zq'},
     {label: '汇率', value: 'hl'},
   ];
-  useInterval(() => {
-    setS(s => s + 1);
-  }, interval);
-
-  useEffect(() => {
-    if (s % 5 == 0) {
-      setTabIndex(t => (t + 1) % 3);
-    }
-    return function () {};
-  }, [s]);
 
   const indexes = {
     hj: [
@@ -110,9 +98,7 @@ const ContinuedTrading = (props: MyProps) => {
         <View>
           <Flex horizontal justify="space-between" style={{paddingHorizontal: 15}}>
             <Tabs tabs={tabs} index={tabIndex} onPress={setTabIndex} />
-            <Text style={{color: '#999', fontSize: 14}}>
-              下一轮刷新: {5 - (s % 5)}s
-            </Text>
+            <View />
           </Flex>
           {datas.map((data, index) => (
             <TouchableOpacity
