@@ -39,7 +39,7 @@ interface MyProps {
 const EditWallet: React.FC<MyProps> = props => {
   const {navigation, route} = props;
   const {theme} = useCaches();
-
+  const insets = useSafeAreaInsets();
   const [form, setForm] = useState<TWallet>({
     fund: [],
     carpool: [],
@@ -272,9 +272,7 @@ const EditWallet: React.FC<MyProps> = props => {
           />
         </Flex>
       </Flex>
-      <View
-        style={{height: useSafeAreaInsets().bottom, backgroundColor: 'white'}}
-      />
+      <View style={{height: insets.bottom, backgroundColor: 'white'}} />
       <InputDialog
         onClose={closeInputerDialog}
         {...inputerDialog}

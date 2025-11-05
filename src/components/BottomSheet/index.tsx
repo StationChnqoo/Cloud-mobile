@@ -12,7 +12,7 @@ interface MyProps {
 }
 const BottomSheet: React.FC<MyProps> = props => {
   const {children, show, onClose, onHide, onShow} = props;
-
+  const insets = useSafeAreaInsets();
   return (
     <Modal
       // animationInTiming={618}
@@ -26,7 +26,7 @@ const BottomSheet: React.FC<MyProps> = props => {
       animationOut={'fadeOutDown'}
       hideModalContentWhileAnimating={true}
       style={{
-        marginBottom: useSafeAreaInsets().bottom + 12,
+        marginBottom: insets.bottom + 12,
         padding: 0,
         justifyContent: 'flex-end',
         ...styles.view,

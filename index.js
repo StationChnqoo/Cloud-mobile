@@ -12,6 +12,8 @@ import {useCaches} from './src/stores';
 import {MMKV} from 'react-native-mmkv';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import Reactotron from 'reactotron-react-native';
+import {reactotronRedux} from 'reactotron-redux';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
@@ -24,9 +26,14 @@ const Cloud = () => {
     setConfig(Config.getConstants());
   }, []);
 
+  useEffect(() => {
+    if (__DEV__) {
+      Reactotron.configure().useReactNative().use(reactotronRedux()).connect();
+    }
+  }, []);
   return (
     <QueryClientProvider client={new QueryClient({})}>
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={{flex: 1}}>
         <SafeAreaProvider>
           <View style={{flex: 1}}>
             <StatusBar

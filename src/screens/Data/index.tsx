@@ -21,7 +21,7 @@ const Data: React.FC<MyProps> = ({navigation}) => {
   const {token, setToken, theme} = useCaches();
   const [tabIndex, setTabIndex] = useState(0);
   const [newPopover, setNewPopover] = useState(false);
-
+  const insets = useSafeAreaInsets();
   useFocusEffect(useCallback(() => {}, [token]));
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const Data: React.FC<MyProps> = ({navigation}) => {
   }, [tabIndex]);
   return (
     <View style={styles.view}>
-      <View style={{height: useSafeAreaInsets().top}} />
+      <View style={{height: insets.top}} />
       <Flex
         horizontal
         justify={'space-between'}

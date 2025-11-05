@@ -20,7 +20,7 @@ const Webviewer: React.FC<MyProps> = props => {
   const [progress, setProgress] = useState(0);
   const [isShowProgressBar, setIsShowProgressBar] = useState(false);
   const webViewRef = useRef(null);
-
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     return function () {};
   }, []);
@@ -63,9 +63,7 @@ const Webviewer: React.FC<MyProps> = props => {
           }}
         />
       </View>
-      <View
-        style={{height: useSafeAreaInsets().bottom, backgroundColor: '#fff'}}
-      />
+      <View style={{height: insets.bottom, backgroundColor: '#fff'}} />
     </View>
   );
 };

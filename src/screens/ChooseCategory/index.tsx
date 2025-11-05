@@ -30,7 +30,7 @@ const ChooseCategory: React.FC<MyProps> = props => {
   const {navigation, route} = props;
   const {theme, category, setCategory} = useCaches();
   const focused = useIsFocused();
-
+  const insets = useSafeAreaInsets();
   const categoriesQuery = useQuery({
     queryKey: ['categoriesQuery', category.id],
     enabled: focused,
@@ -136,9 +136,7 @@ const ChooseCategory: React.FC<MyProps> = props => {
           onPress={onSave}
         />
       </Flex>
-      <View
-        style={{height: useSafeAreaInsets().bottom, backgroundColor: 'white'}}
-      />
+      <View style={{height: insets.bottom, backgroundColor: 'white'}} />
     </View>
   );
 };

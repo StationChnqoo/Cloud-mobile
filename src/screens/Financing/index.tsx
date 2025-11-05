@@ -3,7 +3,7 @@ import {RealTimePrice} from '@src/constants/t';
 import DfcfService from '@src/services/DfcfService';
 import {useCaches} from '@src/stores';
 import {useQueries, useQuery} from '@tanstack/react-query';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {RootStacksProp} from '..';
@@ -24,6 +24,7 @@ const Financing: React.FC<MyProps> = props => {
   const {navigation} = props;
   const {cared, global} = useCaches();
   const focused = useIsFocused();
+  const insets = useSafeAreaInsets();
 
   const countsQuery = useQuery({
     enabled: focused,
@@ -101,7 +102,7 @@ const Financing: React.FC<MyProps> = props => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#f0f0f0', position: 'relative'}}>
-      <View style={{height: useSafeAreaInsets().top, backgroundColor: '#fff'}} /> 
+      <View style={{height: insets.top, backgroundColor: '#fff'}} /> 
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         bounces={false}
@@ -122,18 +123,20 @@ const Financing: React.FC<MyProps> = props => {
             <Global
               datas={globalQueries
                 .filter(it => it.isFetched)
-                .map(it => it.data.data)}
+                .map(it => (it.data as any)?.data)
+                .filter((it): it is RealTimePrice => it !== undefined)}
               onPress={fd => toStockDetail(`${fd.f107}.${fd.f57}`)}
             />,
 
             <Care
               datas={caredQueries
                 .filter(it => it.isFetched)
-                .map(it => it.data.data)}
+                .map(it => (it.data as any)?.data)
+                .filter((it): it is RealTimePrice => it !== undefined)}
               onPress={ss => toStockDetail(`${ss.market}.${ss.code}`)}
             />,
             <Ranks
-              diff={ranksQuery.data.data.diff}
+              diff={ranksQuery.data?.data?.diff || []}
               onPress={item => {
                 // log.debug('Ranks onPress: ', item);
                 navigation.navigate('SectorStocks', {

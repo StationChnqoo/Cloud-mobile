@@ -28,7 +28,7 @@ const SectorStocks: React.FC<MyProps> = props => {
   const {navigation, route} = props;
   const {theme} = useCaches();
   const {code, name} = route.params;
-
+  const insets = useSafeAreaInsets();
   const kTabs = [
     {label: '日K', value: ''},
     {label: '周K', value: 'W'},
@@ -113,7 +113,7 @@ const SectorStocks: React.FC<MyProps> = props => {
       <View
         style={{
           height: Platform.select({
-            ios: useSafeAreaInsets().bottom,
+            ios: insets.bottom,
             android: 10,
           }),
           backgroundColor: '#fff',

@@ -13,7 +13,7 @@ interface MyProps {
 
 const ETFDetailModal: React.FC<MyProps> = props => {
   const {datas, show, onClosePress} = props;
-
+  const insets = useSafeAreaInsets();
   return (
     <BottomSheet show={show} onClose={onClosePress}>
       <View style={styles.view}>
@@ -31,7 +31,7 @@ const ETFDetailModal: React.FC<MyProps> = props => {
               </View>
             ))}
         </View>
-        <View style={{height: useSafeAreaInsets().bottom}} />
+        <View style={{height: insets.bottom}} />
       </View>
     </BottomSheet>
   );

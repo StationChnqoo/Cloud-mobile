@@ -18,16 +18,16 @@ interface MyProps {
 }
 
 const IMAGE_SIZE = 16;
-
 const ToolBar: React.FC<MyProps> = props => {
   const {title, onBackPress, avoidStatusBar} = props;
+  const insets = useSafeAreaInsets();
   return (
     <View style={{backgroundColor: '#fff'}}>
       {avoidStatusBar ? null : (
         <View
           style={{
             backgroundColor: '#fff',
-            height: Platform.select({ios: useSafeAreaInsets().top, android: 0}),
+            height: Platform.select({ios: insets.top, android: 0}),
           }}
         />
       )}

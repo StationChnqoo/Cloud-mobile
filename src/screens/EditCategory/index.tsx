@@ -30,7 +30,7 @@ const EditCategory: React.FC<MyProps> = props => {
   const {navigation, route} = props;
   const {theme, setCategory} = useCaches();
   const [form, setForm] = useState<Category>(CategorySchema.parse({}));
-
+  const insets = useSafeAreaInsets();
   const updateForm = <K extends keyof Category>(key: K, value: Category[K]) => {
     let _form = produce(form, draft => {
       draft[key] = value;
@@ -149,9 +149,7 @@ const EditCategory: React.FC<MyProps> = props => {
           onPress={onSave}
         />
       </Flex>
-      <View
-        style={{height: useSafeAreaInsets().bottom, backgroundColor: 'white'}}
-      />
+      <View style={{height: insets.bottom, backgroundColor: 'white'}} />
     </View>
   );
 };

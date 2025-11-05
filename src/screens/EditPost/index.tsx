@@ -43,7 +43,7 @@ const EditPost: React.FC<MyProps> = props => {
   const [form, setForm] = useState<Post>(PostSchema.parse({}));
   const focused = useIsFocused();
   const [isOpenInputer, setIsOpenInputer] = useState(false);
-
+  const insets = useSafeAreaInsets();
   const updateForm = <K extends keyof Post>(key: K, value: Post[K]) => {
     let _form = produce(form, draft => {
       draft[key] = value;
@@ -253,9 +253,7 @@ const EditPost: React.FC<MyProps> = props => {
         }}
         onConfirm={onTagsAppend}
       />
-      <View
-        style={{height: useSafeAreaInsets().bottom, backgroundColor: 'white'}}
-      />
+      <View style={{height: insets.bottom, backgroundColor: 'white'}} />
     </View>
   );
 };
