@@ -7,11 +7,11 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Linking, Platform, StyleSheet, Text, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
-import Spinner from 'react-native-loading-spinner-overlay';
 import Flex from '../Flex';
 import InputDialog from '../InputDialog';
 import MoreButton from '../MoreButton';
 import PicGoFile from '../PicGoFile';
+import Spinner from '../Spinner';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -170,11 +170,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
         onShow={() => {}}
         onConfirm={doEdit}
       />
-      <Spinner
-        visible={uploading}
-        textContent={`正在上传${progress}%`}
-        textStyle={{color: '#fff', fontSize: 14}}
-      />
+      <Spinner visible={uploading} text={`正在上传${progress}% ...`} />
     </View>
   );
 };

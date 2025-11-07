@@ -4,6 +4,7 @@ import {AppState, Platform} from 'react-native';
 import {
   PERMISSIONS,
   PermissionStatus,
+  check,
   checkMultiple,
   request,
   requestMultiple,
@@ -15,13 +16,16 @@ export const usePhotoPermission = () => {
   let needCheckedPermissions = [
     PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
   ] as any[];
-  if (Platform.Version == 33) {
-    needCheckedPermissions.push(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES);
-  } else if ((Platform.Version as number) >= 34) {
+  if ((Platform.Version as number) >= 33) {
     needCheckedPermissions.push(
+      PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
       PERMISSIONS.ANDROID.READ_MEDIA_VISUAL_USER_SELECTED,
     );
   }
+  console.log('Permissions: ', {
+    needCheckedPermissions,
+    version: Platform.Version,
+  });
 
   const setMultipleStatus = (maps: any) => {
     // console.log('setMultipleStatus: ', maps);
@@ -38,7 +42,7 @@ export const usePhotoPermission = () => {
       let maps = await checkMultiple(needCheckedPermissions);
       setStatus(setMultipleStatus(maps));
     } else if (Platform.OS == 'ios') {
-      setStatus(await request(PERMISSIONS.IOS.PHOTO_LIBRARY));
+      setStatus(await check(PERMISSIONS.IOS.PHOTO_LIBRARY));
     }
   };
 
