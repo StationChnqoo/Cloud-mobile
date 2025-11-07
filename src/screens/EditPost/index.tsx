@@ -122,7 +122,7 @@ const EditPost: React.FC<MyProps> = props => {
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <ToolBar
-        title={`${route.params?.id ? '编辑' : '新增'}记事本`}
+        title={`${route.params?.id ? '编辑' : '新增'}笔记`}
         onBackPress={() => {
           navigation.goBack();
         }}

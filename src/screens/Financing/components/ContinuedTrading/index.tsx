@@ -18,6 +18,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn'; // 如果需要中文
 import {renderUpOrDown} from '@src/constants/u';
 import {RealTimePrice} from '@src/constants/t';
+import { useIsFocused } from '@react-navigation/native';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
@@ -32,6 +33,7 @@ const ContinuedTrading = (props: MyProps) => {
   const {onPress} = props;
   const {theme} = useCaches();
   const [tabIndex, setTabIndex] = useState(0);
+  const focused = useIsFocused();
   const tabs = [
     {label: '黄金', value: 'hj'},
     {label: '债券', value: 'zq'},
@@ -81,6 +83,7 @@ const ContinuedTrading = (props: MyProps) => {
     queries: indexes[tabs[tabIndex].value].map(it => ({
       queryKey: ['indexesQuery', tabIndex, it.value],
       refetchInterval: 10000,
+      enabled: focused,
       queryFn: () => new DfcfService().selectRealtimePrice(it.value),
     })),
   });
