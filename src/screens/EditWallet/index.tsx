@@ -28,6 +28,7 @@ import DatePicker from '@src/components/DatePicker';
 import {toast} from '@src/constants/u';
 import {useMutation} from '@tanstack/react-query';
 import {calculateWalletFormSum, WalletMaps} from '@src/constants/c';
+import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
 
 dayjs.extend(isoWeek);
 

@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
+import {PicGoSrc} from '@src/constants/t';
+import {toast} from '@src/constants/u';
+import {usePhotoPermission} from '@src/hooks/usePhotoPermission';
+import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
+import {produce} from 'immer';
+import React, {useEffect, useState} from 'react';
 import {Alert, Linking, Platform, StyleSheet, Text, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
-import {PicGoSrc} from '@src/constants/t';
-import {usePhotoPermission} from '@src/hooks/usePhotoPermission';
-import SdkService from '@src/services/SdkService';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Flex from '../Flex';
+import InputDialog from '../InputDialog';
 import MoreButton from '../MoreButton';
 import PicGoFile from '../PicGoFile';
-import {produce} from 'immer';
-import InputDialog from '../InputDialog';
-import { toast } from '@src/constants/u';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -18,7 +19,6 @@ interface FileUploaderProps {
 }
 
 const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
-  const [loading, setLoading] = useState(false);
   const [srcIndex, setSrcIndex] = useState(0);
   const {status: photoPermission, requestPermission} = usePhotoPermission();
   const [isOpenPreviewer, setIsOpenPreviewer] = useState(false);
@@ -32,6 +32,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     ]);
   };
 
+  const {uploading, upload, progress, picGo} = usePicGoUpload();
   const onMoveUp = (index: number) => {
     if (index > 0) {
       setImages(
@@ -52,9 +53,17 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     }
   };
 
-  const onImageUploaded = (image: PicGoSrc) => {
-    setImages([...images, image]);
-  };
+  useEffect(() => {
+    // const {id_encoded, size, url, title, date} = result.data;
+    // onImageUploaded({id: id_encoded, size, url, title, date});
+    if (picGo?.image) {
+      let {id_encoded, size, url, title, date} = picGo.image;
+      let image = {id: id_encoded, size, url, title, date};
+      setImages([...images, image]);
+      console.log('PicGo: ', picGo);
+    } else {
+    }
+  }, [picGo]);
 
   const onImageDelete = (id: string) => {
     Alert.alert('提示', '删除后不可恢复，请谨慎操作', [
@@ -82,16 +91,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
           includeBase64: true,
           mediaType: 'photo',
         });
-
         if (!assest.didCancel && assest.assets?.length) {
-          setLoading(true);
-          let result = await new SdkService().upload2PicGo(assest.assets[0]);
-          setLoading(false);
-
-          if (result.success) {
-            const {id_encoded, size, url, title, date} = result.data;
-            onImageUploaded({id: id_encoded, size, url, title, date});
-          }
+          upload(assest.assets[0]);
         }
         break;
       }
@@ -126,7 +127,11 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     <View>
       <Flex horizontal justify="space-between">
         <Text style={styles.label}>附件</Text>
-        <MoreButton onPress={onPhotoSelect} disabled={loading} label="请选择" />
+        <MoreButton
+          onPress={onPhotoSelect}
+          disabled={uploading}
+          label="请选择"
+        />
       </Flex>
       {images.map((it, i) => (
         <View key={it.id} style={{marginTop: 10}}>
@@ -164,6 +169,11 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
         }}
         onShow={() => {}}
         onConfirm={doEdit}
+      />
+      <Spinner
+        visible={uploading}
+        textContent={`正在上传${progress}%`}
+        textStyle={{color: '#fff', fontSize: 14}}
       />
     </View>
   );

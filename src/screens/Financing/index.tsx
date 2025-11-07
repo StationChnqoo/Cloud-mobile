@@ -107,7 +107,6 @@ const Financing: React.FC<MyProps> = props => {
         contentInsetAdjustmentBehavior="automatic"
         bounces={false}
         removeClippedSubviews={false}>
-
         <View style={{}}>
           {/* <View style={{height: 4}} /> */}
           {[

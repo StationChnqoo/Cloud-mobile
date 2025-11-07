@@ -17,11 +17,12 @@ interface MyProps {
   navigation: RootStacksProp;
 }
 
-const Data: React.FC<MyProps> = ({navigation}) => {
+const Data: React.FC<MyProps> = props => {
   const {token, setToken, theme} = useCaches();
   const [tabIndex, setTabIndex] = useState(0);
   const [newPopover, setNewPopover] = useState(false);
   const insets = useSafeAreaInsets();
+  const {navigation} = props;
   useFocusEffect(useCallback(() => {}, [token]));
 
   useEffect(() => {

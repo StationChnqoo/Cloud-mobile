@@ -21,14 +21,6 @@ const Home: React.FC<MyProps> = ({navigation}) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [newPopover, setNewPopover] = useState(false);
   const insets = useSafeAreaInsets();
-  useFocusEffect(
-    useCallback(() => {
-      if (token) {
-      } else {
-        navigation.navigate('Login');
-      }
-    }, [token]),
-  );
 
   const onWalletPress = (item: TWallet) => {
     navigation.navigate('EditWallet', {id: item.id});
