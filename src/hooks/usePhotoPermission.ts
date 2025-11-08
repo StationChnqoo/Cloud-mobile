@@ -17,8 +17,10 @@ export const usePhotoPermission = () => {
     PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
   ] as any[];
   if ((Platform.Version as number) >= 33) {
+    needCheckedPermissions.push(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES);
+  }
+  if ((Platform.Version as number) >= 34) {
     needCheckedPermissions.push(
-      PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
       PERMISSIONS.ANDROID.READ_MEDIA_VISUAL_USER_SELECTED,
     );
   }

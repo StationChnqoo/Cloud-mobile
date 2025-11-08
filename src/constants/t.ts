@@ -182,6 +182,18 @@ export const StandardStockSchema = z.object({
   updateTime: z.number().default(new Date().getTime()),
 });
 
+export const UserSchema = z.object({
+  id: z.string().optional().default(''),
+  name: z.string().optional().default(''),
+  password: z.string().optional().default(''),
+  mobile: z.string().optional().default(''),
+  email: z.string().optional().default(''),
+  avatar: z.string().optional().default(''),
+  updateAt: z.string().optional().default(''),
+  createAt: z.string().optional().default('')
+});
+
+export type User = z.infer<typeof UserSchema>;
 export type StandardStock = z.infer<typeof StandardStockSchema>;
 export type Pailie3And5 = z.infer<typeof Pailie3And5Schema>;
 export type FootballMatch = z.infer<typeof FootballMatchSchema>;
