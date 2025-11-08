@@ -21,6 +21,7 @@ import ChooseCategory from './ChooseCategory';
 import EditCategory from './EditCategory';
 import Webviewer from './Webviewer';
 import SectorStocks from './SectorStocks';
+import ChooseGlobal from './ChooseGlobal';
 
 export type RootStacksParams = {
   BottomTabs: undefined;
@@ -36,6 +37,7 @@ export type RootStacksParams = {
   EditCategory: {id: string};
   Webviewer: {title: string; url: string; injectedJavaScript?: string};
   SectorStocks: {code: string; name: string};
+  ChooseGlobal: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStacksParams>();
@@ -68,6 +70,7 @@ export default function Screens() {
         <RootStack.Screen name="EditCategory" component={EditCategory} />
         <RootStack.Screen name="Webviewer" component={Webviewer} />
         <RootStack.Screen name="SectorStocks" component={SectorStocks} />
+        <RootStack.Screen name="ChooseGlobal" component={ChooseGlobal} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

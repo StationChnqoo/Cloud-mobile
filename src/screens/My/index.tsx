@@ -69,7 +69,7 @@ const My: React.FC<MyProps> = props => {
             />,
             <Global
               onPress={() => {
-                // navigation.navigate('ChooseGlobal');
+                navigation.navigate('ChooseGlobal');
               }}
             />,
             // <Color />,

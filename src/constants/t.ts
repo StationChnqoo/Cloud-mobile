@@ -13,6 +13,17 @@ export interface TWallet {
   updateAt: string;
 }
 
+export interface OtherCountryStock {
+  f1: number;
+  f2: number; // 净值
+  f3: number; // 涨跌幅
+  f4: number;
+  f12: string; // 英文
+  f13: number;
+  f14: string; // 中文
+  f152: number;
+}
+
 export interface RealTimePrice {
   /** 股票价格 * 1000 */
   f43?: number;
