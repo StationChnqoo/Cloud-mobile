@@ -25,7 +25,6 @@ const Global: React.FC<MyProps> = props => {
   return (
     <Card title={'自选指数'}>
       <View style={{height: 6}} />
-
       <TouchableOpacity style={{}} onPress={onPress} activeOpacity={0.8}>
         <Flex horizontal justify="space-between">
           <Text

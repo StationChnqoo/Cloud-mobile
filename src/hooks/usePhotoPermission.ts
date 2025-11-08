@@ -12,18 +12,15 @@ import {
 
 export const usePhotoPermission = () => {
   const [status, setStatus] = useState<PermissionStatus>('unavailable');
+  let map = [
+    {min: 1, value: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE},
+    {min: 33, value: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES}, // Android13
+    {min: 34, value: PERMISSIONS.ANDROID.READ_MEDIA_VISUAL_USER_SELECTED}, // Android14
+  ];
+  let needCheckedPermissions = map
+    .filter(it => (Platform.Version as number) >= it.min)
+    .map(it => it.value);
 
-  let needCheckedPermissions = [
-    PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-  ] as any[];
-  if ((Platform.Version as number) >= 33) {
-    needCheckedPermissions.push(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES);
-  }
-  if ((Platform.Version as number) >= 34) {
-    needCheckedPermissions.push(
-      PERMISSIONS.ANDROID.READ_MEDIA_VISUAL_USER_SELECTED,
-    );
-  }
   console.log('Permissions: ', {
     needCheckedPermissions,
     version: Platform.Version,

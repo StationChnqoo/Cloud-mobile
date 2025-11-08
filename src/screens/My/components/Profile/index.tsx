@@ -67,9 +67,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   button: {
-    borderRadius: 5,
-    height: 28,
-    paddingHorizontal: 10,
+    borderRadius: 14,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
   },
   avatar: {
     height: 58,

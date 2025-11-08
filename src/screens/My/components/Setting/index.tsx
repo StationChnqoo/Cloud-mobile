@@ -28,6 +28,7 @@ const Setting: React.FC<MyProps> = props => {
   };
 
   const configs = (Config as any).getConstants();
+  
   return (
     <Card title={'设置'}>
       <View style={{height: 10}} />
@@ -82,10 +83,10 @@ const Setting: React.FC<MyProps> = props => {
           horizontal
           justify="space-between"
           style={{marginVertical: 4}}>
-          <Text style={{fontSize: 14, color: '#333'}}>{it}</Text>
+          <Text style={{fontSize: 12, color: '#000',}}>{it}</Text>
           <View style={{width: 12}} />
           <Text
-            style={{fontSize: 14, color: '#333', flex: 1, textAlign: 'right'}}
+            style={{fontSize: 12, color: '#666', flex: 1, textAlign: 'right'}}
             numberOfLines={2}>
             {String(Config[it]) || 'N/A'}
           </Text>

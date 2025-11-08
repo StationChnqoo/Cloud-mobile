@@ -64,7 +64,7 @@ const My: React.FC<MyProps> = props => {
             <Profile onLoginPress={onLoginPress} />,
             <Stocks
               onNewStockPress={() => {
-                // navigation.navigate('ChooseStock');
+                navigation.navigate('ChooseStock');
               }}
             />,
             <Global

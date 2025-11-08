@@ -12,12 +12,12 @@ import {RouteProp} from '@react-navigation/native';
 import Button from '@src/components/Button';
 import ToolBar from '@src/components/ToolBar';
 
-import x from '@src/constants/x';
 import {useQuery} from '@tanstack/react-query';
-import {useCaches} from '@src/constants/store';
-import {RootStacksParams, RootStacksProp} from '../Screens';
-import {DfcfService} from '@src/service';
+import {useCaches} from '@src/stores';
+import {RootStacksParams, RootStacksProp} from '..';
 import {RealTimePrice, SearchStockResult} from '@src/constants/t';
+import DfcfService from '@src/services/DfcfService';
+import Flex from '@src/components/Flex';
 
 interface MyProps {
   navigation?: RootStacksProp;
@@ -28,7 +28,7 @@ const ChooseStock: React.FC<MyProps> = props => {
   const {navigation, route} = props;
   const {theme, cared, setCared} = useCaches();
   const [id, setId] = useState(route.params?.id || '');
-  
+
   const [selectedItem, setSelectedItem] = useState<SearchStockResult>(
     Object.assign({}),
   );
@@ -72,7 +72,7 @@ const ChooseStock: React.FC<MyProps> = props => {
       />
       <View style={{height: 12}} />
       <View style={{paddingHorizontal: 12}}>
-        <View style={[x.Styles.rowCenter()]}>
+        <Flex horizontal>
           <TextInput
             style={styles.input}
             placeholder={'请输入6位股票代码'}
@@ -95,7 +95,7 @@ const ChooseStock: React.FC<MyProps> = props => {
             }}
             textStyle={{color: '#fff'}}
           />
-        </View>
+        </Flex>
       </View>
       <View style={{height: 12}} />
       <ScrollView
@@ -113,30 +113,23 @@ const ChooseStock: React.FC<MyProps> = props => {
                     : '#ccc',
               },
             ]}
-            activeOpacity={x.Touchable.OPACITY}
+            activeOpacity={0.8}
             onPress={() => {
               setSelectedItem(it);
             }}>
-            <View style={[x.Styles.rowCenter('space-between'), {flex: 1}]}>
-              <View style={[x.Styles.rowCenter('flex-start'), {flex: 1}]}>
+            <Flex horizontal justify="space-between">
+              <Flex style={{flex: 1}} horizontal justify="flex-start">
                 <Text style={{fontSize: 14, color: '#333'}}>{it.code}</Text>
                 <Text style={{color: '#999'}}> | </Text>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: '#333',
-                    fontWeight: '500',
-                    flex: 1,
-                  }}
-                  numberOfLines={1}>
+                <Text style={styles.title} numberOfLines={1}>
                   {it.shortName}
                 </Text>
-              </View>
+              </Flex>
               <View style={{width: 12}} />
               <Text style={{color: '#666', fontSize: 14}}>
                 {it.securityTypeName}
               </Text>
-            </View>
+            </Flex>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -153,7 +146,7 @@ const styles = StyleSheet.create({
     // margin: 12,
     fontSize: 16,
     paddingVertical: 0,
-    height: x.scale(36),
+    height: 36,
     paddingHorizontal: 12,
     flex: 1,
   },
@@ -164,9 +157,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // marginTop: 6,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#eee',
     marginBottom: 6,
     marginHorizontal: 12,
+  },
+  title: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+    flex: 1,
   },
 });
 

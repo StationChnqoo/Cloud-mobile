@@ -13,6 +13,20 @@ export interface TWallet {
   updateAt: string;
 }
 
+export interface SearchStockResult {
+  code: string;
+  innerCode: string;
+  shortName: string;
+  market: number; // ?.code
+  pinyin: string;
+  securityType: number[];
+  securityTypeName: string; // 什么市场 沪A/深A
+  smallType: number;
+  status: number;
+  flag: number;
+  extSmallType: number;
+}
+
 export interface OtherCountryStock {
   f1: number;
   f2: number; // 净值
