@@ -65,6 +65,10 @@ export default class DfcfService extends BaseService {
     this.instance.defaults.headers[
       'referer'
     ] = `https://so.eastmoney.com/web/s?keyword=${code}`;
+    // 接口太狗了 还玩儿上Cookie了 ...
+    this.instance.defaults.headers[
+      'Cookie'
+    ] = `qgqp_b_id=; st_nvi=; st_si=; st_pvi=; st_sp=; st_inirUrl=; st_asi=delete; st_sn=2; st_psi=; nid=${Math.random()}; nid_create_time=; gvi=; gvi_create_time=`;
     let result = await this.instance.get(`/api/qt/stock/get`, {
       params: {
         cb: '',
