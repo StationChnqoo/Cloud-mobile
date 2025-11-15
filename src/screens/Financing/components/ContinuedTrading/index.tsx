@@ -1,8 +1,15 @@
-import {useCaches} from '@src/stores';
+import {useIsFocused} from '@react-navigation/native';
+import Flex from '@src/components/Flex';
+import Tabs from '@src/components/Tabs';
+import {RealTimePrice} from '@src/constants/t';
+import {renderUpOrDown} from '@src/constants/u';
 import DfcfService from '@src/services/DfcfService';
+import {useCaches} from '@src/stores';
 import {useQueries} from '@tanstack/react-query';
-import {useInterval} from 'ahooks';
-import {useEffect, useState} from 'react';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn'; // 如果需要中文
+import relativeTime from 'dayjs/plugin/relativeTime';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -11,14 +18,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Tabs from '@src/components/Tabs';
-import Flex from '@src/components/Flex';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/zh-cn'; // 如果需要中文
-import {renderUpOrDown} from '@src/constants/u';
-import {RealTimePrice} from '@src/constants/t';
-import { useIsFocused } from '@react-navigation/native';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
@@ -89,7 +88,7 @@ const ContinuedTrading = (props: MyProps) => {
   });
 
   const datas = indexesQuery
-    .filter(it => it.isFetched)
+    .filter(it => it.status == 'success' && it?.data)
     // @ts-ignore
     .map(it => it.data?.data);
 
@@ -99,7 +98,10 @@ const ContinuedTrading = (props: MyProps) => {
         <ActivityIndicator color={theme} />
       ) : (
         <View>
-          <Flex horizontal justify="space-between" style={{paddingHorizontal: 15}}>
+          <Flex
+            horizontal
+            justify="space-between"
+            style={{paddingHorizontal: 15}}>
             <Tabs tabs={tabs} index={tabIndex} onPress={setTabIndex} />
             <View />
           </Flex>
