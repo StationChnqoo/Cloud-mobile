@@ -6,7 +6,9 @@ export class Envs {
     this.config = (Config as any)?.getConstants();
   }
 
-  get(string: 'APP_NAME' | 'APP_PACKAGE_NAME' | 'APP_MY_SERVICE') {
+  get(
+    string: 'APP_NAME' | 'APP_PACKAGE_NAME' | 'APP_MY_SERVICE' | 'APP_PICGO',
+  ) {
     return this.config?.[string] || '';
   }
   all() {
