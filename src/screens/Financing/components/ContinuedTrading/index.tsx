@@ -103,7 +103,6 @@ const ContinuedTrading = (props: MyProps) => {
             justify="space-between"
             style={{paddingHorizontal: 15}}>
             <Tabs tabs={tabs} index={tabIndex} onPress={setTabIndex} />
-            <View />
           </Flex>
           {datas.map((data, index) => (
             <TouchableOpacity
@@ -178,7 +177,6 @@ const styles = StyleSheet.create({
   views: {
     // borderRadius: 12,
     backgroundColor: 'white',
-    paddingVertical: 6,
     // marginHorizontal: '3%',
   },
   view: {

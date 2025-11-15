@@ -28,8 +28,8 @@ const Data: React.FC<MyProps> = props => {
   useEffect(() => {
     if (token) {
     } else {
-      Router.navigate('Login');
       toast('请登录后使用');
+      Router.navigate('Login');
     }
   }, [token]);
 
