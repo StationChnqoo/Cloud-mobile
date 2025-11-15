@@ -1,8 +1,8 @@
 // import log from '@src/constants/log4j';
+import {Envs} from '@src/constants/env';
 import {toast} from '@src/constants/u';
 import {useCaches} from '@src/stores';
 import axios, {AxiosError, AxiosInstance} from 'axios';
-import Config from 'react-native-config';
 
 // import {toast} from 'sonner-native';
 
@@ -14,8 +14,8 @@ export default class BaseService {
     this.instance = axios.create({
       // baseURL: Config.SERVER,
       baseURL: __DEV__
-        ? 'http://192.168.0.103:40091'
-        : cache.config.SERVICE || Config.SERVICE,
+        ? 'http://192.168.0.108:40092'
+        : new Envs().get('APP_MY_SERVICE'),
       timeout: 10000,
       headers: {
         token: useCaches.getState().token || '',

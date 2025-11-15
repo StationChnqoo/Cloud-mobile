@@ -22,8 +22,6 @@ interface States {
   setUser: (u: User) => void;
   token: string;
   setToken: (t: string) => void;
-  config: Record<string, string | undefined>;
-  setConfig: (c: Record<string, string | undefined>) => void;
   theme: string;
   setTheme: (t: string) => void;
   category: Category;
@@ -39,7 +37,6 @@ interface States {
 const initialState = {
   user: UserSchema.parse({}),
   token: '',
-  config: {},
   theme: '#987123',
   category: CategorySchema.parse({}),
   cared:
@@ -57,7 +54,6 @@ export const useCaches = create<States>()(
       set => ({
         ...initialState,
         setToken: token => set({token}),
-        setConfig: config => set({config}),
         setTheme: theme => set({theme}),
         setCategory: category => set({category}),
         setCared: cared => set({cared}),

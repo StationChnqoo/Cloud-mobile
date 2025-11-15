@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import Flex from '@src/components/Flex';
+import {Envs} from '@src/constants/env';
 import {RootStacksProp} from '@src/screens';
 import {useCaches} from '@src/stores';
-import {produce} from 'immer';
 import Config from 'react-native-config';
 import Card from '../Card';
 
@@ -27,8 +27,6 @@ const Setting: React.FC<MyProps> = props => {
     ]);
   };
 
-  const configs = (Config as any).getConstants();
-  
   return (
     <Card title={'设置'}>
       <View style={{height: 10}} />
@@ -77,13 +75,13 @@ const Setting: React.FC<MyProps> = props => {
         <Text style={{fontSize: 14, color: '#333'}}>系统变量</Text>
       </Flex>
       <View style={{height: 5}} />
-      {Object.keys(configs).map((it, i) => (
+      {Object.keys(new Envs().all()).map((it, i) => (
         <Flex
           key={i}
           horizontal
           justify="space-between"
           style={{marginVertical: 4}}>
-          <Text style={{fontSize: 12, color: '#000',}}>{it}</Text>
+          <Text style={{fontSize: 12, color: '#000'}}>{it}</Text>
           <View style={{width: 12}} />
           <Text
             style={{fontSize: 12, color: '#666', flex: 1, textAlign: 'right'}}
