@@ -161,7 +161,7 @@ const EditWallet: React.FC<MyProps> = props => {
           navigation.goBack();
         }}
       />
-      <View style={{height: 1, backgroundColor: '#ccc'}} />
+      <View style={{height: 1, backgroundColor: '#eee'}} />
       <ScrollView
         bounces={false}
         style={{flex: 1}}

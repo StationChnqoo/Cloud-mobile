@@ -88,7 +88,7 @@ const PicGoSrcSchema = z.object({
   id: z.string(),
   date: z.string(),
   size: z.number(),
-  title: z.string(),
+  name: z.string(),
   url: z.string(),
 });
 

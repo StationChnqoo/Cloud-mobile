@@ -57,8 +57,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     // const {id_encoded, size, url, title, date} = result.data;
     // onImageUploaded({id: id_encoded, size, url, title, date});
     if (picGo?.image) {
-      let {id_encoded, size, url, title, date} = picGo.image;
-      let image = {id: id_encoded, size, url, title, date};
+      let {id_encoded, size, url, name, date} = picGo.image;
+      let image = {id: id_encoded, size, url, name, date};
       setImages([...images, image]);
       console.log('PicGo: ', picGo);
     } else {
@@ -117,7 +117,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
   const doEdit = (s: string) => {
     setImages(
       produce(images, draft => {
-        draft[editIndex].title = s;
+        draft[editIndex].name = s;
       }),
     );
     setIsOpenInputer(false);
