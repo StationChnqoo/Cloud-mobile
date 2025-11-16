@@ -42,7 +42,7 @@ const PicGoFile: React.FC<MyProps> = props => {
           justifyContent: 'space-around',
         }}>
         <Text style={{fontSize: 14, color: '#333'}} numberOfLines={1}>
-          {src.title}
+          {src.name}
         </Text>
         <Flex horizontal justify={'space-between'}>
           <Text style={{fontSize: 12, color: '#666'}}>
