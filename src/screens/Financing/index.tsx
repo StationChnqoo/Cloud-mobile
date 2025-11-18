@@ -14,7 +14,8 @@ import ETF from './components/ETF';
 import Global from './components/Global';
 import News from './components/News';
 import Ranks from './components/Ranks';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {links} from '@src/constants/u';
 
 interface MyProps {
   navigation?: RootStacksProp;
@@ -96,13 +97,13 @@ const Financing: React.FC<MyProps> = props => {
   const toStockDetail = (code: string) => {
     navigation.navigate('Webviewer', {
       title: code,
-      url: `https://quote.eastmoney.com/sz${code}.html`,
+      url: links.stockDetail(code),
     });
   };
 
   return (
     <View style={{flex: 1, backgroundColor: '#f0f0f0', position: 'relative'}}>
-      <View style={{height: insets.top, backgroundColor: '#fff'}} /> 
+      <View style={{height: insets.top, backgroundColor: '#fff'}} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         bounces={false}

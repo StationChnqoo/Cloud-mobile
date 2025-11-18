@@ -28,3 +28,19 @@ export const hex2Rgba = (hex: string, alpha: number) => {
     16,
   )}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`;
 };
+
+export const links = {
+  previewPdf: (url: string) =>
+    `https://mozilla.github.io/pdf.js/web/viewer.html?file=${url}`,
+  stockDetail: (code: string) =>
+    `https://wap.eastmoney.com/quote/stock/${code}.html`,
+  fundDetail: (code: string) =>
+    `https://h5.1234567.com.cn/app/fund-details/?fCode=${code}`,
+  /**
+   * 走势曲线
+   * @param code 0.799050
+   * @returns
+   */
+  previewStockChart: (code: string) =>
+    `https://webquotepic.eastmoney.com/GetPic.aspx?imageType=r&type=&nid=${code}`,
+};

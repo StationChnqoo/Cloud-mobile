@@ -37,6 +37,7 @@ const ContinuedTrading = (props: MyProps) => {
     {label: '黄金', value: 'hj'},
     {label: '债券', value: 'zq'},
     {label: '汇率', value: 'hl'},
+    {label: '原油', value: 'yy'},
   ];
 
   const indexes = {
@@ -76,6 +77,18 @@ const ContinuedTrading = (props: MyProps) => {
         value: '120.JPYCNYC',
       },
     ],
+    yy: [
+      {
+        icon: require('@src/assets/images/other/oil_station.png'),
+        label: '布伦特原油当月连续',
+        value: '112.B00Y',
+      },
+      {
+        icon: require('@src/assets/images/other/oil_station.png'),
+        label: '美国原油ETF',
+        value: '107.USO',
+      },
+    ],
   };
 
   const indexesQuery = useQueries({
@@ -94,17 +107,17 @@ const ContinuedTrading = (props: MyProps) => {
 
   return (
     <View style={styles.views}>
-      {datas.length == 0 ? (
-        <ActivityIndicator color={theme} />
-      ) : (
-        <View>
-          <Flex
-            horizontal
-            justify="space-between"
-            style={{paddingHorizontal: 15}}>
-            <Tabs tabs={tabs} index={tabIndex} onPress={setTabIndex} />
-          </Flex>
-          {datas.map((data, index) => (
+      <View>
+        <Flex
+          horizontal
+          justify="space-between"
+          style={{paddingHorizontal: 15}}>
+          <Tabs tabs={tabs} index={tabIndex} onPress={setTabIndex} />
+        </Flex>
+        {datas.length == 0 ? (
+          <ActivityIndicator color={theme} />
+        ) : (
+          datas.map((data, index) => (
             <TouchableOpacity
               key={index}
               style={styles.view}
@@ -166,9 +179,9 @@ const ContinuedTrading = (props: MyProps) => {
                 </Flex>
               </Flex>
             </TouchableOpacity>
-          ))}
-        </View>
-      )}
+          ))
+        )}
+      </View>
     </View>
   );
 };
