@@ -25,6 +25,9 @@ const BottomSheet: React.FC<MyProps> = props => {
       animationIn={'fadeInUp'}
       animationOut={'fadeOutDown'}
       hideModalContentWhileAnimating={true}
+      animationInTiming={100}
+      animationOutTiming={100}
+      useNativeDriver={false}
       style={{
         marginBottom: insets.bottom + 12,
         padding: 0,

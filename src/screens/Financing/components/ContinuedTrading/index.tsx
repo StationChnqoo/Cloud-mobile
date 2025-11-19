@@ -88,6 +88,16 @@ const ContinuedTrading = (props: MyProps) => {
         label: '美国原油ETF',
         value: '107.USO',
       },
+      {
+        icon: require('@src/assets/images/other/oil_station.png'),
+        label: '标普油气开采指数ETF-SPDR',
+        value: '107.XOP',
+      },
+      {
+        icon: require('@src/assets/images/other/oil_station.png'),
+        label: '全球能源ETF-iShares',
+        value: '107.IXC',
+      },
     ],
   };
 
@@ -117,69 +127,71 @@ const ContinuedTrading = (props: MyProps) => {
         {datas.length == 0 ? (
           <ActivityIndicator color={theme} />
         ) : (
-          datas.map((data, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.view}
-              activeOpacity={0.8}
-              onPress={() => {
-                onPress(data);
-              }}>
-              <Flex horizontal justify="space-between">
-                <Flex horizontal style={{flex: 1, alignItems: 'center'}}>
-                  <Image
-                    source={indexes[tabs[tabIndex].value][index].icon}
-                    style={{
-                      height: 16,
-                      width: 16,
-                      tintColor: theme,
-                    }}
-                  />
-                  <View style={{width: 6}} />
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: '#333',
-                      flex: 1,
-                    }}
-                    numberOfLines={1}>
-                    {`${indexes[tabs[tabIndex].value][index].label} `}
-                  </Text>
+          datas
+            .sort((a, b) => b?.f170 - a?.f170)
+            .map((data, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.view}
+                activeOpacity={0.8}
+                onPress={() => {
+                  onPress(data);
+                }}>
+                <Flex horizontal justify="space-between">
+                  <Flex horizontal style={{flex: 1, alignItems: 'center'}}>
+                    <Image
+                      source={indexes[tabs[tabIndex].value][index].icon}
+                      style={{
+                        height: 16,
+                        width: 16,
+                        tintColor: theme,
+                      }}
+                    />
+                    <View style={{width: 6}} />
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: '#333',
+                        flex: 1,
+                      }}
+                      numberOfLines={1}>
+                      {`${indexes[tabs[tabIndex].value][index].label} `}
+                    </Text>
+                  </Flex>
+                  <Flex horizontal style={{alignItems: 'center'}}>
+                    <Text
+                      style={{
+                        color: renderUpOrDown(data?.f169).color,
+                        fontSize: 14,
+                      }}>
+                      {(index == datas.length - 1
+                        ? 100 / (data?.f60 / 10000)
+                        : data?.f60 / Math.pow(10, data.f59)
+                      ).toFixed(data.f59)}
+                    </Text>
+                    <Text style={{color: '#999', marginHorizontal: 2}}>
+                      {` | `}
+                    </Text>
+                    <Text
+                      style={{
+                        color: renderUpOrDown(data?.f170).color,
+                        fontSize: 14,
+                      }}>
+                      {(data?.f170 / 100).toFixed(2)}%
+                      {renderUpOrDown(data?.f170).label}
+                    </Text>
+                    <Text style={{color: '#999', marginHorizontal: 2}}>
+                      {` | `}
+                    </Text>
+                    <Text style={{fontSize: 12, color: '#999'}}>
+                      {dayjs(data?.f86 * 1000)
+                        .fromNow()
+                        .replace(' ', '')}
+                    </Text>
+                  </Flex>
                 </Flex>
-                <Flex horizontal style={{flex: 1, alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      color: renderUpOrDown(data?.f169).color,
-                      fontSize: 14,
-                    }}>
-                    {(index == datas.length - 1
-                      ? 100 / (data?.f60 / 10000)
-                      : data?.f60 / Math.pow(10, data.f59)
-                    ).toFixed(data.f59)}
-                  </Text>
-                  <Text style={{color: '#999', marginHorizontal: 2}}>
-                    {` | `}
-                  </Text>
-                  <Text
-                    style={{
-                      color: renderUpOrDown(data?.f170).color,
-                      fontSize: 14,
-                    }}>
-                    {(data?.f170 / 100).toFixed(2)}%
-                    {renderUpOrDown(data?.f170).label}
-                  </Text>
-                  <Text style={{color: '#999', marginHorizontal: 2}}>
-                    {` | `}
-                  </Text>
-                  <Text style={{fontSize: 12, color: '#999'}}>
-                    {dayjs(data?.f86 * 1000)
-                      .fromNow()
-                      .replace(' ', '')}
-                  </Text>
-                </Flex>
-              </Flex>
-            </TouchableOpacity>
-          ))
+              </TouchableOpacity>
+            ))
         )}
       </View>
     </View>
