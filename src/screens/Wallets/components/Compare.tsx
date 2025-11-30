@@ -10,8 +10,8 @@ interface MyProps {
 
 const Compare: React.FC<MyProps> = props => {
   const {datas} = props;
-  let first = datas?.[0] || ({} as TWallet);
-  let last = datas?.[datas.length - 1] || ({} as TWallet);
+  let last = datas?.[0] || ({} as TWallet);
+  let first = datas?.[datas.length - 1] || ({} as TWallet);
   let sh000001 = [first?.indexSh000001, last?.indexSh000001];
   let spx = [first?.indexSpx, last?.indexSpx];
   let sum = [calculateWalletFormSum(first), calculateWalletFormSum(last)];
