@@ -48,9 +48,9 @@ const Compare: React.FC<MyProps> = props => {
   };
   return datas.length >= 2 ? (
     <View style={styles.item}>
+      {renderItem('总资产', sum, 'k')}
       {renderItem('上证指数', sh000001)}
-      {renderItem('深证成指', spx)}
-      {renderItem('资产净值', sum, 'k')}
+      {renderItem('标普500指数', spx)}
     </View>
   ) : null;
 };

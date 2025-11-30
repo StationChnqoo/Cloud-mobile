@@ -1,6 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,26 +11,25 @@ import {
 } from 'react-native';
 
 import {RouteProp} from '@react-navigation/native';
-import isoWeek from 'dayjs/plugin/isoWeek';
-import InputDialog from '@src/components/InputDialog';
-import ToolBar from '@src/components/ToolBar';
-import {useCaches} from '@src/stores';
-import {produce} from 'immer';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {RootStacksParams, RootStacksProp} from '..';
-import _ from 'lodash';
-import dayjs from 'dayjs';
-import {TWallet} from '@src/constants/t';
-import Services from '@src/services';
-import Flex from '@src/components/Flex';
-import MoreButton from '@src/components/MoreButton';
-import DeleteableTags from '@src/components/DeleteableTags';
 import Button from '@src/components/Button';
 import DatePicker from '@src/components/DatePicker';
-import {toast} from '@src/constants/u';
-import {useMutation} from '@tanstack/react-query';
+import DeleteableTags from '@src/components/DeleteableTags';
+import Flex from '@src/components/Flex';
+import InputDialog from '@src/components/InputDialog';
+import MoreButton from '@src/components/MoreButton';
+import ToolBar from '@src/components/ToolBar';
 import {calculateWalletFormSum, WalletMaps} from '@src/constants/c';
-import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
+import {TWallet} from '@src/constants/t';
+import {toast} from '@src/constants/u';
+import Services from '@src/services';
+import {useCaches} from '@src/stores';
+import {useMutation} from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import isoWeek from 'dayjs/plugin/isoWeek';
+import {produce} from 'immer';
+import _ from 'lodash';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {RootStacksParams, RootStacksProp} from '..';
 
 dayjs.extend(isoWeek);
 
@@ -41,6 +42,7 @@ const EditWallet: React.FC<MyProps> = props => {
   const {navigation, route} = props;
   const {theme} = useCaches();
   const insets = useSafeAreaInsets();
+
   const [form, setForm] = useState<TWallet>({
     fund: [],
     carpool: [],
@@ -156,169 +158,174 @@ const EditWallet: React.FC<MyProps> = props => {
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
-      <ToolBar
-        title={`${route.params?.id ? '编辑' : '新增'}钱包`}
-        onBackPress={() => {
-          navigation.goBack();
-        }}
-      />
-      <View style={{height: 1, backgroundColor: '#eee'}} />
-      <ScrollView
-        bounces={false}
-        style={{flex: 1}}
-        removeClippedSubviews={false}>
-        <View style={{padding: 15}}>
-          {Object.keys(WalletMaps).map((it, i) => (
-            <View key={i}>
-              {Array.isArray(form[it]) ? (
-                <View>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.select({ios: 'padding', android: null})}
+      keyboardVerticalOffset={100}>
+      <View style={{flex: 1, backgroundColor: '#fff'}}>
+        <ToolBar
+          title={`${route.params?.id ? '编辑' : '新增'}钱包`}
+          onBackPress={() => {
+            navigation.goBack();
+          }}
+        />
+        <View style={{height: 1, backgroundColor: '#eee'}} />
+        <ScrollView>
+          <View style={{padding: 15}}>
+            {Object.keys(WalletMaps).map((it, i) => (
+              <View key={i}>
+                {Array.isArray(form[it]) ? (
+                  <View>
+                    <Flex horizontal justify="space-between">
+                      <Text style={styles.label}>{WalletMaps?.[it]}</Text>
+                      <MoreButton
+                        onPress={() => {
+                          setInputerDialog(
+                            produce(inputerDialog, draft => {
+                              draft.name = it;
+                              draft.message = `请输入${WalletMaps[it]}`;
+                              draft.show = true;
+                            }),
+                          );
+                        }}
+                        label={
+                          form[it].length > 0
+                            ? `已填写${form[it].length}项`
+                            : '请填写'
+                        }
+                      />
+                    </Flex>
+                    {form[it].length > 0 && (
+                      <View style={{marginTop: 5}}>
+                        <DeleteableTags
+                          datas={form[it]}
+                          onDelete={index => {
+                            deleteTag(it, index);
+                          }}
+                        />
+                      </View>
+                    )}
+                  </View>
+                ) : (
                   <Flex horizontal justify="space-between">
-                    <Text style={styles.label}>{WalletMaps?.[it]}</Text>
-                    <MoreButton
-                      onPress={() => {
-                        setInputerDialog(
-                          produce(inputerDialog, draft => {
-                            draft.name = it;
-                            draft.message = `请输入${WalletMaps[it]}`;
-                            draft.show = true;
-                          }),
-                        );
-                      }}
-                      label={
-                        form[it].length > 0
-                          ? `已填写${form[it].length}项`
-                          : '请填写'
-                      }
+                    <Text style={styles.label}>{WalletMaps[it]}</Text>
+                    <TextInput
+                      placeholder={WalletMaps[it] + ' / k'}
+                      style={{...styles.input, height: undefined}}
+                      textAlign={'right'}
+                      multiline
+                      value={`${form?.[it] || ''}`}
+                      // @ts-ignore
+                      onChangeText={t => updateForm(it, t)}
                     />
                   </Flex>
-                  {form[it].length > 0 && (
-                    <View style={{marginTop: 5}}>
-                      <DeleteableTags
-                        datas={form[it]}
-                        onDelete={index => {
-                          deleteTag(it, index);
-                        }}
-                      />
-                    </View>
-                  )}
-                </View>
-              ) : (
-                <Flex horizontal justify="space-between">
-                  <Text style={styles.label}>{WalletMaps[it]}</Text>
-                  <TextInput
-                    placeholder={WalletMaps[it] + ' / k'}
-                    style={{...styles.input, height: undefined}}
-                    textAlign={'right'}
-                    multiline
-                    value={`${form?.[it] || ''}`}
-                    // @ts-ignore
-                    onChangeText={t => updateForm(it, t)}
-                  />
-                </Flex>
-              )}
-              {loadLine()}
-            </View>
-          ))}
-          <Flex horizontal justify="space-between">
-            <Text style={styles.label}>上证指数</Text>
-            <TextInput
-              placeholder={'请输入'}
-              style={{...styles.input, height: undefined}}
-              textAlign={'right'}
-              multiline
-              value={`${form?.indexSh000001 || ''}`}
-              // @ts-ignore
-              onChangeText={t => updateForm('indexSh000001', t)}
-            />
-          </Flex>
-          {loadLine()}
-          <Flex horizontal justify="space-between">
-            <Text style={styles.label}>标普500</Text>
-            <TextInput
-              placeholder={'请输入'}
-              style={{...styles.input, height: undefined}}
-              textAlign={'right'}
-              multiline
-              value={`${form?.indexSpx || ''}`}
-              // @ts-ignore
-              onChangeText={t => updateForm('indexSpx', t)}
-            />
-          </Flex>
-          {loadLine()}
-          <Flex horizontal justify="space-between">
-            <Text style={styles.label}>创建时间</Text>
-            <Text style={{color: '#333', fontSize: 16}}>{form?.createAt}</Text>
-          </Flex>
-          {loadLine()}
-          <Flex horizontal justify="space-between">
-            <Text style={styles.label}>结算周期</Text>
-            <MoreButton
-              onPress={() => {
-                setTimePicker(true);
+                )}
+                {loadLine()}
+              </View>
+            ))}
+
+            <Flex horizontal justify="space-between">
+              <Text style={styles.label}>上证指数</Text>
+              <TextInput
+                placeholder={'请输入'}
+                style={{...styles.input, height: undefined}}
+                textAlign={'right'}
+                multiline
+                value={`${form?.indexSh000001 || ''}`}
+                // @ts-ignore
+                onChangeText={t => updateForm('indexSh000001', t)}
+              />
+            </Flex>
+            {loadLine()}
+            <Flex horizontal justify="space-between">
+              <Text style={styles.label}>标普500</Text>
+              <TextInput
+                placeholder={'请输入'}
+                style={{...styles.input, height: undefined}}
+                textAlign={'right'}
+                multiline
+                value={`${form?.indexSpx || ''}`}
+                // @ts-ignore
+                onChangeText={t => updateForm('indexSpx', t)}
+              />
+            </Flex>
+            {loadLine()}
+            <Flex horizontal justify="space-between">
+              <Text style={styles.label}>创建时间</Text>
+              <Text style={{color: '#333', fontSize: 16}}>
+                {form?.createAt}
+              </Text>
+            </Flex>
+            {loadLine()}
+            <Flex horizontal justify="space-between">
+              <Text style={styles.label}>结算周期</Text>
+              <MoreButton
+                onPress={() => {
+                  setTimePicker(true);
+                }}
+                label={
+                  form.settleOn
+                    ? dayjs(form.settleOn).format('YYYY年') +
+                      dayjs(form.settleOn).isoWeek() +
+                      '周'
+                    : '请选择'
+                }
+              />
+            </Flex>
+          </View>
+          <View style={{height: 100}} />
+        </ScrollView>
+        <View style={{height: 1, backgroundColor: '#ccc'}} />
+        <Flex
+          horizontal
+          justify={'space-between'}
+          style={{paddingHorizontal: 15, paddingVertical: 10}}>
+          <Text style={{color: '#ff5252', fontSize: 20}}>
+            {calculateSelectedSum}
+            <Text style={{fontSize: 14}}>{` k `}</Text>
+          </Text>
+          <Flex horizontal justify={'flex-start'}>
+            <Button
+              title={'删除'}
+              style={{
+                borderColor: theme,
+                ...styles.deleteButton,
               }}
-              label={
-                form.settleOn
-                  ? dayjs(form.settleOn).format('YYYY年') +
-                    dayjs(form.settleOn).isoWeek() +
-                    '周'
-                  : '请选择'
-              }
+              textStyle={{color: theme}}
+              onPress={onDelete}
+            />
+            <View style={{width: 16}} />
+            <Button
+              title={'保存'}
+              style={{
+                backgroundColor: theme,
+                ...styles.saveButton,
+              }}
+              disabled={!checkForm}
+              textStyle={{color: '#fff'}}
+              onPress={onSave}
             />
           </Flex>
-          {loadLine()}
-        </View>
-      </ScrollView>
-      <View style={{height: 1, backgroundColor: '#ccc'}} />
-      <Flex
-        horizontal
-        justify={'space-between'}
-        style={{paddingHorizontal: 15, paddingVertical: 10}}>
-        <Text style={{color: '#ff5252', fontSize: 20}}>
-          {calculateSelectedSum}
-          <Text style={{fontSize: 14}}>{` k `}</Text>
-        </Text>
-        <Flex horizontal justify={'flex-start'}>
-          <Button
-            title={'删除'}
-            style={{
-              borderColor: theme,
-              ...styles.deleteButton,
-            }}
-            textStyle={{color: theme}}
-            onPress={onDelete}
-          />
-          <View style={{width: 16}} />
-          <Button
-            title={'保存'}
-            style={{
-              backgroundColor: theme,
-              ...styles.saveButton,
-            }}
-            disabled={!checkForm}
-            textStyle={{color: '#fff'}}
-            onPress={onSave}
-          />
         </Flex>
-      </Flex>
-      <View style={{height: insets.bottom, backgroundColor: 'white'}} />
-      <InputDialog
-        onClose={closeInputerDialog}
-        {...inputerDialog}
-        onConfirm={onAppend}
-      />
-      <DatePicker
-        date={form?.settleOn}
-        show={timePicker}
-        onCancel={() => {
-          setTimePicker(false);
-        }}
-        onConfirm={s => {
-          updateForm('settleOn', s);
-          setTimePicker(false);
-        }}
-      />
-    </View>
+        <InputDialog
+          onClose={closeInputerDialog}
+          {...inputerDialog}
+          onConfirm={onAppend}
+        />
+        <DatePicker
+          date={form?.settleOn}
+          show={timePicker}
+          onCancel={() => {
+            setTimePicker(false);
+          }}
+          onConfirm={s => {
+            updateForm('settleOn', s);
+            setTimePicker(false);
+          }}
+        />
+        <View style={{height: insets.bottom, backgroundColor: 'white'}} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 

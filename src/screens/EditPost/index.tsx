@@ -120,7 +120,7 @@ const EditPost: React.FC<MyProps> = props => {
   }, [focused, category?.id]);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1}}>
       <ToolBar
         title={`${route.params?.id ? '编辑' : '新增'}笔记`}
         onBackPress={() => {
@@ -128,10 +128,7 @@ const EditPost: React.FC<MyProps> = props => {
         }}
       />
       <View style={{height: 1, backgroundColor: '#eee'}} />
-      <ScrollView
-        bounces={false}
-        style={{flex: 1}}
-        removeClippedSubviews={false}>
+      <ScrollView style={{flex: 1}}>
         <View style={{padding: 15}}>
           <Flex horizontal justify="space-between">
             <Text style={styles.label}>是否公开</Text>
@@ -154,7 +151,9 @@ const EditPost: React.FC<MyProps> = props => {
               <Text style={styles.label}>分类</Text>
               <MoreButton
                 onPress={() => {
-                  navigation.navigate('ChooseCategory', {id: form.categoryId});
+                  navigation.navigate('ChooseCategory', {
+                    id: form.categoryId,
+                  });
                 }}
                 label={
                   form.categoryId ? categoryQuery.data?.data?.title : '请选择'
@@ -217,7 +216,9 @@ const EditPost: React.FC<MyProps> = props => {
               updateForm('images', i);
             }}
           />
+          <View style={{height: '5%'}} />
         </View>
+        <View style={{height: 100}} />
       </ScrollView>
       <View style={{height: 1, backgroundColor: '#ccc'}} />
       <Flex
@@ -244,6 +245,7 @@ const EditPost: React.FC<MyProps> = props => {
           onPress={onSave}
         />
       </Flex>
+      <View style={{height: insets.bottom, backgroundColor: 'white'}} />
       <InputDialog
         title="提示"
         message="请填写标签"
@@ -253,7 +255,6 @@ const EditPost: React.FC<MyProps> = props => {
         }}
         onConfirm={onTagsAppend}
       />
-      <View style={{height: insets.bottom, backgroundColor: 'white'}} />
     </View>
   );
 };
@@ -292,6 +293,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0,
     height: 24,
+    width: '33%',
   },
 });
 
