@@ -1,6 +1,6 @@
 import {RouteProp, useIsFocused} from '@react-navigation/native';
 import Flex from '@src/components/Flex';
-import ToolBar from '@src/components/ToolBar';
+import {calculateWalletFormSum, WalletMaps} from '@src/constants/c';
 import {PaginationProps, TWallet} from '@src/constants/t';
 import Services from '@src/services';
 import {useCaches} from '@src/stores';
@@ -12,16 +12,14 @@ import {
   FlatList,
   Image,
   ListRenderItemInfo,
-  Platform,
   RefreshControl,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
-import {calculateWalletFormSum, WalletMaps} from '@src/constants/c';
+import Compare from './components/Compare';
 
 dayjs.extend(isoWeek);
 
@@ -90,6 +88,16 @@ const Wallets: React.FC<MyProps> = memo(props => {
         <Text style={{color: '#ccc', fontSize: 14}} numberOfLines={1}>
           {item.id}
         </Text>
+        <View style={{height: 5}} />
+        <Flex horizontal justify={'flex-start'}>
+          <Text style={{color: '#666', fontSize: 14}}>
+            上证指数: {item.indexSh000001}
+          </Text>
+          <View style={{width: 12}} />
+          <Text style={{color: '#666', fontSize: 14}}>
+            标普500指数: {item.indexSpx}
+          </Text>
+        </Flex>
         <View style={{height: 10}} />
         <Flex
           horizontal
@@ -116,6 +124,9 @@ const Wallets: React.FC<MyProps> = memo(props => {
 
   return (
     <View style={styles.view}>
+      <Compare
+        datas={walletsQuery.data?.pages.map(it => it.records).flat() || []}
+      />
       <FlatList
         // ListHeaderComponent={() => <View style={{height: 1}} />}
         refreshControl={

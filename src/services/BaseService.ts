@@ -14,7 +14,7 @@ export default class BaseService {
     this.instance = axios.create({
       // baseURL: Config.SERVER,
       baseURL: __DEV__
-        ? 'http://192.168.0.108:40092'
+        ? 'http://192.168.0.104:40091'
         : new Envs().get('APP_MY_SERVICE'),
       timeout: 10000,
       headers: {

@@ -6,6 +6,8 @@ export interface TWallet {
   alipay: string;
   eastmoney: string;
   cash: string;
+  indexSh000001: string;
+  indexSpx: string;
   fund: string[];
   carpool: string[];
   settleOn: string;

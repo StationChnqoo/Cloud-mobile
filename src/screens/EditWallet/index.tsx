@@ -110,10 +110,12 @@ const EditWallet: React.FC<MyProps> = props => {
   };
 
   const checkForm = useMemo(() => {
-    return Object.keys(WalletMaps)
+    let walletForm = Object.keys(WalletMaps)
       .map(it => form[it])
       .filter(it => !Array.isArray(it))
       .every(it => (it ? true : false));
+    let indexForm = form?.indexSh000001 && form?.indexSpx ? true : false;
+    return walletForm && indexForm;
   }, [form]);
 
   const loadLine = (n?: string) => <View style={{...styles.line}} />;
@@ -218,6 +220,32 @@ const EditWallet: React.FC<MyProps> = props => {
               {loadLine()}
             </View>
           ))}
+          <Flex horizontal justify="space-between">
+            <Text style={styles.label}>上证指数</Text>
+            <TextInput
+              placeholder={'请输入'}
+              style={{...styles.input, height: undefined}}
+              textAlign={'right'}
+              multiline
+              value={`${form?.indexSh000001 || ''}`}
+              // @ts-ignore
+              onChangeText={t => updateForm('indexSh000001', t)}
+            />
+          </Flex>
+          {loadLine()}
+          <Flex horizontal justify="space-between">
+            <Text style={styles.label}>标普500</Text>
+            <TextInput
+              placeholder={'请输入'}
+              style={{...styles.input, height: undefined}}
+              textAlign={'right'}
+              multiline
+              value={`${form?.indexSpx || ''}`}
+              // @ts-ignore
+              onChangeText={t => updateForm('indexSpx', t)}
+            />
+          </Flex>
+          {loadLine()}
           <Flex horizontal justify="space-between">
             <Text style={styles.label}>创建时间</Text>
             <Text style={{color: '#333', fontSize: 16}}>{form?.createAt}</Text>
