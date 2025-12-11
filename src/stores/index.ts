@@ -39,10 +39,7 @@ const initialState = {
   token: '',
   theme: '#987123',
   category: CategorySchema.parse({}),
-  cared:
-    '1.511520,1.513100,0.159567,1.513020,1.520600,0.159329,100.NDX,0.300996'.split(
-      ',',
-    ),
+  cared: ['1.513880', '1.513500', '0.159659'],
   global: ['1.000001', '0.399006', '1.000300', '100.N225'],
   holdFundCodes:
     `BK1040,BK1041,BK0727,BK1044,BK1031,BK0433,BK0438,BK0437`.split(','),
