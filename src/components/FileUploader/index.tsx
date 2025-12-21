@@ -32,7 +32,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     ]);
   };
 
-  const {uploading, upload, progress, picGo} = usePicGoUpload();
+  const {uploading, upload, picGo} = usePicGoUpload();
   const onMoveUp = (index: number) => {
     if (index > 0) {
       setImages(
@@ -56,9 +56,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
   useEffect(() => {
     // const {id_encoded, size, url, title, date} = result.data;
     // onImageUploaded({id: id_encoded, size, url, title, date});
-    if (picGo?.image) {
-      let {id_encoded, size, url, name, date} = picGo.image;
-      let image = {id: id_encoded, size, url, name, date};
+    if (picGo?.url) {
+      let {url, key, id, size, date} = picGo;
+      let image = {id, size, url, name: key, date};
       setImages([...images, image]);
       console.log('PicGo: ', picGo);
     } else {
@@ -170,7 +170,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
         onShow={() => {}}
         onConfirm={doEdit}
       />
-      <Spinner visible={uploading} text={`正在上传${progress}% ...`} />
+      <Spinner visible={uploading} text={`正在上传 ...`} />
     </View>
   );
 };

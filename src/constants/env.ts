@@ -7,7 +7,12 @@ export class Envs {
   }
 
   get(
-    string: 'APP_NAME' | 'APP_PACKAGE_NAME' | 'APP_MY_SERVICE' | 'APP_PICGO',
+    string:
+      | 'APP_NAME'
+      | 'APP_PACKAGE_NAME'
+      | 'APP_JAVA'
+      | 'APP_PICGO'
+      | 'APP_ENV',
   ) {
     return this.config?.[string] || '';
   }

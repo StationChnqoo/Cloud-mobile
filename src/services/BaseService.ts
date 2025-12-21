@@ -15,7 +15,7 @@ export default class BaseService {
       // baseURL: Config.SERVER,
       baseURL: __DEV__
         ? 'http://192.168.0.104:40091'
-        : new Envs().get('APP_MY_SERVICE'),
+        : new Envs().get('APP_JAVA'),
       timeout: 10000,
       headers: {
         token: useCaches.getState().token || '',

@@ -93,7 +93,7 @@ export default class DfcfService extends BaseService {
       params: {
         cb: '',
         fltt: 2,
-        secids: '1.000001,0.399001',
+        secids: '1.000001,0.399001,0.899050',
         fields: 'f1,f2,f3,f4,f6,f12,f13,f104,f105,f106',
       },
     });

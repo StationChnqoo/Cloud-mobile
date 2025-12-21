@@ -120,7 +120,7 @@ const EditPost: React.FC<MyProps> = props => {
   }, [focused, category?.id]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <ToolBar
         title={`${route.params?.id ? '编辑' : '新增'}笔记`}
         onBackPress={() => {
