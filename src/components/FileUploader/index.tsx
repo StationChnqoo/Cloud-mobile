@@ -32,7 +32,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     ]);
   };
 
-  const {uploading, upload, picGo} = usePicGoUpload();
+  const {uploading, upload, picGo, progress} = usePicGoUpload();
   const onMoveUp = (index: number) => {
     if (index > 0) {
       setImages(
@@ -170,7 +170,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
         onShow={() => {}}
         onConfirm={doEdit}
       />
-      <Spinner visible={uploading} text={`正在上传 ...`} />
+      <Spinner visible={uploading} text={`正在上传 ${progress}% ...`} />
     </View>
   );
 };
