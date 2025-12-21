@@ -4,6 +4,7 @@ import {createJSONStorage, devtools, persist} from 'zustand/middleware';
 import {MMKV} from 'react-native-mmkv';
 import {StateStorage} from 'zustand/middleware';
 import {Category, CategorySchema, User, UserSchema} from '@src/constants/t';
+import _ from 'lodash';
 
 // const mmkv = new MMKV({
 //   id: 'useMMKV',
@@ -32,15 +33,26 @@ interface States {
   setGlobal: (g: string[]) => void;
   holdFundCodes: string[];
   setHoldFundCodes: (h: string[]) => void;
+  reset: () => void;
 }
 
+const defaultCared = ['0.159659', '1.513500', '1.513880'];
+const defaultGlobal = [
+  '0.159659',
+  '1.513500',
+  '1.513880',
+  '100.N225',
+  '100.VNINDEX',
+  '100.SPX',
+  '100.NDX',
+];
 const initialState = {
   user: UserSchema.parse({}),
   token: '',
   theme: '#987123',
   category: CategorySchema.parse({}),
-  cared: ['1.513880', '1.513500', '0.159659'],
-  global: ['1.000001', '0.399006', '1.000300', '100.N225'],
+  cared: _.cloneDeep(defaultCared),
+  global: _.cloneDeep(defaultGlobal),
   holdFundCodes:
     `BK1040,BK1041,BK0727,BK1044,BK1031,BK0433,BK0438,BK0437`.split(','),
 };
@@ -57,6 +69,7 @@ export const useCaches = create<States>()(
         setGlobal: global => set({global}),
         setHoldFundCodes: holdFundCodes => set({holdFundCodes}),
         setUser: user => set({user}),
+        reset: () => set({...initialState}),
       }),
       {
         storage: createJSONStorage(() => mmkvStorage),
@@ -65,6 +78,7 @@ export const useCaches = create<States>()(
         partialize: state => ({
           token: state.token,
           holdFundCodes: state.holdFundCodes,
+          cared: state.cared,
         }),
       },
     ),
