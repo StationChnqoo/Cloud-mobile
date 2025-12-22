@@ -44,9 +44,8 @@ const defaultCared = [
 ];
 
 const defaultGlobal = [
-  '0.159659',
-  '1.513500',
-  '1.513880',
+  '1.000001',
+  '0.399006',
   '100.N225',
   '100.VNINDEX',
   '100.SPX',
@@ -57,7 +56,7 @@ const initialState = {
   token: '',
   theme: '#987123',
   category: CategorySchema.parse({}),
-  cared: _.cloneDeep(defaultCared.map(it => `${it.market}.${it.code}`)),
+  cared: _.cloneDeep(defaultCared).map(it => `${it.market}.${it.code}`),
   global: _.cloneDeep(defaultGlobal),
   holdFundCodes:
     `BK1040,BK1041,BK0727,BK1044,BK1031,BK0433,BK0438,BK0437`.split(','),

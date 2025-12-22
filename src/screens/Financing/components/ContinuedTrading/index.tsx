@@ -85,18 +85,8 @@ const ContinuedTrading = (props: MyProps) => {
       },
       {
         icon: require('@src/assets/images/other/oil_station.png'),
-        label: '美国原油ETF',
-        value: '107.USO',
-      },
-      {
-        icon: require('@src/assets/images/other/oil_station.png'),
         label: '标普油气开采指数ETF-SPDR',
         value: '107.XOP',
-      },
-      {
-        icon: require('@src/assets/images/other/oil_station.png'),
-        label: '全球能源ETF-iShares',
-        value: '107.IXC',
       },
     ],
   };
