@@ -7,7 +7,7 @@ import {PicGoSrc} from '@src/constants/t';
 
 interface MyProps {
   src: PicGoSrc;
-  onDelete: (id: string) => void;
+  onDelete: (src: PicGoSrc) => void;
   onPreview: (uri: string) => void;
   onMoveUp: (id: string) => void;
   onMoveDown: (id: string) => void;
@@ -66,7 +66,7 @@ const PicGoFile: React.FC<MyProps> = props => {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              onDelete(src.id);
+              onDelete(src);
             }}>
             <Image
               source={require('@src/assets/images/common/arrow_delete.png')}

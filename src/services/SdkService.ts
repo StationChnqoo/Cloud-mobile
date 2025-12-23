@@ -8,6 +8,22 @@ export default class SdkService extends BaseService {
     super();
   }
 
+  deleteCosFile = async (fileUrl: string) => {
+    const idx = fileUrl.indexOf('.com/');
+    if (idx === -1) return '';
+    let key = fileUrl.slice(idx + 5);
+
+    const params = {
+      bucket: 'cloud-1252363101',
+      key,
+    };
+    console.log('Delete Cos File: ', params);
+    let result = await this.instance.delete('/upload', {
+      params,
+    });
+    return result.data;
+  };
+
   upload2SpringBoot = async (file: any) => {
     let formData = new FormData();
     formData.append('file', {

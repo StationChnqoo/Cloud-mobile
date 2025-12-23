@@ -12,6 +12,7 @@ import InputDialog from '../InputDialog';
 import MoreButton from '../MoreButton';
 import PicGoFile from '../PicGoFile';
 import Spinner from '../Spinner';
+import SdkService from '@src/services/SdkService';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -65,15 +66,23 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     }
   }, [picGo]);
 
-  const onImageDelete = (id: string) => {
+  const deleteAgain = async (pgs: PicGoSrc) => {
+    console.log('DeleteAgain: ', pgs);
+    let result = await new SdkService().deleteCosFile(pgs.url);
+    if (result.status == 200) {
+      toast('删除成功');
+      setImages(images.filter(it => it.id !== pgs.id));
+    } else {
+      toast('删除失败');
+    }
+  };
+
+  const onImageDelete = (pgs: PicGoSrc) => {
     Alert.alert('提示', '删除后不可恢复，请谨慎操作', [
       {text: '取消', onPress: () => {}},
       {
         text: '确定',
-        onPress: () => {
-          setImages(images.filter(it => it.id !== id));
-          toast('删除成功');
-        },
+        onPress: () => deleteAgain(pgs),
       },
     ]);
   };
@@ -137,7 +146,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
         <View key={it.id} style={{marginTop: 10}}>
           <PicGoFile
             src={it}
-            onDelete={() => onImageDelete(it.id)}
+            onDelete={() => onImageDelete(it)}
             onPreview={() => {
               setSrcIndex(i);
               setIsOpenPreviewer(true);
