@@ -6,12 +6,13 @@ import {StyleSheet, Text, View} from 'react-native';
 
 interface MyProps {
   datas: TWallet[];
+  firstAndLast?: TWallet[];
 }
 
 const Compare: React.FC<MyProps> = props => {
-  const {datas} = props;
-  let last = datas?.[0] || ({} as TWallet);
-  let first = datas?.[datas.length - 1] || ({} as TWallet);
+  const {datas, firstAndLast} = props;
+  let last = firstAndLast?.[1] || ({} as TWallet);
+  let first = firstAndLast?.[0] || ({} as TWallet);
   let sh000001 = [first?.indexSh000001, last?.indexSh000001];
   let spx = [first?.indexSpx, last?.indexSpx];
   let sum = [calculateWalletFormSum(first), calculateWalletFormSum(last)];

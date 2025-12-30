@@ -34,6 +34,14 @@ export default class Services extends BaseService {
     return result.data;
   }
 
+  async selectFirstAndLastWallet() {
+    let result = await this.instance.get(
+      '/wallet/selectFirstAndLastWallet.do',
+      {},
+    );
+    return result.data;
+  }
+
   async selectWallets(params: PaginationProps) {
     let result = await this.instance.get('/wallet/selectWallets.do', {params});
     return result.data;
@@ -45,7 +53,9 @@ export default class Services extends BaseService {
   }
 
   async selectCategories(params: PaginationProps) {
-    let result = await this.instance.get('/category/selectCategories.do', {params});
+    let result = await this.instance.get('/category/selectCategories.do', {
+      params,
+    });
     return result.data;
   }
 
@@ -65,12 +75,16 @@ export default class Services extends BaseService {
   }
 
   async deleteCategory(id: String) {
-    let result = await this.instance.get(`/category/deleteCategory.do`, {params: {id}});
+    let result = await this.instance.get(`/category/deleteCategory.do`, {
+      params: {id},
+    });
     return result.data;
   }
 
   async deleteProperty(id: String) {
-    let result = await this.instance.get(`/category/deleteProperty.do`, {params: {id}});
+    let result = await this.instance.get(`/category/deleteProperty.do`, {
+      params: {id},
+    });
     return result.data;
   }
 
@@ -80,7 +94,10 @@ export default class Services extends BaseService {
   }
 
   async mergeProperty(property: Property) {
-    let result = await this.instance.post(`/category/mergeProperty.do`, property);
+    let result = await this.instance.post(
+      `/category/mergeProperty.do`,
+      property,
+    );
     return result.data;
   }
 
@@ -100,7 +117,9 @@ export default class Services extends BaseService {
   }
 
   async selectCategory(id: String) {
-    let result = await this.instance.get(`/category/selectCategory.do`, {params: {id}});
+    let result = await this.instance.get(`/category/selectCategory.do`, {
+      params: {id},
+    });
     return result.data;
   }
 }

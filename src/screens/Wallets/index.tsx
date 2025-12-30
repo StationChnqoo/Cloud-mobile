@@ -35,10 +35,17 @@ const Wallets: React.FC<MyProps> = memo(props => {
   const queryClient = useQueryClient();
   const focused = useIsFocused();
   const logined = useCaches().token ? true : false;
+  const [firstAndLast, setFirstAndLast] = React.useState<TWallet[]>([]);
 
   const loadDatas = async (params: PaginationProps) => {
     let result = await new Services().selectWallets(params);
     return result.data;
+  };
+
+  const loadFirstAndLastWallet = async () => {
+    let result = await new Services().selectFirstAndLastWallet();
+    setFirstAndLast(result.data?.datas);
+    console.log('loadFirstAndLastWallet: ', result);
   };
 
   const walletsQuery = useInfiniteQuery({
@@ -60,6 +67,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
 
   useEffect(() => {
     walletsQuery.refetch();
+    loadFirstAndLastWallet();
     return function () {};
   }, [focused]);
 
@@ -125,6 +133,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
   return (
     <View style={styles.view}>
       <Compare
+        firstAndLast={firstAndLast}
         datas={walletsQuery.data?.pages.map(it => it.records).flat() || []}
       />
       <FlatList
