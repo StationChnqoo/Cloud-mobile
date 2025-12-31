@@ -20,7 +20,7 @@ export default class Services extends BaseService {
   }
 
   async selectUser() {
-    let result = await this.instance.get('/users', {});
+    let result = await this.instance.get('/users/me');
     return result.data;
   }
 
