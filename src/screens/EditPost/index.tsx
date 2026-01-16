@@ -26,6 +26,7 @@ import {produce} from 'immer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import z from 'zod';
 import {RootStacksParams, RootStacksProp} from '..';
+import {nanoid} from 'nanoid';
 
 interface MyProps {
   navigation?: RootStacksProp;
@@ -83,6 +84,9 @@ const EditPost: React.FC<MyProps> = props => {
     if (route.params?.id) {
       let result = await new Services().selectPost(route.params.id);
       _form = result.data;
+    }
+    else {
+      _form.id = nanoid();
     }
     _form.updateAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
     setForm(_form);

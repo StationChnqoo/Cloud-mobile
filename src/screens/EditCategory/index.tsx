@@ -20,6 +20,7 @@ import dayjs from 'dayjs';
 import {produce} from 'immer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
+import {nanoid} from 'nanoid';
 
 interface MyProps {
   navigation?: RootStacksProp;
@@ -64,6 +65,9 @@ const EditCategory: React.FC<MyProps> = props => {
     if (route.params?.id) {
       let result = await new Services().selectCategory(route.params.id);
       _form = result.data;
+    }
+    else {
+      _form.id = nanoid();
     }
     _form.updateAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
     setForm(_form);

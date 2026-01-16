@@ -3047,7 +3047,7 @@ __metadata:
     react-native: 0.78.3
     react-native-config: 1.5.6
     react-native-gesture-handler: ^2.28.0
-    react-native-get-random-values: ^1.11.0
+    react-native-get-random-values: ^2.0.0
     react-native-image-picker: ^8.2.1
     react-native-image-viewing: ^0.2.2
     react-native-localize: ^3.5.2
@@ -8402,14 +8402,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-get-random-values@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "react-native-get-random-values@npm:1.11.0"
+"react-native-get-random-values@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "react-native-get-random-values@npm:2.0.0"
   dependencies:
     fast-base64-decode: ^1.0.0
   peerDependencies:
-    react-native: ">=0.56"
-  checksum: 07729f70a007f7a3b8f98ebf687c1298ba288b87dd71d8ba385be6b5a377718b27b97547bbe1db6b225b83ee109dfce0b01721e6ed535d53892f3ac81e6bf975
+    react-native: ">=0.81"
+  checksum: 57e80fa836e61d5ff08d31cfb3df45c00a6616651b3f7521af2d4fd6456aefd05e17eb21a269d458ada0dd58bc8c25eef6b43097eefc542ab6186072f6b653a3
   languageName: node
   linkType: hard
 

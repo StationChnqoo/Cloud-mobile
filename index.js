@@ -12,6 +12,8 @@ import {reactotronRedux} from 'reactotron-redux';
 import {name as appName} from './app.json';
 import Screens from './src/screens';
 import {Envs} from './src/constants/env';
+import 'react-native-get-random-values';
+import {nanoid} from 'nanoid';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
@@ -19,6 +21,9 @@ dayjs.locale('zh-cn');
 const Cloud = () => {
   useEffect(() => {
     console.log('Config:', new Envs().all());
+    for(let i = 0; i < 9; i++) {
+      console.log('nanoid:', nanoid());
+    }
   }, []);
 
   useEffect(() => {
