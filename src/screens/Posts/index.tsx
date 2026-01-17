@@ -147,7 +147,7 @@ const Posts: React.FC<MyProps> = props => {
           style={styles.itemBottomContainer}>
           <Flex horizontal>
             <Text style={{color: theme, fontSize: 14}}>
-              [{['公开', '私密'][item.isPublic]}]
+              [{['私密', '公开'][item.isPublic]}]
             </Text>
             <View style={{width: 2}} />
             <Text style={{fontSize: 14, color: '#333'}}>

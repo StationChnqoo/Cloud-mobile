@@ -15,6 +15,8 @@ import Spinner from '../Spinner';
 import SdkService from '@src/services/SdkService';
 import useFile, {PicGoFileType} from '@src/hooks/useFile';
 import {navigationRef} from '@src/screens';
+import Share from 'react-native-share';
+import RNFS from 'react-native-fs';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -27,6 +29,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
   const [isOpenPreviewer, setIsOpenPreviewer] = useState(false);
   const [isOpenInputer, setIsOpenInputer] = useState(false);
   const [editIndex, setEditIndex] = useState(0);
+  const [downloading, setDownloading] = useState(false);
 
   const link2PhotoSetting = () => {
     Alert.alert('提示', '需要获取相册权限，是否前往设置页面进行设置？', [
@@ -36,25 +39,6 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
   };
 
   const {uploading, upload, picGo, progress} = usePicGoUpload();
-  const onMoveUp = (index: number) => {
-    if (index > 0) {
-      setImages(
-        produce(images, draft => {
-          [draft[index], draft[index - 1]] = [draft[index - 1], draft[index]];
-        }),
-      );
-    }
-  };
-
-  const onMoveDown = (index: number) => {
-    if (index < images.length - 1) {
-      setImages(
-        produce(images, draft => {
-          [draft[index], draft[index + 1]] = [draft[index + 1], draft[index]];
-        }),
-      );
-    }
-  };
 
   useEffect(() => {
     // const {id_encoded, size, url, title, date} = result.data;
@@ -157,6 +141,47 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     }
   };
 
+  const onShare = async (src: PicGoSrc) => {
+    if (downloading) {
+      toast('请等待下载完成后再分享 ...');
+      return;
+    }
+    let url = `${Platform.OS == 'android' ? 'file://' : ''}${
+      RNFS.CachesDirectoryPath // 私有目录需要Provider
+    }/${src.name}`;
+    let isInCache = await RNFS.exists(url);
+    console.log('Share File: ', {url, isInCache});
+    let findCouldShareUrl = async () => {
+      if (isInCache) {
+        return url;
+      } else {
+        setDownloading(true);
+        let download = await RNFS.downloadFile({
+          fromUrl: src.url,
+          toFile: url,
+        }).promise;
+        if (download.statusCode === 200) {
+          setDownloading(false);
+          return url;
+        }
+      }
+    };
+    let couldShareUrl = await findCouldShareUrl();
+    toast(`正在分享：${couldShareUrl}`);
+    setTimeout(() => {
+      Share.open({
+        title: src.name,
+        filename: src.name,
+        type: src.mimeType,
+        // saveToFiles: true,
+        url: couldShareUrl,
+      }).catch(error => {
+        console.log('Share Error: ', error);
+        // toast(`分享失败：${error}`);
+      });
+    }, 1000);
+  };
+
   return (
     <View>
       <Flex horizontal justify="space-between">
@@ -176,6 +201,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
             onEdit={() => {
               onEdit(i);
             }}
+            onShare={onShare}
           />
         </View>
       ))}

@@ -12,10 +12,11 @@ interface MyProps {
   onDelete: (src: PicGoSrc) => void;
   onPreview: (uri: string) => void;
   onEdit: (id: string) => void;
+  onShare: (src: PicGoSrc) => void;
 }
 
 const PicGoFile: React.FC<MyProps> = props => {
-  const {src, onDelete, onPreview, onEdit} = props;
+  const {src, onDelete, onPreview, onEdit, onShare} = props;
   const {theme} = useCaches();
   const {file} = useFile(src);
 
@@ -38,6 +39,7 @@ const PicGoFile: React.FC<MyProps> = props => {
         <Text style={{fontSize: 14, color: '#333'}} numberOfLines={1}>
           {src.name}
         </Text>
+        <View style={{height: 4}} />
         <Flex horizontal justify={'space-between'}>
           <Text style={{fontSize: 12, color: '#666'}}>
             {`${(src.size / 1024 / 1024).toFixed(2)}MB | ${src.updateAt}`}
@@ -50,13 +52,15 @@ const PicGoFile: React.FC<MyProps> = props => {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              onEdit(src.id);
+              // onEdit(src.id);
+              onShare(src);
             }}>
             <Image
-              source={require('@src/assets/images/common/arrow_edit.png')}
+              source={require('@src/assets/images/common/arrow_share.png')}
               style={{height: 20, width: 20, tintColor: theme}}
             />
           </TouchableOpacity>
+          <View style={{height: 1}} />
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
@@ -75,11 +79,12 @@ const PicGoFile: React.FC<MyProps> = props => {
 
 const styles = StyleSheet.create({
   view: {
-    borderRadius: 12,
+    borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#eee',
     paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingLeft: 4,
+    paddingRight: 5,
   },
   src: {
     height: dip2px(52),
