@@ -87,11 +87,22 @@ import dayjs from 'dayjs';
 import {z} from 'zod';
 
 const PicGoSrcSchema = z.object({
-  id: z.string(),
-  date: z.string(),
-  size: z.number(),
-  name: z.string(),
-  url: z.string(),
+  /** 图片的唯一标识符 */
+  id: z.string().default(''),
+  /** 图片的 MIME 类型 */
+  mimeType: z.string().default('image/jpeg'),
+  /** 图片的文件名 */
+  name: z.string().default(''),
+  /** 图片在存储系统中的路径/键值 */
+  objectKey: z.string().default(''),
+  /** 图片文件大小（字节） */
+  size: z.number().min(0).default(0),
+  /** 图片更新时间 */
+  updateAt: z
+    .string()
+    .default(() => new Date().toISOString().slice(0, 19).replace('T', ' ')),
+  /** 图片的访问 URL */
+  url: z.string().url().default(''),
 });
 
 export const PropertySchema = z.object({
@@ -217,7 +228,7 @@ export const UserSchema = z.object({
   email: z.string().optional().default(''),
   avatar: z.string().optional().default(''),
   updateAt: z.string().optional().default(''),
-  createAt: z.string().optional().default('')
+  createAt: z.string().optional().default(''),
 });
 
 export type User = z.infer<typeof UserSchema>;

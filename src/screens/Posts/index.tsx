@@ -23,6 +23,8 @@ import {
 } from '@tanstack/react-query';
 import {RootStacksProp} from '..';
 import {Router} from '@src/navigation';
+import useFile from '@src/hooks/useFile';
+import {dip2px} from '@src/constants/u';
 
 interface MyProps {
   navigation?: RootStacksProp;
@@ -115,18 +117,17 @@ const Posts: React.FC<MyProps> = props => {
           <Flex
             horizontal
             align="flex-end"
-            justify="flex-start"
+            justify="space-between"
             style={{marginTop: 12}}>
-            <Flex horizontal style={{gap: 4}}>
-              {item.images.slice(0, 3).map((it, i) => (
-                <View key={i} style={{position: 'relative'}}>
-                  <Image
-                    key={i}
-                    source={{uri: it.url}}
-                    style={{height: 52, width: 52, borderRadius: 4}}
-                  />
-                </View>
-              ))}
+            <Flex horizontal style={{gap: 4, flex: 1}} justify="flex-start">
+              {item.images.slice(0, 3).map((it, i) => {
+                const {file} = useFile(it);
+                return (
+                  <View key={i} style={{position: 'relative'}}>
+                    <Image key={i} source={file.src} style={styles.src} />
+                  </View>
+                );
+              })}
             </Flex>
             <View style={{width: 10}} />
             <Text
@@ -135,7 +136,7 @@ const Posts: React.FC<MyProps> = props => {
                 textDecorationLine: 'underline',
                 fontSize: 14,
               }}>
-              +{item.images.length}图
+              {item.images.length}附件
             </Text>
           </Flex>
         ) : null}
@@ -274,6 +275,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     backgroundColor: '#fff',
+  },
+  src: {
+    height: dip2px(52),
+    width: dip2px(52),
+    borderRadius: 5,
   },
   tags: {
     marginTop: 10,

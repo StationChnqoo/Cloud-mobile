@@ -1242,8 +1242,27 @@ PODS:
     - react-native-config/App (= 1.5.6)
   - react-native-config/App (1.5.6):
     - React-Core
-  - react-native-get-random-values (1.11.0):
+  - react-native-get-random-values (2.0.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-image-picker (8.2.1):
     - DoubleConversion
     - glog
@@ -1373,6 +1392,71 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Toast (~> 4)
+    - Yoga
+  - react-native-video (6.17.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - react-native-video/Video (= 6.17.0)
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-video/Fabric (6.17.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-video/Video (6.17.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - react-native-video/Fabric
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
     - Yoga
   - react-native-webview (13.16.0):
     - DoubleConversion
@@ -1959,6 +2043,7 @@ DEPENDENCIES:
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
+  - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2088,6 +2173,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-simple-toast:
     :path: "../node_modules/react-native-simple-toast"
+  react-native-video:
+    :path: "../node_modules/react-native-video"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
@@ -2198,11 +2285,12 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 396d97d3534fa0df8c1a690eb6269d8a7d9f5b0e
   React-microtasksnativemodule: 9f9819152d22361967a6dfaaca7828af37b0ae70
   react-native-config: 9f48ad1ee7f4fcb9482c66988e30bd60572bb963
-  react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
+  react-native-get-random-values: 55bd2dca3a769ad0deb8c34ff5a4fb9d7a8cc65a
   react-native-image-picker: fb2d12cb86e0b3e58caee9aa660ddbd5742c841c
   react-native-mmkv: 56529b171eec4456a3c475bbc6c9187c3e98618e
   react-native-safe-area-context: 337fce5941460e2605fb3c39dbb0f6e0765c8010
   react-native-simple-toast: fe8a1112585a6f250ca645b7ce4e1d3abd40539b
+  react-native-video: 0e03750aabdce300df3ef6db7f30b8a5aac78835
   react-native-webview: 4c1156463f8031c30ea99262317ac3d0a5940211
   React-NativeModulesApple: 7c9c0c4e76731529b2e15f5d5edb266b980556ea
   React-perflogger: 069d41f741187be92ed46c6ac67add03b99f3166

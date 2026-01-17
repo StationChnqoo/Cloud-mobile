@@ -26,7 +26,7 @@ import {produce} from 'immer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import z from 'zod';
 import {RootStacksParams, RootStacksProp} from '..';
-import {nanoid} from 'nanoid';
+import {nanoid} from 'nanoid/non-secure';
 
 interface MyProps {
   navigation?: RootStacksProp;

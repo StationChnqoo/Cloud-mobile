@@ -3,7 +3,7 @@ import {toast} from '@src/constants/u';
 import {usePhotoPermission} from '@src/hooks/usePhotoPermission';
 import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
 import {produce} from 'immer';
-import React, {useEffect, useState} from 'react';
+import React, {use, useEffect, useMemo, useState} from 'react';
 import {Alert, Linking, Platform, StyleSheet, Text, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
@@ -13,6 +13,8 @@ import MoreButton from '../MoreButton';
 import PicGoFile from '../PicGoFile';
 import Spinner from '../Spinner';
 import SdkService from '@src/services/SdkService';
+import useFile, {PicGoFileType} from '@src/hooks/useFile';
+import {navigationRef} from '@src/screens';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -58,9 +60,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     // const {id_encoded, size, url, title, date} = result.data;
     // onImageUploaded({id: id_encoded, size, url, title, date});
     if (picGo?.url) {
-      let {url, key, id, size, date} = picGo;
-      let image = {id, size, url, name: key, date};
-      setImages([...images, image]);
+      setImages([...images, picGo]);
       console.log('PicGo: ', picGo);
     } else {
     }
@@ -98,7 +98,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
       case 'limited': {
         let assest = await launchImageLibrary({
           includeBase64: true,
-          mediaType: 'photo',
+          mediaType: 'mixed',
         });
         if (!assest.didCancel && assest.assets?.length) {
           upload(assest.assets[0]);
@@ -132,6 +132,31 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     setIsOpenInputer(false);
   };
 
+  const imagePreviewSrcs = useMemo(() => {
+    return images
+      .filter(it => {
+        const {file} = useFile(it);
+        return file.type == PicGoFileType.Image;
+      })
+      .map(it => ({uri: it.url}));
+  }, [images]);
+
+  const onPreview = (index: number) => {
+    const {file} = useFile(images[index]);
+    if (file.type == PicGoFileType.Image) {
+      setSrcIndex(0);
+      setIsOpenPreviewer(true);
+    } else if (file.type == PicGoFileType.Video) {
+      navigationRef.navigate('PreviewVideo', {uri: images[index].url});
+    } else {
+      Alert.alert(
+        '提示',
+        '仅支持图片和视频预览，其他类型文件请前往浏览器查看～',
+        [{text: '确定', onPress: () => {}}],
+      );
+    }
+  };
+
   return (
     <View>
       <Flex horizontal justify="space-between">
@@ -147,16 +172,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
           <PicGoFile
             src={it}
             onDelete={() => onImageDelete(it)}
-            onPreview={() => {
-              setSrcIndex(i);
-              setIsOpenPreviewer(true);
-            }}
-            onMoveUp={() => {
-              onMoveUp(i);
-            }}
-            onMoveDown={() => {
-              onMoveDown(i);
-            }}
+            onPreview={() => onPreview(i)}
             onEdit={() => {
               onEdit(i);
             }}
@@ -164,7 +180,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
         </View>
       ))}
       <ImageView
-        images={images.map(it => ({uri: it.url}))}
+        images={imagePreviewSrcs}
         imageIndex={srcIndex}
         visible={isOpenPreviewer}
         onRequestClose={() => setIsOpenPreviewer(false)}

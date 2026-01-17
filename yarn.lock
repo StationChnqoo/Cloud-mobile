@@ -3061,6 +3061,8 @@ __metadata:
     react-native-safe-area-context: ^5.6.1
     react-native-screens: ^4.16.0
     react-native-simple-toast: ^3.3.2
+    react-native-video: 6.17.0
+    react-native-video-player: ^0.16.3
     react-native-webview: ^13.16.0
     react-test-renderer: 19.0.0
     reactotron-react-native: ^5.1.12
@@ -8586,6 +8588,27 @@ __metadata:
     react: "*"
     react-native: ">=0.71.0"
   checksum: af2d3f95b0fd4d0b916ec029179e177402d25ffb90d793c4352d67775492681da1ed69742c5908d68ebd1e5e818e919821a54df05a22a52fc9189be910b1c5c1
+  languageName: node
+  linkType: hard
+
+"react-native-video-player@npm:^0.16.3":
+  version: 0.16.3
+  resolution: "react-native-video-player@npm:0.16.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-video: ^6.8.0
+  checksum: 73405dcab658bd783f71a843c1850d5c974244b7edee8d5980a6937330c6ce48975499590de2f7ad6d0e8928d43bf2c217b64d1dd85d554b688ee0b853c75fe2
+  languageName: node
+  linkType: hard
+
+"react-native-video@npm:6.17.0":
+  version: 6.17.0
+  resolution: "react-native-video@npm:6.17.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 36cb907b9d96aabe5878214a3be3d1b70fdc504e5e8f9276d892a8e76dc8cfc98c48223ea99b5e1f70e5da547a0047b9a82d9406bd3996897ff421a52ea98656
   languageName: node
   linkType: hard
 

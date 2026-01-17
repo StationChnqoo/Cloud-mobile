@@ -30,7 +30,7 @@ import {produce} from 'immer';
 import _ from 'lodash';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
-import {nanoid} from 'nanoid';
+import {nanoid} from 'nanoid/non-secure';
 
 dayjs.extend(isoWeek);
 
