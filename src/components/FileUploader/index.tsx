@@ -1,22 +1,22 @@
 import {PicGoSrc} from '@src/constants/t';
 import {toast} from '@src/constants/u';
+import useFile, {PicGoFileType} from '@src/hooks/useFile';
 import {usePhotoPermission} from '@src/hooks/usePhotoPermission';
 import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
+import {navigationRef} from '@src/screens';
+import SdkService from '@src/services/SdkService';
 import {produce} from 'immer';
-import React, {use, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, Linking, Platform, StyleSheet, Text, View} from 'react-native';
+import RNFS from 'react-native-fs';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
+import Share from 'react-native-share';
 import Flex from '../Flex';
 import InputDialog from '../InputDialog';
 import MoreButton from '../MoreButton';
 import PicGoFile from '../PicGoFile';
 import Spinner from '../Spinner';
-import SdkService from '@src/services/SdkService';
-import useFile, {PicGoFileType} from '@src/hooks/useFile';
-import {navigationRef} from '@src/screens';
-import Share from 'react-native-share';
-import RNFS from 'react-native-fs';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -116,14 +116,12 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     setIsOpenInputer(false);
   };
 
-  const imagePreviewSrcs = useMemo(() => {
-    return images
-      .filter(it => {
-        const {file} = useFile(it);
-        return file.type == PicGoFileType.Image;
-      })
-      .map(it => ({uri: it.url}));
-  }, [images]);
+  const imagePreviewSrcs = images
+    .filter(it => {
+      const {file} = useFile(it);
+      return file.type == PicGoFileType.Image;
+    })
+    .map(it => ({uri: it.url}));
 
   const onPreview = (index: number) => {
     const {file} = useFile(images[index]);

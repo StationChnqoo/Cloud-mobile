@@ -3,9 +3,11 @@ import {RealTimePrice} from '@src/constants/t';
 import DfcfService from '@src/services/DfcfService';
 import {useCaches} from '@src/stores';
 import {useQueries, useQuery} from '@tanstack/react-query';
-import React, {useMemo} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
+import {links} from '@src/constants/u';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksProp} from '..';
 import Care from './components/Care';
 import ContinuedTrading from './components/ContinuedTrading';
@@ -14,8 +16,6 @@ import ETF from './components/ETF';
 import Global from './components/Global';
 import News from './components/News';
 import Ranks from './components/Ranks';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {links} from '@src/constants/u';
 
 interface MyProps {
   navigation?: RootStacksProp;

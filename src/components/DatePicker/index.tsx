@@ -1,12 +1,12 @@
+import {useCaches} from '@src/stores';
 import dayjs from 'dayjs';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import BottomSheet from '../BottomSheet';
+import Flex from '../Flex';
 import ListView from './components/ListView';
 import {DATE_YEAR_INIT, ITEM_HEIGHT} from './constants/c';
 import {optionsBuilder} from './constants/u';
-import BottomSheet from '../BottomSheet';
-import Flex from '../Flex';
-import {useCaches} from '@src/stores';
 
 interface MyProps {
   date: string;
@@ -44,36 +44,32 @@ const DatePicker = (props: MyProps) => {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   };
 
-  const days = useMemo(() => {
-    return [
-      0,
-      31,
-      isLeapYear(Number(array?.[0]) || DATE_YEAR_INIT) ? 29 : 28,
-      31,
-      30,
-      31,
-      30,
-      31,
-      31,
-      30,
-      31,
-      30,
-      31,
-    ][Number(array?.[1] || 1)];
-  }, [array]);
+  const days = [
+    0,
+    31,
+    isLeapYear(Number(array?.[0]) || DATE_YEAR_INIT) ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ][Number(array?.[1] || 1)];
 
   const current = () => {
     console.log(array, options);
     return array.map((it, i) => options?.[i]?.[it]?.value).join('-');
   };
 
-  const options = useMemo(() => {
-    let result = Array(3).fill([]);
-    result[0] = optionsBuilder(199, DATE_YEAR_INIT);
-    result[1] = optionsBuilder(12, 1);
-    result[2] = optionsBuilder(days, 1);
-    return result;
-  }, [array]);
+  let options = [
+    optionsBuilder(199, DATE_YEAR_INIT),
+    optionsBuilder(12, 1),
+    optionsBuilder(days, 1),
+  ];
 
   useEffect(() => {
     // 越界 -> 当前选择的日 > 当月总天数

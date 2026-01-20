@@ -1,17 +1,17 @@
 import {useFocusEffect} from '@react-navigation/native';
 import Flex from '@src/components/Flex';
+import Tabs from '@src/components/Tabs';
 import {TWallet} from '@src/constants/t';
+import {toast} from '@src/constants/u';
+import {Router} from '@src/navigation';
 import {useCaches} from '@src/stores';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Popover from 'react-native-popover-view';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksProp} from '..';
 import Posts from '../Posts';
 import Wallets from '../Wallets';
-import Tabs from '@src/components/Tabs';
-import {toast} from '@src/constants/u';
-import {Router} from '@src/navigation';
 
 interface MyProps {
   navigation: RootStacksProp;
@@ -55,9 +55,6 @@ const Data: React.FC<MyProps> = props => {
     handlers[index]();
   };
 
-  const currentComponent = useMemo(() => {
-    return [<Wallets onWalletPress={onWalletPress} />, <Posts />][tabIndex];
-  }, [tabIndex]);
   return (
     <View style={styles.view}>
       <View style={{height: insets.top}} />
@@ -119,7 +116,8 @@ const Data: React.FC<MyProps> = props => {
         </Popover>
       </Flex>
       {/* <View style={{height: 1, backgroundColor: 'ccc'}} /> */}
-      {currentComponent}
+      {tabIndex == 0 && <Wallets onWalletPress={onWalletPress} />},
+      {tabIndex == 1 && <Posts />}
     </View>
   );
 };

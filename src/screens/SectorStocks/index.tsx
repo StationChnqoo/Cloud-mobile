@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   Platform,
@@ -13,8 +13,8 @@ import {RouteProp} from '@react-navigation/native';
 import CommonStockCard from '@src/components/CommonStockCard';
 import PreloadImage from '@src/components/PreloadImage';
 import ToolBar from '@src/components/ToolBar';
-import {useCaches} from '@src/stores';
 import DfcfService from '@src/services/DfcfService';
+import {useCaches} from '@src/stores';
 import {useQuery} from '@tanstack/react-query';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
@@ -43,11 +43,9 @@ const SectorStocks: React.FC<MyProps> = props => {
   const [kTab, setKTab] = useState('');
   const {data} = sectorStocksQuery;
   // console.log('sectorStocksQuery: ', data.data.diff);
-  const kLineUrl = useMemo(() => {
-    return `https://webquoteklinepic.eastmoney.com/GetPic.aspx?nid=90.${code}&type=${kTab}&unitWidth=-6&ef=&formula=RSI&AT=1&imageType=KXL&timespan=${Math.floor(
-      new Date().getTime() / 1000,
-    )}`;
-  }, [kTab]);
+  const kLineUrl = `https://webquoteklinepic.eastmoney.com/GetPic.aspx?nid=90.${code}&type=${kTab}&unitWidth=-6&ef=&formula=RSI&AT=1&imageType=KXL&timespan=${Math.floor(
+    new Date().getTime() / 1000,
+  )}`;
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>

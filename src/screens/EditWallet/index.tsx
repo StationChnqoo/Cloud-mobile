@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -28,9 +28,9 @@ import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import {produce} from 'immer';
 import _ from 'lodash';
+import {nanoid} from 'nanoid/non-secure';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
-import {nanoid} from 'nanoid/non-secure';
 
 dayjs.extend(isoWeek);
 
@@ -66,9 +66,7 @@ const EditWallet: React.FC<MyProps> = props => {
     setForm(_form);
   };
 
-  const calculateSelectedSum = useMemo(() => {
-    return calculateWalletFormSum(form);
-  }, [form]);
+  const calculateSelectedSum = calculateWalletFormSum(form);
 
   const onDelete = async () => {
     Alert.alert('提示', '删除后不可恢复，请谨慎操作', [
@@ -112,14 +110,12 @@ const EditWallet: React.FC<MyProps> = props => {
     }
   };
 
-  const checkForm = useMemo(() => {
-    let walletForm = Object.keys(WalletMaps)
-      .map(it => form[it])
-      .filter(it => !Array.isArray(it))
-      .every(it => (it ? true : false));
-    let indexForm = form?.indexSh000001 && form?.indexSpx ? true : false;
-    return walletForm && indexForm;
-  }, [form]);
+  let walletForm = Object.keys(WalletMaps)
+    .map(it => form[it])
+    .filter(it => !Array.isArray(it))
+    .every(it => (it ? true : false));
+  let indexForm = form?.indexSh000001 && form?.indexSpx ? true : false;
+  let checkForm = walletForm && indexForm;
 
   const loadLine = (n?: string) => <View style={{...styles.line}} />;
 
