@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import {RootStacksParams, RootStacksProp} from '..';
 import Compare from './components/Compare';
+import ProtectView from '@src/components/ProtectView';
 
 dayjs.extend(isoWeek);
 
@@ -36,6 +37,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
   const focused = useIsFocused();
   const logined = useCaches().token ? true : false;
   const [firstAndLast, setFirstAndLast] = React.useState<TWallet[]>([]);
+  const [isPassed, setIsPassed] = React.useState(false);
 
   const loadDatas = async (params: PaginationProps) => {
     let result = await new Services().selectWallets(params);
@@ -53,7 +55,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
     queryKey: ['walletsQuery'],
     retryOnMount: false,
     refetchOnMount: false,
-    enabled: focused && logined,
+    enabled: focused && logined && isPassed,
     queryFn: params =>
       loadDatas({currentPage: params.pageParam.currentPage, pageSize: 10}),
     getNextPageParam: (lastPage, pages) => {
@@ -69,6 +71,10 @@ const Wallets: React.FC<MyProps> = memo(props => {
     walletsQuery.refetch();
     loadFirstAndLastWallet();
     return function () {};
+  }, [isPassed]);
+
+  useEffect(() => {
+    setIsPassed(false);
   }, [focused]);
 
   const loadItem = (info: ListRenderItemInfo<TWallet>) => {
@@ -136,43 +142,51 @@ const Wallets: React.FC<MyProps> = memo(props => {
         firstAndLast={firstAndLast}
         datas={walletsQuery.data?.pages.map(it => it.records).flat() || []}
       />
-      <FlatList
-        // ListHeaderComponent={() => <View style={{height: 1}} />}
-        refreshControl={
-          <RefreshControl
-            refreshing={
-              walletsQuery.isFetching &&
-              walletsQuery.data?.pages?.[0]?.page === 1
-            }
-            onRefresh={() => {
-              queryClient.resetQueries({queryKey: ['walletsQuery']});
-              walletsQuery.refetch();
-            }}
-          />
-        }
-        data={walletsQuery.data?.pages.map(it => it.records).flat() || []}
-        onEndReached={() => {
-          walletsQuery.fetchNextPage();
-        }}
-        renderItem={loadItem}
-        keyExtractor={(it, i) => `${it.id}:${i}`}
-        onEndReachedThreshold={0.2}
-        removeClippedSubviews={false}
-        ItemSeparatorComponent={() => <View style={{height: 1}} />}
-        ListEmptyComponent={
-          <Flex>
-            <Image
-              source={require('@src/assets/images/empty/wallet.png')}
-              style={{height: 128, width: 128}}
+      {isPassed ? (
+        <FlatList
+          // ListHeaderComponent={() => <View style={{height: 1}} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                walletsQuery.isFetching &&
+                walletsQuery.data?.pages?.[0]?.page === 1
+              }
+              onRefresh={() => {
+                queryClient.resetQueries({queryKey: ['walletsQuery']});
+                walletsQuery.refetch();
+              }}
             />
-          </Flex>
-        }
-        ListFooterComponent={
-          <Flex style={{marginVertical: 12}}>
-            <Text style={{fontSize: 12, color: '#999'}}>滑动到底了</Text>
-          </Flex>
-        }
-      />
+          }
+          data={walletsQuery.data?.pages.map(it => it.records).flat() || []}
+          onEndReached={() => {
+            walletsQuery.fetchNextPage();
+          }}
+          renderItem={loadItem}
+          keyExtractor={(it, i) => `${it.id}:${i}`}
+          onEndReachedThreshold={0.2}
+          removeClippedSubviews={false}
+          ItemSeparatorComponent={() => <View style={{height: 1}} />}
+          ListEmptyComponent={
+            <Flex>
+              <Image
+                source={require('@src/assets/images/empty/wallet.png')}
+                style={{height: 128, width: 128}}
+              />
+            </Flex>
+          }
+          ListFooterComponent={
+            <Flex style={{marginVertical: 12}}>
+              <Text style={{fontSize: 12, color: '#999'}}>滑动到底了</Text>
+            </Flex>
+          }
+        />
+      ) : (
+        <ProtectView
+          onPassed={() => {
+            setIsPassed(true);
+          }}
+        />
+      )}
     </View>
   );
 });

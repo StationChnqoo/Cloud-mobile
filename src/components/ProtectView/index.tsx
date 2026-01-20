@@ -1,5 +1,6 @@
-import {useCaches} from '@src/constants/store';
-import React, {useEffect} from 'react';
+
+import { useCaches } from '@src/stores';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 
 interface MyProps {
@@ -9,7 +10,7 @@ interface MyProps {
 const ProtectView: React.FC<MyProps> = props => {
   const {onPassed} = props;
   const {password, theme} = useCaches();
-  const [text, setText] = React.useState('');
+  const [text, setText] = useState('');
 
   useEffect(() => {
     if (text === password) {

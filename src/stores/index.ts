@@ -19,6 +19,8 @@ const mmkvStorage: StateStorage = {
 };
 
 interface States {
+  password: string;
+  setPassword: (p: string) => void;
   user: User;
   setUser: (u: User) => void;
   token: string;
@@ -52,6 +54,7 @@ const defaultGlobal = [
   '100.NDX',
 ];
 const initialState = {
+  password: '123456',
   user: UserSchema.parse({}),
   token: '',
   theme: '#987123',
@@ -67,6 +70,7 @@ export const useCaches = create<States>()(
     persist(
       set => ({
         ...initialState,
+        setPassword: password => set({password}),
         setToken: token => set({token}),
         setTheme: theme => set({theme}),
         setCategory: category => set({category}),
