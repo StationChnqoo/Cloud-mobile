@@ -140,7 +140,11 @@ const Wallets: React.FC<MyProps> = memo(props => {
     <View style={styles.view}>
       <Compare
         firstAndLast={firstAndLast}
-        datas={walletsQuery.data?.pages.map(it => it.records).flat() || []}
+        datas={
+          isPassed
+            ? walletsQuery.data?.pages.map(it => it.records)?.flat() || []
+            : []
+        }
       />
       {isPassed ? (
         <FlatList
