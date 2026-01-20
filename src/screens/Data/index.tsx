@@ -116,7 +116,7 @@ const Data: React.FC<MyProps> = props => {
         </Popover>
       </Flex>
       {/* <View style={{height: 1, backgroundColor: 'ccc'}} /> */}
-      {tabIndex == 0 && <Wallets onWalletPress={onWalletPress} />},
+      {tabIndex == 0 && <Wallets onWalletPress={onWalletPress} />}
       {tabIndex == 1 && <Posts />}
     </View>
   );

@@ -18,7 +18,8 @@ const ProtectView: React.FC<MyProps> = props => {
   }, [password, text]);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'center'}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
+      <View style={{height: 32}} />
       <View style={{alignItems: 'center'}}>
         <Image
           source={require('@src/assets/images/other/protect_lock.png')}
