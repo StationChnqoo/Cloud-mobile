@@ -55,7 +55,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
     queryKey: ['walletsQuery'],
     retryOnMount: false,
     refetchOnMount: false,
-    enabled: focused && logined && isPassed,
+    enabled: true,
     queryFn: params =>
       loadDatas({currentPage: params.pageParam.currentPage, pageSize: 10}),
     getNextPageParam: (lastPage, pages) => {
@@ -138,45 +138,47 @@ const Wallets: React.FC<MyProps> = memo(props => {
 
   return (
     <View style={styles.view}>
-      <Compare firstAndLast={isPassed ? firstAndLast : []} />
       {isPassed ? (
-        <FlatList
-          // ListHeaderComponent={() => <View style={{height: 1}} />}
-          refreshControl={
-            <RefreshControl
-              refreshing={
-                walletsQuery.isFetching &&
-                walletsQuery.data?.pages?.[0]?.page === 1
-              }
-              onRefresh={() => {
-                queryClient.resetQueries({queryKey: ['walletsQuery']});
-                walletsQuery.refetch();
-              }}
-            />
-          }
-          data={walletsQuery.data?.pages.map(it => it.records).flat() || []}
-          onEndReached={() => {
-            walletsQuery.fetchNextPage();
-          }}
-          renderItem={loadItem}
-          keyExtractor={(it, i) => `${it.id}:${i}`}
-          onEndReachedThreshold={0.2}
-          removeClippedSubviews={false}
-          ItemSeparatorComponent={() => <View style={{height: 1}} />}
-          ListEmptyComponent={
-            <Flex>
-              <Image
-                source={require('@src/assets/images/empty/wallet.png')}
-                style={{height: 128, width: 128}}
+        <View style={{flex: 1}}>
+          <Compare firstAndLast={firstAndLast} />
+          <FlatList
+            // ListHeaderComponent={() => <View style={{height: 1}} />}
+            refreshControl={
+              <RefreshControl
+                refreshing={
+                  walletsQuery.isFetching &&
+                  walletsQuery.data?.pages?.[0]?.page === 1
+                }
+                onRefresh={() => {
+                  queryClient.resetQueries({queryKey: ['walletsQuery']});
+                  walletsQuery.refetch();
+                }}
               />
-            </Flex>
-          }
-          ListFooterComponent={
-            <Flex style={{marginVertical: 12}}>
-              <Text style={{fontSize: 12, color: '#999'}}>滑动到底了</Text>
-            </Flex>
-          }
-        />
+            }
+            data={walletsQuery.data?.pages.map(it => it.records).flat() || []}
+            onEndReached={() => {
+              walletsQuery.fetchNextPage();
+            }}
+            renderItem={loadItem}
+            keyExtractor={(it, i) => `${it.id}:${i}`}
+            onEndReachedThreshold={0.2}
+            removeClippedSubviews={false}
+            ItemSeparatorComponent={() => <View style={{height: 1}} />}
+            ListEmptyComponent={
+              <Flex>
+                <Image
+                  source={require('@src/assets/images/empty/wallet.png')}
+                  style={{height: 128, width: 128}}
+                />
+              </Flex>
+            }
+            ListFooterComponent={
+              <Flex style={{marginVertical: 12}}>
+                <Text style={{fontSize: 12, color: '#999'}}>滑动到底了</Text>
+              </Flex>
+            }
+          />
+        </View>
       ) : (
         <ProtectView
           onPassed={() => {
