@@ -5,12 +5,11 @@ import {renderUpOrDown} from '@src/constants/u';
 import {StyleSheet, Text, View} from 'react-native';
 
 interface MyProps {
-  datas: TWallet[];
   firstAndLast?: TWallet[];
 }
 
 const Compare: React.FC<MyProps> = props => {
-  const {datas, firstAndLast} = props;
+  const {firstAndLast} = props;
   let last = firstAndLast?.[1] || ({} as TWallet);
   let first = firstAndLast?.[0] || ({} as TWallet);
   let sh000001 = [first?.indexSh000001, last?.indexSh000001];
@@ -47,13 +46,14 @@ const Compare: React.FC<MyProps> = props => {
       </Flex>
     );
   };
-  return datas.length >= 2 ? (
+  
+  return (
     <View style={styles.item}>
       {renderItem('总资产', sum, 'k')}
       {renderItem('上证指数', sh000001)}
       {renderItem('标普500指数', spx)}
     </View>
-  ) : null;
+  );
 };
 
 const styles = StyleSheet.create({

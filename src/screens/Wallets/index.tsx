@@ -7,7 +7,7 @@ import {useCaches} from '@src/stores';
 import {useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import React, {memo, useEffect} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -36,8 +36,8 @@ const Wallets: React.FC<MyProps> = memo(props => {
   const queryClient = useQueryClient();
   const focused = useIsFocused();
   const logined = useCaches().token ? true : false;
-  const [firstAndLast, setFirstAndLast] = React.useState<TWallet[]>([]);
-  const [isPassed, setIsPassed] = React.useState(false);
+  const [firstAndLast, setFirstAndLast] = useState<TWallet[]>([]);
+  const [isPassed, setIsPassed] = useState(false);
 
   const loadDatas = async (params: PaginationProps) => {
     let result = await new Services().selectWallets(params);
@@ -138,14 +138,7 @@ const Wallets: React.FC<MyProps> = memo(props => {
 
   return (
     <View style={styles.view}>
-      <Compare
-        firstAndLast={firstAndLast}
-        datas={
-          isPassed
-            ? walletsQuery.data?.pages.map(it => it.records)?.flat() || []
-            : []
-        }
-      />
+      <Compare firstAndLast={isPassed ? firstAndLast : []} />
       {isPassed ? (
         <FlatList
           // ListHeaderComponent={() => <View style={{height: 1}} />}
