@@ -27,10 +27,11 @@ import {useMutation} from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import {produce} from 'immer';
-import _ from 'lodash';
+import _, {set} from 'lodash';
 import {nanoid} from 'nanoid/non-secure';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 dayjs.extend(isoWeek);
 
@@ -310,16 +311,24 @@ const EditWallet: React.FC<MyProps> = props => {
           {...inputerDialog}
           onConfirm={onAppend}
         />
-        <DatePicker
-          date={form?.settleOn}
-          show={timePicker}
+        <DateTimePickerModal
+          isVisible={timePicker}
+          mode="date"
+          date={form?.settleOn ? new Date(form.settleOn) : new Date()}
+          onConfirm={date => {
+            updateForm('settleOn', dayjs(date).format('YYYY-MM-DD'));
+            setTimePicker(false);
+          }}
           onCancel={() => {
             setTimePicker(false);
           }}
-          onConfirm={s => {
-            updateForm('settleOn', s);
-            setTimePicker(false);
-          }}
+          locale="zh-CN" // 中文
+          display={Platform.OS === 'ios' ? 'inline' : 'default'}
+          minimumDate={new Date(1901, 0, 1)}
+          maximumDate={new Date(2099, 11, 31)}
+          confirmTextIOS="确定"
+          cancelTextIOS="取消"
+          is24Hour={true}
         />
         <View style={{height: insets.bottom, backgroundColor: 'white'}} />
       </View>
