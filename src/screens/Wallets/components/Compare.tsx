@@ -12,12 +12,12 @@ const Compare: React.FC<MyProps> = props => {
   const {firstAndLast} = props;
   let last = firstAndLast?.[1] || ({} as TWallet);
   let first = firstAndLast?.[0] || ({} as TWallet);
-  let sh000001 = [first?.indexSh000001, last?.indexSh000001];
-  let spx = [first?.indexSpx, last?.indexSpx];
+  let sh000001 = [first?.indexSh000001 || '--', last?.indexSh000001 || '--'];
+  let spx = [first?.indexSpx || '--', last?.indexSpx || '--'];
   let sum = [calculateWalletFormSum(first), calculateWalletFormSum(last)];
 
   const renderItem = (label: string, value: string[], unit?: string) => {
-    let rud = renderUpOrDown(Number(value[1]) - Number(value[0]));
+    let rud = renderUpOrDown(Number(value[1] ?? '0') - Number(value[0] ?? '0'));
 
     return (
       <Flex horizontal justify="space-between" style={{marginVertical: 4}}>
@@ -38,7 +38,8 @@ const Compare: React.FC<MyProps> = props => {
             fontSize: 14,
           }}>
           {(
-            ((Number(value[1]) - Number(value[0])) / Number(value[0])) *
+            ((Number(value[1] ?? '0') - Number(value[0] ?? '0')) /
+              Number(value[0] ?? '1')) *
             100
           ).toFixed(2)}
           %{rud.label}
@@ -46,7 +47,7 @@ const Compare: React.FC<MyProps> = props => {
       </Flex>
     );
   };
-  
+
   return (
     <View style={styles.item}>
       {renderItem('总资产', sum, 'k')}

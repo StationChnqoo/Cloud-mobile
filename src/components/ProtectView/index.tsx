@@ -1,5 +1,4 @@
-
-import { useCaches } from '@src/stores';
+import {useCaches} from '@src/stores';
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 
@@ -19,9 +18,8 @@ const ProtectView: React.FC<MyProps> = props => {
   }, [password, text]);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'center'}}>
       <View style={{alignItems: 'center'}}>
-        <View style={{height: 24}} />
         <Image
           source={require('@src/assets/images/other/protect_lock.png')}
           style={{height: 64, width: 64, tintColor: theme}}
