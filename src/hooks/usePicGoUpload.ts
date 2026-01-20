@@ -14,7 +14,7 @@ export const usePicGoUpload = () => {
   const upload = async (file: Asset) => {
     const xhr = new XMLHttpRequest();
     const host = __DEV__
-      ? 'http://192.168.0.106:40091'
+      ? 'http://192.168.0.107:40091'
       : new Envs().get('APP_JAVA');
     let formData = new FormData();
     formData.append('file', {

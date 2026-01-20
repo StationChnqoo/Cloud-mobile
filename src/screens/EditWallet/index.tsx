@@ -30,6 +30,7 @@ import {produce} from 'immer';
 import _ from 'lodash';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksParams, RootStacksProp} from '..';
+import {nanoid} from 'nanoid/non-secure';
 
 dayjs.extend(isoWeek);
 
@@ -129,6 +130,7 @@ const EditWallet: React.FC<MyProps> = props => {
       let result = await new Services().selectWallet({id: route.params.id});
       _form = result.data;
     } else {
+      _form.id = nanoid();
       _form.createAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
     }
     _form.updateAt = dayjs().format('YYYY-MM-DD HH:mm:ss');

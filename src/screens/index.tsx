@@ -23,6 +23,7 @@ import Webviewer from './Webviewer';
 import SectorStocks from './SectorStocks';
 import ChooseGlobal from './ChooseGlobal';
 import ChooseStock from './ChooseStock';
+import PreviewVideo from './PreviewVideo';
 
 export type RootStacksParams = {
   BottomTabs: undefined;
@@ -40,6 +41,7 @@ export type RootStacksParams = {
   SectorStocks: {code: string; name: string};
   ChooseGlobal: undefined;
   ChooseStock: {id?: string};
+  PreviewVideo: {uri: string};
 };
 
 const RootStack = createNativeStackNavigator<RootStacksParams>();
@@ -74,6 +76,7 @@ export default function Screens() {
         <RootStack.Screen name="SectorStocks" component={SectorStocks} />
         <RootStack.Screen name="ChooseGlobal" component={ChooseGlobal} />
         <RootStack.Screen name="ChooseStock" component={ChooseStock} />
+        <RootStack.Screen name="PreviewVideo" component={PreviewVideo} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

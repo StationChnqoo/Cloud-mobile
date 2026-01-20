@@ -3,7 +3,7 @@ import {toast} from '@src/constants/u';
 import {usePhotoPermission} from '@src/hooks/usePhotoPermission';
 import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
 import {produce} from 'immer';
-import React, {useEffect, useState} from 'react';
+import React, {use, useEffect, useMemo, useState} from 'react';
 import {Alert, Linking, Platform, StyleSheet, Text, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
@@ -13,6 +13,10 @@ import MoreButton from '../MoreButton';
 import PicGoFile from '../PicGoFile';
 import Spinner from '../Spinner';
 import SdkService from '@src/services/SdkService';
+import useFile, {PicGoFileType} from '@src/hooks/useFile';
+import {navigationRef} from '@src/screens';
+import Share from 'react-native-share';
+import RNFS from 'react-native-fs';
 
 interface FileUploaderProps {
   images: PicGoSrc[];
@@ -25,6 +29,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
   const [isOpenPreviewer, setIsOpenPreviewer] = useState(false);
   const [isOpenInputer, setIsOpenInputer] = useState(false);
   const [editIndex, setEditIndex] = useState(0);
+  const [downloading, setDownloading] = useState(false);
 
   const link2PhotoSetting = () => {
     Alert.alert('提示', '需要获取相册权限，是否前往设置页面进行设置？', [
@@ -34,33 +39,12 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
   };
 
   const {uploading, upload, picGo, progress} = usePicGoUpload();
-  const onMoveUp = (index: number) => {
-    if (index > 0) {
-      setImages(
-        produce(images, draft => {
-          [draft[index], draft[index - 1]] = [draft[index - 1], draft[index]];
-        }),
-      );
-    }
-  };
-
-  const onMoveDown = (index: number) => {
-    if (index < images.length - 1) {
-      setImages(
-        produce(images, draft => {
-          [draft[index], draft[index + 1]] = [draft[index + 1], draft[index]];
-        }),
-      );
-    }
-  };
 
   useEffect(() => {
     // const {id_encoded, size, url, title, date} = result.data;
     // onImageUploaded({id: id_encoded, size, url, title, date});
     if (picGo?.url) {
-      let {url, key, id, size, date} = picGo;
-      let image = {id, size, url, name: key, date};
-      setImages([...images, image]);
+      setImages([...images, picGo]);
       console.log('PicGo: ', picGo);
     } else {
     }
@@ -98,7 +82,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
       case 'limited': {
         let assest = await launchImageLibrary({
           includeBase64: true,
-          mediaType: 'photo',
+          mediaType: 'mixed',
         });
         if (!assest.didCancel && assest.assets?.length) {
           upload(assest.assets[0]);
@@ -132,6 +116,72 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
     setIsOpenInputer(false);
   };
 
+  const imagePreviewSrcs = useMemo(() => {
+    return images
+      .filter(it => {
+        const {file} = useFile(it);
+        return file.type == PicGoFileType.Image;
+      })
+      .map(it => ({uri: it.url}));
+  }, [images]);
+
+  const onPreview = (index: number) => {
+    const {file} = useFile(images[index]);
+    if (file.type == PicGoFileType.Image) {
+      setSrcIndex(0);
+      setIsOpenPreviewer(true);
+    } else if (file.type == PicGoFileType.Video) {
+      navigationRef.navigate('PreviewVideo', {uri: images[index].url});
+    } else {
+      Alert.alert(
+        '提示',
+        '仅支持图片和视频预览，其他类型文件请前往浏览器查看～',
+        [{text: '确定', onPress: () => {}}],
+      );
+    }
+  };
+
+  const onShare = async (src: PicGoSrc) => {
+    if (downloading) {
+      toast('请等待下载完成后再分享 ...');
+      return;
+    }
+    let url = `${Platform.OS == 'android' ? 'file://' : ''}${
+      RNFS.CachesDirectoryPath // 私有目录需要Provider
+    }/${src.name}`;
+    let isInCache = await RNFS.exists(url);
+    console.log('Share File: ', {url, isInCache});
+    let findCouldShareUrl = async () => {
+      if (isInCache) {
+        return url;
+      } else {
+        setDownloading(true);
+        let download = await RNFS.downloadFile({
+          fromUrl: src.url,
+          toFile: url,
+        }).promise;
+        if (download.statusCode === 200) {
+          setDownloading(false);
+          return url;
+        }
+      }
+    };
+    let couldShareUrl = await findCouldShareUrl();
+    toast(`正在分享：${couldShareUrl}`);
+    setTimeout(() => {
+      Share.open({
+        title: src.name,
+        filename: src.name,
+        type: src.mimeType,
+        // saveToFiles: true,
+        url: couldShareUrl,
+      }).catch(error => {
+        console.log('Share Error: ', error);
+        // toast(`分享失败：${error}`);
+      });
+    }, 1000);
+  };
+
   return (
     <View>
       <Flex horizontal justify="space-between">
@@ -147,24 +197,16 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
           <PicGoFile
             src={it}
             onDelete={() => onImageDelete(it)}
-            onPreview={() => {
-              setSrcIndex(i);
-              setIsOpenPreviewer(true);
-            }}
-            onMoveUp={() => {
-              onMoveUp(i);
-            }}
-            onMoveDown={() => {
-              onMoveDown(i);
-            }}
+            onPreview={() => onPreview(i)}
             onEdit={() => {
               onEdit(i);
             }}
+            onShare={onShare}
           />
         </View>
       ))}
       <ImageView
-        images={images.map(it => ({uri: it.url}))}
+        images={imagePreviewSrcs}
         imageIndex={srcIndex}
         visible={isOpenPreviewer}
         onRequestClose={() => setIsOpenPreviewer(false)}

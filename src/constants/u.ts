@@ -29,6 +29,11 @@ export const hex2Rgba = (hex: string, alpha: number) => {
   )}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`;
 };
 
+export const dip2px = (dip: number) => {
+  const scale = Dimensions.get('window').width / 375;
+  return Math.round(dip * scale);
+};
+
 export const links = {
   previewPdf: (url: string) =>
     `https://mozilla.github.io/pdf.js/web/viewer.html?file=${url}`,
