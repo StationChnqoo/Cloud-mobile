@@ -67,10 +67,12 @@ const VnFundDetail: React.FC<MyProps> = props => {
         const data = result?.quoteResponse?.result.find(
           d => d.symbol === it.code,
         );
-        return `${data?.regularMarketChangePercent?.toFixed(2)}% x ${
-          it.weight
-        }`;
-      }).join(' + '),
+        return `${
+          data?.regularMarketChangePercent < 0
+            ? `(${data?.regularMarketChangePercent?.toFixed(2)})`
+            : data?.regularMarketChangePercent?.toFixed(2)
+        }% x ${it.weight}`;
+      }).join('+'),
     );
   };
 
@@ -96,30 +98,31 @@ const VnFundDetail: React.FC<MyProps> = props => {
           borderBottomColor: '#eee',
           paddingVertical: 10,
         }}>
-        <Text style={{color: '#666', marginTop: 8, fontSize: 14, flex: 1}}>
-          {`(${calcString} ) / ${RateSum.toFixed(2)}`}
-        </Text>
-        <View style={{height: 10}} />
-        <Flex horizontal justify="space-between" align="flex-end">
-          <View style={{}}>
+        <Flex horizontal align="flex-end">
+          <Text style={{color: '#666', fontSize: 12, flex: 1}}>
             <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
               估值：
             </Text>
+            {`[${calcString}] / ${RateSum.toFixed(2)}`}
             <Text
               style={{
                 color: rud.color,
-                fontFamily: Fonts.digital,
-                fontSize: 32,
+                fontSize: 18,
               }}>
-              ≈ {(total / RateSum).toFixed(2)}%
+              {` ≈ ${(total / RateSum).toFixed(2)}`}%{rud.label}
             </Text>
-          </View>
+          </Text>
+          <View style={{width: 10}} />
           <PreloadImage
             uri={`https://webquotepic.eastmoney.com/GetPic.aspx?nid=100.VNINDEX&imageType=RTOPSH&_${Math.ceil(
               new Date().getTime() / 10000,
             )}`}
             style={{height: 68, width: 122}}
           />
+        </Flex>
+        <View style={{height: 10}} />
+        <Flex horizontal justify="space-between" align="flex-end">
+          <View style={{}}></View>
         </Flex>
         <View style={{height: 10}} />
         <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
