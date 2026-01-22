@@ -44,11 +44,7 @@ interface States {
 }
 
 // 我的持仓
-const defaultCared = [
-  {market: 0, code: '159659', label: '纳斯达克100ETF'},
-  {market: 1, code: '513500', label: '标普500ETF'},
-  {market: 1, code: '513880', label: '日经225ETF'},
-];
+const defaultCared = [{market: 100, code: 'VNINDEX', label: '越南胡志明指数'}];
 
 const defaultGlobal = [
   '1.000001',

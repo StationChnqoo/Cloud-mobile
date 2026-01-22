@@ -4,6 +4,7 @@ import _ from 'lodash';
 import {use, useEffect, useState} from 'react';
 import {
   FlatList,
+  Image,
   ListRenderItemInfo,
   RefreshControl,
   StyleSheet,
@@ -17,6 +18,7 @@ import {YahooStandardStock} from '@src/constants/t';
 import {renderUpOrDown} from '@src/constants/u';
 import Flex from '@src/components/Flex';
 import {Fonts} from '@src/constants/config';
+import PreloadImage from '@src/components/PreloadImage';
 
 // 持仓数据来源：新浪财经
 const DefaultVnFunds = [
@@ -94,20 +96,31 @@ const VnFundDetail: React.FC<MyProps> = props => {
           borderBottomColor: '#eee',
           paddingVertical: 10,
         }}>
-        <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
-          估值如下：
-        </Text>
-        <Text style={{color: '#666', marginTop: 8, fontSize: 14}}>
+        <Text style={{color: '#666', marginTop: 8, fontSize: 14, flex: 1}}>
           {`(${calcString} ) / ${RateSum.toFixed(2)}`}
         </Text>
-        <Text
-          style={{
-            color: rud.color,
-            fontFamily: Fonts.digital,
-            fontSize: 32,
-          }}>
-          ≈ {(total / RateSum).toFixed(2)}%
-        </Text>
+        <View style={{height: 10}} />
+        <Flex horizontal justify="space-between" align="flex-end">
+          <View style={{}}>
+            <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
+              估值：
+            </Text>
+            <Text
+              style={{
+                color: rud.color,
+                fontFamily: Fonts.digital,
+                fontSize: 32,
+              }}>
+              ≈ {(total / RateSum).toFixed(2)}%
+            </Text>
+          </View>
+          <PreloadImage
+            uri={`https://webquotepic.eastmoney.com/GetPic.aspx?nid=100.VNINDEX&imageType=RTOPSH&_${Math.ceil(
+              new Date().getTime() / 10000,
+            )}`}
+            style={{height: 68, width: 122}}
+          />
+        </Flex>
         <View style={{height: 10}} />
         <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
           2025年第四季度持仓：
@@ -121,7 +134,7 @@ const VnFundDetail: React.FC<MyProps> = props => {
     const rud = renderUpOrDown(item.regularMarketChangePercent);
     return (
       <View style={{paddingVertical: 8, paddingHorizontal: 15}}>
-        <Text style={{color: '#999', fontSize: 14}}>
+        <Text style={{color: theme, fontSize: 14}}>
           #{index + 1}&nbsp;&nbsp;
           <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
             {DefaultVnFunds[index].label}
@@ -130,7 +143,7 @@ const VnFundDetail: React.FC<MyProps> = props => {
         <View style={{height: 4}} />
         <Flex horizontal>
           <Text
-            style={{fontSize: 12, color: '#666', flex: 1}}
+            style={{fontSize: 14, color: '#999', flex: 1}}
             numberOfLines={1}>
             {item.longName}
           </Text>
