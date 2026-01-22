@@ -35,6 +35,11 @@ interface States {
   setGlobal: (g: string[]) => void;
   holdFundCodes: string[];
   setHoldFundCodes: (h: string[]) => void;
+  yahoo: {
+    cookies: string;
+    crumb: string;
+  };
+  setYahoo: (y: {cookies: string; crumb: string}) => void;
   reset: () => void;
 }
 
@@ -63,6 +68,10 @@ const initialState = {
   global: _.cloneDeep(defaultGlobal),
   holdFundCodes:
     `BK1040,BK1041,BK0727,BK1044,BK1031,BK0433,BK0438,BK0437`.split(','),
+  yahoo: {
+    cookies: `GUC=AQEBCAFpcyJppEIcswRn&s=AQAAAIRYnMD7&g=aXHREA; A1=d=AQABBKpfoWgCEGajuXd9l--403wdLKCZn2QFEgEBCAEic2mkaWChyyMA_eMDAAcIql-haKCZn2Q&S=AQAAAgnKAnX81kxNcsaI9kp0jgY; A3=d=AQABBKpfoWgCEGajuXd9l--403wdLKCZn2QFEgEBCAEic2mkaWChyyMA_eMDAAcIql-haKCZn2Q&S=AQAAAgnKAnX81kxNcsaI9kp0jgY; A1S=d=AQABBKpfoWgCEGajuXd9l--403wdLKCZn2QFEgEBCAEic2mkaWChyyMA_eMDAAcIql-haKCZn2Q&S=AQAAAgnKAnX81kxNcsaI9kp0jgY; gpp=DBAA; gpp_sid=-1; axids=gam=y-Nt8QxHlE2uJYwT1c9H4YfYaKC0N807H_~A&dv360=eS13d0haTXpORTJ1SFFZb0szUU9vYmpScnVHUkVPWUZ4MH5B&ydsp=y-Z.l1i8ZE2uJZdSuhTkxoyA4mcA2knQxw~A&tbla=y-D45mccJE2uJ7M2FQc7dnSrWwgdeLHmUR~A; tbla_id=cc8194ee-f8d4-4550-a0ad-1a2686694879-tuctf9bf5b1; _ga_BNW7Q63BME=GS2.1.s1769067216$o1$g1$t1769067227$j49$l0$h0; _ga=GA1.1.1320792746.1769066762; _ga_YD9K1W9DLN=GS2.1.s1769068902$o2$g1$t1769068921$j41$l0$h0; PRF=t%3DHPG.VN%252BFPT.VN%26dock-collapsed%3Dtrue; fes-ds-session=pv%3D4; _ga_LHGXQCMSKY=GS2.1.s1769070983$o2$g1$t1769070984$j59$l0$h0; cmp=t=1769081923&j=0&u=1---`,
+    crumb: 'VPmHr38ItUO',
+  },
 };
 
 export const useCaches = create<States>()(
@@ -78,6 +87,7 @@ export const useCaches = create<States>()(
         setGlobal: global => set({global}),
         setHoldFundCodes: holdFundCodes => set({holdFundCodes}),
         setUser: user => set({user}),
+        setYahoo: yahoo => set({yahoo}),
         reset: () => set({...initialState}),
       }),
       {
@@ -88,6 +98,7 @@ export const useCaches = create<States>()(
           token: state.token,
           holdFundCodes: state.holdFundCodes,
           cared: state.cared,
+          yahoo: state.yahoo,
         }),
       },
     ),

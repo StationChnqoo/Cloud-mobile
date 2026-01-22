@@ -25,6 +25,7 @@ import ChooseGlobal from './ChooseGlobal';
 import ChooseStock from './ChooseStock';
 import PreviewVideo from './PreviewVideo';
 import VnFundDetail from './VnFundDetail';
+import YahooAuth from './YahooAuth';
 
 export type RootStacksParams = {
   BottomTabs: undefined;
@@ -44,6 +45,7 @@ export type RootStacksParams = {
   ChooseStock: {id?: string};
   PreviewVideo: {uri: string};
   VnFundDetail: undefined;
+  YahooAuth: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStacksParams>();
@@ -80,6 +82,7 @@ export default function Screens() {
         <RootStack.Screen name="ChooseStock" component={ChooseStock} />
         <RootStack.Screen name="PreviewVideo" component={PreviewVideo} />
         <RootStack.Screen name="VnFundDetail" component={VnFundDetail} />
+        <RootStack.Screen name="YahooAuth" component={YahooAuth} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

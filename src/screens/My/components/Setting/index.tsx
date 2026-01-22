@@ -16,6 +16,11 @@ const Setting: React.FC<MyProps> = props => {
   const {theme, setTheme} = useCaches();
   const [colors, setColors] = useState([]);
   const {token} = useCaches();
+  const {navigation} = props;
+
+  const onYahooAuthPress = () => {
+    navigation.navigate('YahooAuth');
+  };
 
   const onClearPress = () => {
     Alert.alert('提示', '确认要清除数据缓存吗？', [
@@ -61,18 +66,23 @@ const Setting: React.FC<MyProps> = props => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={onClearPress}
-          hitSlop={{
-            top: 8,
-            right: 8,
-            bottom: 8,
-            left: 8,
-          }}>
+          hitSlop={8}>
           <Text style={{color: theme, fontSize: 14}}>清除</Text>
         </TouchableOpacity>
       </Flex>
       <View style={{height: 10}} />
       <Flex horizontal justify="space-between">
         <Text style={{fontSize: 14, color: '#333'}}>系统变量</Text>
+      </Flex>
+      <View style={{height: 10}} />
+      <Flex justify={'space-between'} horizontal>
+        <Text style={{fontSize: 14, color: '#333'}}>Yahoo Auth</Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={onYahooAuthPress}
+          hitSlop={8}>
+          <Text style={{color: theme, fontSize: 14}}>设置</Text>
+        </TouchableOpacity>
       </Flex>
       <View style={{height: 5}} />
       {Object.keys(new Envs().all()).map((it, i) => (

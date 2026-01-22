@@ -5,13 +5,13 @@ export default class YahooService extends BaseService {
     super();
   }
   // https://query1.finance.yahoo.com?&=&fields=&crumb=&formatted=false&region=US&lang=en-US
-  async selectVnFunds(cookie: string, fundCodes: string) {
+  async selectVnFunds(cookie: string, crumb: string, fundCodes: string) {
     this.instance.defaults.baseURL = 'https://query1.finance.yahoo.com';
     let result = await this.instance.get(`/v7/finance/quote`, {
       params: {
         symbols: fundCodes,
         fields: '',
-        crumb: 'VPmHr38ItUO',
+        crumb: crumb,
       },
       headers: {
         Cookie: cookie,
