@@ -231,14 +231,85 @@ export const UserSchema = z.object({
   createAt: z.string().optional().default(''),
 });
 
-export const VnFundSchema = z.object({
-  label: z.string().default(''),
-  code: z.string().default(''),
-  weight: z.number().default(0),
-  value: z.number().default(0),
-});
+export interface YahooStandardStock {
+    ask: number;
+    askSize: number;
+    averageAnalystRating: string;
+    averageDailyVolume3Month: number;
+    averageDailyVolume10Day: number;
+    bid: number;
+    bidSize: number;
+    bookValue: number;
+    corporateActions: any[];
+    cryptoTradeable: boolean;
+    currency: string;
+    customPriceAlertConfidence: string;
+    dividendRate: number;
+    dividendYield: number;
+    earningsTimestampEnd: number;
+    earningsTimestampStart: number;
+    epsCurrentYear: number;
+    epsForward: number;
+    epsTrailingTwelveMonths: number;
+    esgPopulated: boolean;
+    exchange: string;
+    exchangeDataDelayedBy: number;
+    exchangeTimezoneName: string;
+    exchangeTimezoneShortName: string;
+    fiftyDayAverage: number;
+    fiftyDayAverageChange: number;
+    fiftyDayAverageChangePercent: number;
+    fiftyTwoWeekChangePercent: number;
+    fiftyTwoWeekHigh: number;
+    fiftyTwoWeekHighChange: number;
+    fiftyTwoWeekHighChangePercent: number;
+    fiftyTwoWeekLow: number;
+    fiftyTwoWeekLowChange: number;
+    fiftyTwoWeekLowChangePercent: number;
+    fiftyTwoWeekRange: string;
+    financialCurrency: string;
+    firstTradeDateMilliseconds: number;
+    forwardPE: number;
+    fullExchangeName: string;
+    gmtOffSetMilliseconds: number;
+    hasPrePostMarketData: boolean;
+    isEarningsDateEstimate: boolean;
+    language: string;
+    longName: string;
+    market: string;
+    marketCap: number;
+    marketState: string;
+    messageBoardId: string;
+    priceEpsCurrentYear: number;
+    priceHint: number;
+    priceToBook: number;
+    quoteType: string;
+    region: string;
+    regularMarketChange: number;
+    regularMarketChangePercent: number;
+    regularMarketDayHigh: number;
+    regularMarketDayLow: number;
+    regularMarketDayRange: string;
+    regularMarketOpen: number;
+    regularMarketPreviousClose: number;
+    regularMarketPrice: number;
+    regularMarketTime: number;
+    regularMarketVolume: number;
+    sharesOutstanding: number;
+    shortName: string;
+    sourceInterval: number;
+    symbol: string;
+    tradeable: boolean;
+    trailingAnnualDividendRate: number;
+    trailingAnnualDividendYield: number;
+    trailingPE: number;
+    triggerable: boolean;
+    twoHundredDayAverage: number;
+    twoHundredDayAverageChange: number;
+    twoHundredDayAverageChangePercent: number;
+    typeDisp: string;
+}
 
-export type VnFund = z.infer<typeof VnFundSchema>;
 export type User = z.infer<typeof UserSchema>;
 export type StandardStock = z.infer<typeof StandardStockSchema>;
 export type Pailie3And5 = z.infer<typeof Pailie3And5Schema>;

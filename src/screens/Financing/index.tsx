@@ -95,10 +95,14 @@ const Financing: React.FC<MyProps> = props => {
 
   // console.log('ranksQuery: ', ranksQuery.data.data.diff);
   const toStockDetail = (code: string) => {
-    navigation.navigate('Webviewer', {
-      title: code,
-      url: links.stockDetail(code),
-    });
+    if (code == '100.VNINDEX') {
+      navigation.navigate('VnFundDetail');
+    } else {
+      navigation.navigate('Webviewer', {
+        title: code,
+        url: links.stockDetail(code),
+      });
+    }
   };
 
   return (
@@ -127,7 +131,6 @@ const Financing: React.FC<MyProps> = props => {
                 .filter((it): it is RealTimePrice => it !== undefined)}
               onPress={fd => toStockDetail(`${fd.f107}.${fd.f57}`)}
             />,
-
             <Care
               datas={caredQueries
                 .filter(it => it.isFetched)
