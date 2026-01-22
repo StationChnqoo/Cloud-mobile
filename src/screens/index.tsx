@@ -24,6 +24,7 @@ import SectorStocks from './SectorStocks';
 import ChooseGlobal from './ChooseGlobal';
 import ChooseStock from './ChooseStock';
 import PreviewVideo from './PreviewVideo';
+import VnFundDetail from './VnFundDetail';
 
 export type RootStacksParams = {
   BottomTabs: undefined;
@@ -42,6 +43,7 @@ export type RootStacksParams = {
   ChooseGlobal: undefined;
   ChooseStock: {id?: string};
   PreviewVideo: {uri: string};
+  VnFundDetail: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStacksParams>();
@@ -77,6 +79,7 @@ export default function Screens() {
         <RootStack.Screen name="ChooseGlobal" component={ChooseGlobal} />
         <RootStack.Screen name="ChooseStock" component={ChooseStock} />
         <RootStack.Screen name="PreviewVideo" component={PreviewVideo} />
+        <RootStack.Screen name="VnFundDetail" component={VnFundDetail} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

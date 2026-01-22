@@ -44,6 +44,7 @@ const BottomTabs = (props: MyProps) => {
   useFocusEffect(
     useCallback(() => {
       // setIsShowNewModal(true);
+      navigation.navigate('VnFundDetail');
       return () => {};
     }, []),
   );

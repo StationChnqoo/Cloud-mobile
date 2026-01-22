@@ -231,6 +231,14 @@ export const UserSchema = z.object({
   createAt: z.string().optional().default(''),
 });
 
+export const VnFundSchema = z.object({
+  label: z.string().default(''),
+  code: z.string().default(''),
+  weight: z.number().default(0),
+  value: z.number().default(0),
+});
+
+export type VnFund = z.infer<typeof VnFundSchema>;
 export type User = z.infer<typeof UserSchema>;
 export type StandardStock = z.infer<typeof StandardStockSchema>;
 export type Pailie3And5 = z.infer<typeof Pailie3And5Schema>;
