@@ -22,7 +22,7 @@ import {RootStacksProp} from '..';
 // 持仓数据来源：新浪财经
 const DefaultVnFunds = [
   {label: 'FPT公司', code: 'FPT.VN', weight: 7.86},
-  {label: '和发集团', code: 'GMD.VN', weight: 7.6},
+  {label: '和发集团', code: 'HPG.VN', weight: 7.6},
   {label: '移动世界投资公司', code: 'MWG.VN', weight: 7.58},
   {label: '越南繁荣银行', code: 'VPB.VN', weight: 6.91},
   {label: '军队股份制商业银行', code: 'MBB.VN', weight: 6.37},
@@ -55,6 +55,14 @@ const VnFundDetail: React.FC<MyProps> = props => {
   const cookie = yahoo.cookies;
   const crumb = yahoo.crumb;
   const [baseIndex, setBaseIndex] = useState<RealTimePrice>({});
+
+  const countAfterThisIndex = (index: number) => {
+    let sum = 0;
+    for (let i = index; i < DefaultVnFunds.length; i++) {
+      sum += DefaultVnFunds[i].weight;
+    }
+    return sum;
+  };
 
   const loadVnFunds = async () => {
     let result = await new YahooService().selectVnFunds(
@@ -164,8 +172,11 @@ const VnFundDetail: React.FC<MyProps> = props => {
         }}>
         <Text style={{color: theme, fontSize: 14}}>
           #{index + 1}&nbsp;&nbsp;
-          <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
+          <Text style={{color: '#333', fontSize: 14}}>
             {DefaultVnFunds[index].label}
+            <Text style={{color: '#666'}}>{` (${DefaultVnFunds[
+              index
+            ].weight.toFixed(2)}%) `}</Text>
           </Text>
         </Text>
         <View style={{height: 4}} />
@@ -180,15 +191,21 @@ const VnFundDetail: React.FC<MyProps> = props => {
             {item.regularMarketChangePercent?.toFixed(2)}%{rud.label}
           </Text>
         </Flex>
-        <View
-          style={[
-            styles.rate,
-            {
-              width: `${(DefaultVnFunds[index].weight / RateSum) * 100}%`,
-              backgroundColor: rud.color,
-            },
-          ]}
-        />
+        <Flex
+          horizontal
+          style={styles.rate}
+          justify="flex-start"
+          align="flex-end">
+          <View
+            style={[
+              {
+                height: 2,
+                width: `${(countAfterThisIndex(index) / RateSum) * 100}%`,
+                backgroundColor: rud.color,
+              },
+            ]}
+          />
+        </Flex>
       </TouchableOpacity>
     );
   };
@@ -258,9 +275,9 @@ const styles = StyleSheet.create({
   },
   rate: {
     position: 'absolute',
-    height: 2,
     bottom: -1,
     left: 15,
+    width: '100%',
   },
 });
 
