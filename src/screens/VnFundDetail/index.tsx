@@ -1,10 +1,14 @@
+import CommonStockCard from '@src/components/CommonStockCard';
+import Flex from '@src/components/Flex';
+import ToolBar from '@src/components/ToolBar';
+import {RealTimePrice, YahooStandardStock} from '@src/constants/t';
+import {renderUpOrDown} from '@src/constants/u';
+import DfcfService from '@src/services/DfcfService';
 import YahooService from '@src/services/YahooService';
 import {useCaches} from '@src/stores';
-import _ from 'lodash';
-import {use, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   FlatList,
-  Image,
   ListRenderItemInfo,
   RefreshControl,
   StyleSheet,
@@ -13,12 +17,6 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RootStacksProp} from '..';
-import ToolBar from '@src/components/ToolBar';
-import {YahooStandardStock} from '@src/constants/t';
-import {renderUpOrDown} from '@src/constants/u';
-import Flex from '@src/components/Flex';
-import {Fonts} from '@src/constants/config';
-import PreloadImage from '@src/components/PreloadImage';
 
 // 持仓数据来源：新浪财经
 const DefaultVnFunds = [
@@ -37,6 +35,7 @@ const DefaultVnFunds = [
     weight: 4.1,
   },
 ];
+
 const RateSum = DefaultVnFunds.reduce((sum, it) => sum + it.weight, 0);
 
 interface MyProps {
@@ -54,6 +53,8 @@ const VnFundDetail: React.FC<MyProps> = props => {
   const {yahoo} = useCaches();
   const cookie = yahoo.cookies;
   const crumb = yahoo.crumb;
+  const [baseIndex, setBaseIndex] = useState<RealTimePrice>({});
+
   const loadVnFunds = async () => {
     let result = await new YahooService().selectVnFunds(
       cookie,
@@ -76,8 +77,15 @@ const VnFundDetail: React.FC<MyProps> = props => {
     );
   };
 
+  const loadVnBaseIndex = async () => {
+    let result = await new DfcfService().selectRealtimePrice('100.VNINDEX');
+    console.log('loadVnBaseIndex: ', result.data);
+    setBaseIndex(result?.data || {});
+  };
+
   useEffect(() => {
     loadVnFunds();
+    loadVnBaseIndex();
   }, [r]);
 
   const renderHeader = () => {
@@ -90,44 +98,50 @@ const VnFundDetail: React.FC<MyProps> = props => {
     }, 0);
 
     const rud = renderUpOrDown(total / RateSum);
+
     return (
-      <View
-        style={{
-          paddingHorizontal: 15,
-          borderBottomWidth: 1,
-          borderBottomColor: '#eee',
-          paddingVertical: 10,
-        }}>
-        <Flex horizontal align="flex-end">
-          <Text style={{color: '#666', fontSize: 12, flex: 1}}>
-            <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
-              估值：
+      <View style={styles.header}>
+        <CommonStockCard
+          item={{
+            code: baseIndex.f57,
+            name: baseIndex.f58,
+            zdf: baseIndex.f170 / 100,
+            currentPrice: baseIndex.f43 / Math.pow(10, baseIndex.f59),
+            market: baseIndex.f107,
+            updateTime: baseIndex.f86 * 1000,
+          }}
+          onPress={() => {}}
+        />
+
+        <View style={styles.line} />
+        {datas.length == 0 ? null : (
+          <View>
+            <Flex horizontal justify="space-between" align="flex-end">
+              <View style={{}}></View>
+            </Flex>
+            <View style={{height: 10}} />
+            <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
+              2025年第四季度持仓
             </Text>
-            {`[${calcString}] / ${RateSum.toFixed(2)}`}
-            <Text
-              style={{
-                color: rud.color,
-                fontSize: 18,
-              }}>
-              {` ≈ ${(total / RateSum).toFixed(2)}`}%{rud.label}
-            </Text>
-          </Text>
-          <View style={{width: 10}} />
-          <PreloadImage
-            uri={`https://webquotepic.eastmoney.com/GetPic.aspx?nid=100.VNINDEX&imageType=RTOPSH&_${Math.ceil(
-              new Date().getTime() / 10000,
-            )}`}
-            style={{height: 68, width: 122}}
-          />
-        </Flex>
-        <View style={{height: 10}} />
-        <Flex horizontal justify="space-between" align="flex-end">
-          <View style={{}}></View>
-        </Flex>
-        <View style={{height: 10}} />
-        <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
-          2025年第四季度持仓：
-        </Text>
+            <View style={{height: 6}} />
+            <Flex horizontal align="flex-end">
+              <Text style={{color: '#666', fontSize: 12, flex: 1}}>
+                <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
+                  估值：
+                </Text>
+                {`[${calcString}] / ${RateSum.toFixed(2)}`}
+                <Text
+                  style={{
+                    color: rud.color,
+                    fontWeight: '500',
+                    fontSize: 14,
+                  }}>
+                  {` ≈ ${(total / RateSum).toFixed(2)}`}%{rud.label}
+                </Text>
+              </Text>
+            </Flex>
+          </View>
+        )}
       </View>
     );
   };
@@ -136,7 +150,12 @@ const VnFundDetail: React.FC<MyProps> = props => {
     const {item, index} = info;
     const rud = renderUpOrDown(item.regularMarketChangePercent);
     return (
-      <View style={{paddingVertical: 8, paddingHorizontal: 15}}>
+      <View
+        style={{
+          paddingVertical: 8,
+          paddingHorizontal: 15,
+          position: 'relative',
+        }}>
         <Text style={{color: theme, fontSize: 14}}>
           #{index + 1}&nbsp;&nbsp;
           <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
@@ -155,6 +174,17 @@ const VnFundDetail: React.FC<MyProps> = props => {
             {item.regularMarketChangePercent?.toFixed(2)}%{rud.label}
           </Text>
         </Flex>
+        <View
+          style={[
+            styles.rate,
+            {
+              width: `${
+                (DefaultVnFunds[index].weight / DefaultVnFunds[0].weight) * 100
+              }%`,
+              backgroundColor: rud.color,
+            },
+          ]}
+        />
       </View>
     );
   };
@@ -162,7 +192,7 @@ const VnFundDetail: React.FC<MyProps> = props => {
   return (
     <View style={styles.view}>
       <ToolBar
-        title={'估值小助手'}
+        title={`${baseIndex?.f57}.${baseIndex?.f58}` || '详情'}
         onBackPress={() => {
           navigation.goBack();
         }}
@@ -172,7 +202,9 @@ const VnFundDetail: React.FC<MyProps> = props => {
         data={datas}
         renderItem={renderItem}
         ItemSeparatorComponent={() => (
-          <View style={{height: 1, backgroundColor: '#eee'}} />
+          <View
+            style={{height: 1, backgroundColor: '#eee', marginHorizontal: 15}}
+          />
         )}
         refreshControl={
           <RefreshControl
@@ -204,6 +236,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
   },
+  header: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
   line: {
     height: 1,
     backgroundColor: '#eee',
@@ -214,7 +250,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#987123',
     borderRadius: 5,
-    height: 44,
+    height: 36,
+  },
+  rate: {
+    position: 'absolute',
+    height: 2,
+    bottom: -1,
+    left: 15,
   },
 });
 
