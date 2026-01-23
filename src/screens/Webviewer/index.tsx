@@ -21,9 +21,11 @@ const Webviewer: React.FC<MyProps> = props => {
   const [isShowProgressBar, setIsShowProgressBar] = useState(false);
   const webViewRef = useRef(null);
   const insets = useSafeAreaInsets();
+
   useEffect(() => {
     return function () {};
   }, []);
+
   const injectedJavaScript =
     route.params?.injectedJavaScript || `(function() {})();`;
   // useFocusEffect(useCallback(() => {}, [sound]));
@@ -34,6 +36,7 @@ const Webviewer: React.FC<MyProps> = props => {
         title={route.params.title}
         onBackPress={() => navigation.goBack()}
       />
+      <View style={{height: 1, backgroundColor: '#d8d8d8'}} />
       <View style={styles.view}>
         <WebView
           ref={webViewRef}

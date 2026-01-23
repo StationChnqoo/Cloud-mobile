@@ -13,6 +13,7 @@ import {
   RefreshControl,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -112,7 +113,6 @@ const VnFundDetail: React.FC<MyProps> = props => {
           }}
           onPress={() => {}}
         />
-
         <View style={styles.line} />
         {datas.length == 0 ? null : (
           <View>
@@ -120,10 +120,6 @@ const VnFundDetail: React.FC<MyProps> = props => {
               <View style={{}}></View>
             </Flex>
             <View style={{height: 10}} />
-            <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
-              2025年第四季度持仓
-            </Text>
-            <View style={{height: 6}} />
             <Flex horizontal align="flex-end">
               <Text style={{color: '#666', fontSize: 12, flex: 1}}>
                 <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
@@ -150,11 +146,18 @@ const VnFundDetail: React.FC<MyProps> = props => {
     const {item, index} = info;
     const rud = renderUpOrDown(item.regularMarketChangePercent);
     return (
-      <View
+      <TouchableOpacity
         style={{
           paddingVertical: 8,
           paddingHorizontal: 15,
           position: 'relative',
+        }}
+        activeOpacity={0.8}
+        onPress={() => {
+          navigation.navigate('Webviewer', {
+            title: item.symbol,
+            url: `https://finance.yahoo.com/quote/${item.symbol}`,
+          });
         }}>
         <Text style={{color: theme, fontSize: 14}}>
           #{index + 1}&nbsp;&nbsp;
@@ -178,14 +181,12 @@ const VnFundDetail: React.FC<MyProps> = props => {
           style={[
             styles.rate,
             {
-              width: `${
-                (DefaultVnFunds[index].weight / DefaultVnFunds[0].weight) * 100
-              }%`,
+              width: `${(DefaultVnFunds[index].weight / RateSum) * 100}%`,
               backgroundColor: rud.color,
             },
           ]}
         />
-      </View>
+      </TouchableOpacity>
     );
   };
 
