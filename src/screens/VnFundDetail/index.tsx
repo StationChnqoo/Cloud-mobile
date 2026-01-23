@@ -125,14 +125,17 @@ const VnFundDetail: React.FC<MyProps> = props => {
                 <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
                   估值：
                 </Text>
-                {`[${calcString}] / ${RateSum.toFixed(2)}`}
+                {`[${calcString}]`}
                 <Text
                   style={{
                     color: rud.color,
                     fontWeight: '500',
                     fontSize: 14,
                   }}>
-                  {` ≈ ${(total / RateSum).toFixed(2)}`}%{rud.label}
+                  {` ≈ ${(total / 100).toFixed(2)}% 到 ${(
+                    total / RateSum
+                  ).toFixed(2)}`}
+                  %之间
                 </Text>
               </Text>
             </Flex>
