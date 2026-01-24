@@ -46,6 +46,8 @@ export const links = {
    * @param code 0.799050
    * @returns
    */
-  previewStockChart: (code: string) =>
-    `https://webquotepic.eastmoney.com/GetPic.aspx?imageType=r&type=&nid=${code}`,
+  previewStockChart: (code: string, imageType?: string) =>
+    `https://webquotepic.eastmoney.com/GetPic.aspx?imageType=${
+      imageType || ''
+    }&type=&nid=${code}`,
 };

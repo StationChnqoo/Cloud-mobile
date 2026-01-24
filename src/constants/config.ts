@@ -1,9 +1,11 @@
-enum Fonts {
+export enum Fonts {
   digitalMono = 'digital-7-mono',
   digital = 'digital-7',
 }
 
-const GlobalIndexes = {
+export const RefreshInterval = 60000;
+
+export const GlobalIndexes = {
   asia: {
     name: '亚洲',
     value: [
@@ -254,5 +256,3 @@ const GlobalIndexes = {
     ],
   },
 };
-
-export {Fonts, GlobalIndexes};

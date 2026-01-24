@@ -22,7 +22,6 @@ export default class BaseService {
       },
     });
     this.instance.interceptors.request.use((x: any) => {
-      console.log('Request: ', {url: x.url, data: x?.data || x?.params});
       x.meta = x.meta || {};
       x.meta.timer = new Date().getTime();
       return x;
@@ -34,7 +33,8 @@ export default class BaseService {
         //   `${new Date().getTime() - x.config.meta.timer} ms`,
         //   // JSON.stringify(x.config.params),
         // );
-        console.log('Response: ', x.data);
+        console.log(x.request.responseURL);
+        console.log(x.data);
         return x;
       },
       (error: AxiosError) => {

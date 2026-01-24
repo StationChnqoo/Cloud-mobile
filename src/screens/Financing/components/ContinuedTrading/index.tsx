@@ -1,6 +1,7 @@
 import {useIsFocused} from '@react-navigation/native';
 import Flex from '@src/components/Flex';
 import Tabs from '@src/components/Tabs';
+import {RefreshInterval} from '@src/constants/config';
 import {RealTimePrice} from '@src/constants/t';
 import {renderUpOrDown} from '@src/constants/u';
 import DfcfService from '@src/services/DfcfService';
@@ -94,7 +95,7 @@ const ContinuedTrading = (props: MyProps) => {
   const indexesQuery = useQueries({
     queries: indexes[tabs[tabIndex].value].map(it => ({
       queryKey: ['indexesQuery', tabIndex, it.value],
-      refetchInterval: 10000,
+      refetchInterval: RefreshInterval,
       enabled: focused,
       queryFn: () => new DfcfService().selectRealtimePrice(it.value),
     })),
@@ -193,6 +194,7 @@ const styles = StyleSheet.create({
     // borderRadius: 12,
     backgroundColor: 'white',
     // marginHorizontal: '3%',
+    marginBottom: 1,
   },
   view: {
     backgroundColor: 'white',

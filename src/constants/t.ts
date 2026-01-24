@@ -40,6 +40,24 @@ export interface OtherCountryStock {
   f152: number;
 }
 
+export interface BoardItem {
+  amount: number;    // 成交额
+  c: string;         // 代码
+  fbt: number;       // 封板额
+  hs: number;        // 换手率
+  hybk: string;      // 行业板块
+  ltsz: number;      // 流通市值
+  m: number;         // 连板数
+  n: string;         // 名称
+  p: number;         // 最新价
+  tshare: number;    // 总市值
+  zbc: number;       // 炸板次数
+  zdp: number;       // 涨跌幅
+  zf: number;        // 振幅
+  zs: number;        // 涨速
+  ztp: number;       // 涨停价
+}
+
 export interface RealTimePrice {
   /** 股票价格 * 1000 */
   f43?: number;
@@ -232,82 +250,82 @@ export const UserSchema = z.object({
 });
 
 export interface YahooStandardStock {
-    ask: number;
-    askSize: number;
-    averageAnalystRating: string;
-    averageDailyVolume3Month: number;
-    averageDailyVolume10Day: number;
-    bid: number;
-    bidSize: number;
-    bookValue: number;
-    corporateActions: any[];
-    cryptoTradeable: boolean;
-    currency: string;
-    customPriceAlertConfidence: string;
-    dividendRate: number;
-    dividendYield: number;
-    earningsTimestampEnd: number;
-    earningsTimestampStart: number;
-    epsCurrentYear: number;
-    epsForward: number;
-    epsTrailingTwelveMonths: number;
-    esgPopulated: boolean;
-    exchange: string;
-    exchangeDataDelayedBy: number;
-    exchangeTimezoneName: string;
-    exchangeTimezoneShortName: string;
-    fiftyDayAverage: number;
-    fiftyDayAverageChange: number;
-    fiftyDayAverageChangePercent: number;
-    fiftyTwoWeekChangePercent: number;
-    fiftyTwoWeekHigh: number;
-    fiftyTwoWeekHighChange: number;
-    fiftyTwoWeekHighChangePercent: number;
-    fiftyTwoWeekLow: number;
-    fiftyTwoWeekLowChange: number;
-    fiftyTwoWeekLowChangePercent: number;
-    fiftyTwoWeekRange: string;
-    financialCurrency: string;
-    firstTradeDateMilliseconds: number;
-    forwardPE: number;
-    fullExchangeName: string;
-    gmtOffSetMilliseconds: number;
-    hasPrePostMarketData: boolean;
-    isEarningsDateEstimate: boolean;
-    language: string;
-    longName: string;
-    market: string;
-    marketCap: number;
-    marketState: string;
-    messageBoardId: string;
-    priceEpsCurrentYear: number;
-    priceHint: number;
-    priceToBook: number;
-    quoteType: string;
-    region: string;
-    regularMarketChange: number;
-    regularMarketChangePercent: number;
-    regularMarketDayHigh: number;
-    regularMarketDayLow: number;
-    regularMarketDayRange: string;
-    regularMarketOpen: number;
-    regularMarketPreviousClose: number;
-    regularMarketPrice: number;
-    regularMarketTime: number;
-    regularMarketVolume: number;
-    sharesOutstanding: number;
-    shortName: string;
-    sourceInterval: number;
-    symbol: string;
-    tradeable: boolean;
-    trailingAnnualDividendRate: number;
-    trailingAnnualDividendYield: number;
-    trailingPE: number;
-    triggerable: boolean;
-    twoHundredDayAverage: number;
-    twoHundredDayAverageChange: number;
-    twoHundredDayAverageChangePercent: number;
-    typeDisp: string;
+  ask: number;
+  askSize: number;
+  averageAnalystRating: string;
+  averageDailyVolume3Month: number;
+  averageDailyVolume10Day: number;
+  bid: number;
+  bidSize: number;
+  bookValue: number;
+  corporateActions: any[];
+  cryptoTradeable: boolean;
+  currency: string;
+  customPriceAlertConfidence: string;
+  dividendRate: number;
+  dividendYield: number;
+  earningsTimestampEnd: number;
+  earningsTimestampStart: number;
+  epsCurrentYear: number;
+  epsForward: number;
+  epsTrailingTwelveMonths: number;
+  esgPopulated: boolean;
+  exchange: string;
+  exchangeDataDelayedBy: number;
+  exchangeTimezoneName: string;
+  exchangeTimezoneShortName: string;
+  fiftyDayAverage: number;
+  fiftyDayAverageChange: number;
+  fiftyDayAverageChangePercent: number;
+  fiftyTwoWeekChangePercent: number;
+  fiftyTwoWeekHigh: number;
+  fiftyTwoWeekHighChange: number;
+  fiftyTwoWeekHighChangePercent: number;
+  fiftyTwoWeekLow: number;
+  fiftyTwoWeekLowChange: number;
+  fiftyTwoWeekLowChangePercent: number;
+  fiftyTwoWeekRange: string;
+  financialCurrency: string;
+  firstTradeDateMilliseconds: number;
+  forwardPE: number;
+  fullExchangeName: string;
+  gmtOffSetMilliseconds: number;
+  hasPrePostMarketData: boolean;
+  isEarningsDateEstimate: boolean;
+  language: string;
+  longName: string;
+  market: string;
+  marketCap: number;
+  marketState: string;
+  messageBoardId: string;
+  priceEpsCurrentYear: number;
+  priceHint: number;
+  priceToBook: number;
+  quoteType: string;
+  region: string;
+  regularMarketChange: number;
+  regularMarketChangePercent: number;
+  regularMarketDayHigh: number;
+  regularMarketDayLow: number;
+  regularMarketDayRange: string;
+  regularMarketOpen: number;
+  regularMarketPreviousClose: number;
+  regularMarketPrice: number;
+  regularMarketTime: number;
+  regularMarketVolume: number;
+  sharesOutstanding: number;
+  shortName: string;
+  sourceInterval: number;
+  symbol: string;
+  tradeable: boolean;
+  trailingAnnualDividendRate: number;
+  trailingAnnualDividendYield: number;
+  trailingPE: number;
+  triggerable: boolean;
+  twoHundredDayAverage: number;
+  twoHundredDayAverageChange: number;
+  twoHundredDayAverageChangePercent: number;
+  typeDisp: string;
 }
 
 export type User = z.infer<typeof UserSchema>;

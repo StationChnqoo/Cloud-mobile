@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     // borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 12,
+    marginBottom: 1,
     // marginHorizontal: '3%',
     // borderRadius: 12,
   },

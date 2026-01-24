@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import BaseService from './BaseService';
 
 export default class DfcfService extends BaseService {
@@ -177,6 +178,29 @@ export default class DfcfService extends BaseService {
         fs: 'm:90 t:2',
         fields:
           'f12,f14,f2,f3,f62,f184,f66,f69,f72,f75,f78,f81,f84,f87,f204,f205,f124,f1,f13',
+      },
+    });
+    return result.data;
+  }
+
+  /**
+   * 炸板
+   * @param date YYYYMMDD
+   * @returns 
+   */
+  async selectBoomBoards(date?: string) {
+    // https://quote.eastmoney.com/ztb/detail#type=zbgc
+    // https://push2ex.eastmoney.com/getTopicZBPool?cb=callbackdata603949&ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=20&sort=fbt%3Aasc&date=20260124&_=1769240666924
+    this.instance.defaults.baseURL = 'https://push2ex.eastmoney.com';
+    let result = await this.instance.get(`/getTopicZBPool`, {
+      params: {
+        cb: '',
+        ut: '7eea3edcaed734bea9cbfc24409ed989',
+        dpt: 'wz.ztzt',
+        pageindex: 0,
+        pagesize: 100,
+        sort: 'fbt:asc',
+        date: date ? date : dayjs().format('YYYYMMDD'),
       },
     });
     return result.data;

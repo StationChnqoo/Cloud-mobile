@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     // borderRadius: 12,
     paddingHorizontal: 12,
+    marginBottom: 1,
     // borderRadius: 12,
   },
   viewCounts: {
