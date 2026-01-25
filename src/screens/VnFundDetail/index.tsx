@@ -8,6 +8,7 @@ import YahooService from '@src/services/YahooService';
 import {useCaches} from '@src/stores';
 import {useEffect, useState} from 'react';
 import {
+  Dimensions,
   FlatList,
   ListRenderItemInfo,
   RefreshControl,
@@ -123,31 +124,23 @@ const VnFundDetail: React.FC<MyProps> = props => {
         />
         <View style={styles.line} />
         {datas.length == 0 ? null : (
-          <View>
-            <Flex horizontal justify="space-between" align="flex-end">
-              <View style={{}}></View>
-            </Flex>
-            <View style={{height: 10}} />
-            <Flex horizontal align="flex-end">
-              <Text style={{color: '#666', fontSize: 12, flex: 1}}>
-                <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
-                  估值：
-                </Text>
-                {`[${calcString}]`}
-                <Text
-                  style={{
-                    color: rud.color,
-                    fontWeight: '500',
-                    fontSize: 14,
-                  }}>
-                  {` ≈ ${(total / 100).toFixed(2)}% 到 ${(
-                    total / RateSum
-                  ).toFixed(2)}`}
-                  %之间
-                </Text>
-              </Text>
-            </Flex>
-          </View>
+          <Flex style={{marginTop: 10}} horizontal justify="space-between">
+            <Text style={{color: '#333', fontSize: 14, fontWeight: '500'}}>
+              2025第四季度持仓估值
+            </Text>
+            {/* {`[${calcString}]`} */}
+            <Text
+              style={{
+                color: rud.color,
+                fontWeight: '500',
+                fontSize: 14,
+              }}>
+              {`${(total / 100).toFixed(2)}% 到 ${(total / RateSum).toFixed(
+                2,
+              )}`}
+              %之间
+            </Text>
+          </Flex>
         )}
       </View>
     );
@@ -170,26 +163,40 @@ const VnFundDetail: React.FC<MyProps> = props => {
             url: `https://finance.yahoo.com/quote/${item.symbol}`,
           });
         }}>
-        <Text style={{color: theme, fontSize: 14}}>
-          #{index + 1}&nbsp;&nbsp;
-          <Text style={{color: '#333', fontSize: 14}}>
-            {DefaultVnFunds[index].label}
-            <Text style={{color: '#666'}}>{` (${DefaultVnFunds[
-              index
-            ].weight.toFixed(2)}%) `}</Text>
+        <Flex horizontal justify="space-between">
+          <Text style={{color: theme, fontSize: 14}}>
+            #{index + 1}&nbsp;&nbsp;
+            <Text style={{color: '#333', fontSize: 14}}>
+              {DefaultVnFunds[index].label}
+              <Text style={{color: '#666'}}>{` (${DefaultVnFunds[
+                index
+              ].weight.toFixed(2)}%) `}</Text>
+            </Text>
           </Text>
-        </Text>
-        <View style={{height: 4}} />
-        <Flex horizontal>
+        </Flex>
+        <View style={{height: 5}} />
+        <Flex horizontal justify="space-between">
           <Text
             style={{fontSize: 14, color: '#999', flex: 1}}
             numberOfLines={1}>
             {item.longName}
           </Text>
           <View style={{width: 12}} />
-          <Text style={{color: rud.color, fontSize: 14}}>
-            {item.regularMarketChangePercent?.toFixed(2)}%{rud.label}
-          </Text>
+          <Flex horizontal justify="flex-end" align="center">
+            <Text style={{color: '#666'}}>
+              {(item.regularMarketPrice * 0.00027).toFixed(2)}元/股
+            </Text>
+            <Text style={{color: theme}}> | </Text>
+            <Text
+              style={{
+                fontWeight: '500',
+                width: 72,
+                textAlign: 'right',
+                color: rud.color,
+              }}>
+              {item.regularMarketChangePercent?.toFixed(2)}%{rud.label}
+            </Text>
+          </Flex>
         </Flex>
         <Flex
           horizontal

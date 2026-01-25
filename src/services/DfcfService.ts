@@ -183,25 +183,69 @@ export default class DfcfService extends BaseService {
     return result.data;
   }
 
+  async buildZtbParams(params: {date?: string; sort?: string; dpt?: string}) {
+    return {
+      cb: '',
+      ut: '7eea3edcaed734bea9cbfc24409ed989',
+      pageindex: 0,
+      pagesize: 100,
+      ...params,
+    };
+  }
+
   /**
    * 炸板
    * @param date YYYYMMDD
-   * @returns 
+   * @returns
    */
   async selectBoomBoards(date?: string) {
     // https://quote.eastmoney.com/ztb/detail#type=zbgc
     // https://push2ex.eastmoney.com/getTopicZBPool?cb=callbackdata603949&ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=20&sort=fbt%3Aasc&date=20260124&_=1769240666924
     this.instance.defaults.baseURL = 'https://push2ex.eastmoney.com';
     let result = await this.instance.get(`/getTopicZBPool`, {
-      params: {
-        cb: '',
-        ut: '7eea3edcaed734bea9cbfc24409ed989',
+      params: await this.buildZtbParams({
+        date: date || dayjs().format('YYYYMMDD'),
         dpt: 'wz.ztzt',
-        pageindex: 0,
-        pagesize: 100,
         sort: 'fbt:asc',
-        date: date ? date : dayjs().format('YYYYMMDD'),
-      },
+      }),
+    });
+    return result.data;
+  }
+
+  /**
+   * 涨停板
+   * @param date
+   * @returns
+   */
+  async selectLimitUpBoards(date?: string) {
+    // https://quote.eastmoney.com/ztb/detail#type=zbgc
+    // https://push2ex.eastmoney.com/getTopicZBPool?cb=callbackdata603949&ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=20&sort=fbt%3Aasc&date=20260124&_=1769240666924
+    this.instance.defaults.baseURL = 'https://push2ex.eastmoney.com';
+    let result = await this.instance.get(`/getYesterdayZTPool`, {
+      params: await this.buildZtbParams({
+        date: date || dayjs().format('YYYYMMDD'),
+        dpt: 'wz.ztzt',
+        sort: 'zs:desc',
+      }),
+    });
+    return result.data;
+  }
+
+  /**
+   * 次新股
+   * @param date
+   * @returns
+   */
+  async selectNearNewBoards(date?: string) {
+    // https://quote.eastmoney.com/ztb/detail#type=zbgc
+    // https://push2ex.eastmoney.com/getTopicZBPool?cb=callbackdata603949&ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=20&sort=fbt%3Aasc&date=20260124&_=1769240666924
+    this.instance.defaults.baseURL = 'https://push2ex.eastmoney.com';
+    let result = await this.instance.get(`/getTopicCXPooll`, {
+      params: await this.buildZtbParams({
+        date: date || dayjs().format('YYYYMMDD'),
+        dpt: 'wz.ztzt',
+        sort: 'ods:asc',
+      }),
     });
     return result.data;
   }

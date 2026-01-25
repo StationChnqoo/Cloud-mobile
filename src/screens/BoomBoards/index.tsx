@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import {useEffect, useRef, useState} from 'react';
 
+import Tabs from '@src/components/Tabs';
 import {
   FlatList,
   Image,
@@ -43,15 +44,38 @@ const BoomBoards: React.FC<MyProps> = props => {
   const [r, setR] = useState(0);
   const [sortKey, setSortKey] = useState('zdp');
   const sortNames = {tshare: '总市值', p: '价格', zdp: '涨幅', hs: '换手率'};
+  const [tabIndex, setTabIndex] = useState(0);
+  const tabs = [
+    {
+      label: '涨停板股池',
+      value: 'zt',
+      fn: (d: string) => new DfcfService().selectLimitUpBoards(d),
+    },
+    {
+      label: '炸板股池',
+      value: 'zb',
+      fn: (d: string) => new DfcfService().selectBoomBoards(d),
+    },
+    {
+      label: '次新股池',
+      value: 'cx',
+      fn: (d: string) => new DfcfService().selectNearNewBoards(d),
+    },
+  ];
 
   const loadBoomBoards = async () => {
-    const result = await new DfcfService().selectBoomBoards(date);
+    const result = await tabs[tabIndex].fn(date);
     setDatas(
       (result?.data?.pool || [])?.sort(
         (a: any, b: any) => b[sortKey] - a[sortKey],
       ),
     );
   };
+
+  useEffect(() => {
+    listView.current?.scrollToOffset({animated: false, offset: 0});
+    loadBoomBoards();
+  }, [date, r, sortKey, tabIndex]);
 
   const onDatePress = (change: number) => {
     const next = dayjs(date).add(change, 'day');
@@ -147,20 +171,24 @@ const BoomBoards: React.FC<MyProps> = props => {
     );
   };
 
-  useEffect(() => {
-    listView.current?.scrollToOffset({animated: false, offset: 0});
-    loadBoomBoards();
-  }, [date, r, sortKey]);
-
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <ToolBar
-        title={'炸板'}
+        title={'股池榜单'}
         onBackPress={() => {
           navigation.goBack();
         }}
       />
       <View style={{height: 1, backgroundColor: '#eee'}} />
+      <Tabs
+        tabs={tabs}
+        style={{
+          justifyContent: 'space-between',
+          paddingHorizontal: 12,
+        }}
+        onPress={i => setTabIndex(i)}
+        index={tabIndex}
+      />
       <FlatList
         ref={listView}
         style={{flex: 1}}
@@ -222,7 +250,7 @@ const BoomBoards: React.FC<MyProps> = props => {
         <Flex horizontal justify="space-between">
           <Text style={{fontSize: 14, color: '#333', lineHeight: 24}}>
             共<Text style={{fontSize: 24, color: theme}}>{datas.length}</Text>
-            只炸板股
+            只票
           </Text>
           <Flex horizontal justify="flex-end">
             <TouchableOpacity

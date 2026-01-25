@@ -1,17 +1,18 @@
 import {useCaches} from '@src/stores';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 
 interface MyProps {
   index: number;
   tabs: any[];
   onPress: (index: number) => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Tabs: React.FC<MyProps> = props => {
-  const {index, tabs, onPress} = props;
+  const {index, tabs, onPress, style} = props;
   const {theme} = useCaches();
   return (
-    <View style={styles.view}>
+    <View style={[styles.view, style]}>
       {tabs.map((it, i) => {
         let checked = i == index;
         return (
