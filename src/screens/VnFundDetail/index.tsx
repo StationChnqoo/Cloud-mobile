@@ -109,6 +109,25 @@ const VnFundDetail: React.FC<MyProps> = props => {
 
     const rud = renderUpOrDown(total / RateSum);
 
+    const renderZd = () => {
+      return (
+        <Text
+          style={{
+            color: rud.color,
+            fontSize: 14,
+          }}>
+          <Text style={{fontWeight: '500'}}>{`${(total / 100).toFixed(
+            2,
+          )}%`}</Text>
+          <Text style={{color: '#999'}}>到</Text>
+          <Text style={{fontWeight: '500'}}>{`${(total / RateSum).toFixed(
+            2,
+          )}%`}</Text>
+          <Text style={{color: '#999'}}>之间</Text>
+        </Text>
+      );
+    };
+
     return (
       <View style={styles.header}>
         <CommonStockCard
@@ -129,17 +148,7 @@ const VnFundDetail: React.FC<MyProps> = props => {
               2025第四季度持仓估值
             </Text>
             {/* {`[${calcString}]`} */}
-            <Text
-              style={{
-                color: rud.color,
-                fontWeight: '500',
-                fontSize: 14,
-              }}>
-              {`${(total / 100).toFixed(2)}% 到 ${(total / RateSum).toFixed(
-                2,
-              )}`}
-              %之间
-            </Text>
+            {renderZd()}
           </Flex>
         )}
       </View>

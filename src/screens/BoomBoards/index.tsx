@@ -79,13 +79,12 @@ const BoomBoards: React.FC<MyProps> = props => {
 
   const onDatePress = (change: number) => {
     const next = dayjs(date).add(change, 'day');
-    const weekStart = dayjs().startOf('week').add(0, 'day'); // 周一
-    const weekEnd = weekStart.add(6, 'day'); // 周天
-
-    if (next.isBetween(weekStart, weekEnd, 'day', '[]')) {
-      const newDate = next.format('YYYYMMDD');
-      setDate(newDate);
+    const last7Days = dayjs().subtract(7, 'day');
+    if (next.isBefore(last7Days, 'day') || next.isAfter(dayjs(), 'day')) {
+      return;
     }
+    const newDate = next.format('YYYYMMDD');
+    setDate(newDate);
   };
 
   const renderItem = (info: ListRenderItemInfo<BoardItem>) => {
