@@ -26,6 +26,8 @@ const YahooAuth: React.FC<MyProps> = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
   const [myYahoo, setMyYahoo] = useState(_.cloneDeep(yahoo));
 
+  /** https://finance.yahoo.com/quote/FPT.VN/ */
+  // 随便找个请求，复制Header里面的Cookie ...
   const onSavePress = async () => {
     try {
       let result = await new YahooService().selectVnFunds(

@@ -4,6 +4,7 @@ export default class YahooService extends BaseService {
   constructor() {
     super();
   }
+  
   // https://query1.finance.yahoo.com?&=&fields=&crumb=&formatted=false&region=US&lang=en-US
   async selectVnFunds(cookie: string, crumb: string, fundCodes: string) {
     this.instance.defaults.baseURL = 'https://query1.finance.yahoo.com';

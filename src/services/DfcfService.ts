@@ -188,7 +188,7 @@ export default class DfcfService extends BaseService {
       cb: '',
       ut: '7eea3edcaed734bea9cbfc24409ed989',
       pageindex: 0,
-      pagesize: 100,
+      pagesize: 255,
       ...params,
     };
   }
@@ -221,11 +221,11 @@ export default class DfcfService extends BaseService {
     // https://quote.eastmoney.com/ztb/detail#type=zbgc
     // https://push2ex.eastmoney.com/getTopicZBPool?cb=callbackdata603949&ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=20&sort=fbt%3Aasc&date=20260124&_=1769240666924
     this.instance.defaults.baseURL = 'https://push2ex.eastmoney.com';
-    let result = await this.instance.get(`/getYesterdayZTPool`, {
+    let result = await this.instance.get(`/getTopicZTPool`, {
       params: await this.buildZtbParams({
         date: date || dayjs().format('YYYYMMDD'),
         dpt: 'wz.ztzt',
-        sort: 'zs:desc',
+        sort: 'fbt:desc',
       }),
     });
     return result.data;
