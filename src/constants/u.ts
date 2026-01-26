@@ -49,5 +49,5 @@ export const links = {
   previewStockChart: (code: string, imageType?: string) =>
     `https://webquotepic.eastmoney.com/GetPic.aspx?imageType=${
       imageType || ''
-    }&type=&nid=${code}`,
+    }&type=&nid=${code}&_${new Date().getTime()}`,
 };

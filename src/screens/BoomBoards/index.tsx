@@ -154,6 +154,7 @@ const BoomBoards: React.FC<MyProps> = props => {
             }}>
             {dayjs().format('YYYYMMDD') == date ? (
               <Image
+                key={`${item.m}.${item.c}.${new Date().getTime()}`}
                 source={{
                   uri: links.previewStockChart(`${item.m}.${item.c}`, 'RTOPSH'),
                 }}
