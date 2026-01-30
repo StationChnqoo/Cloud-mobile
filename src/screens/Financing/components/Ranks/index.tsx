@@ -103,7 +103,7 @@ const Ranks: React.FC<MyProps> = props => {
                 .sort((a, b) => Math.abs(b.f3) - Math.abs(a.f3))
                 .map((it, i) => (
                   <Item
-                    key={i}
+                    key={`${it.f12}-${i}`}
                     it={it}
                     max={Math.max(
                       Math.abs(
@@ -127,7 +127,7 @@ const Ranks: React.FC<MyProps> = props => {
               .sort((a, b) => Math.abs(b.f3) - Math.abs(a.f3))
               .map((it, i) => (
                 <Item
-                  key={i}
+                  key={`${it.f12}-${i}`}
                   it={it}
                   max={Math.max(
                     Math.abs(

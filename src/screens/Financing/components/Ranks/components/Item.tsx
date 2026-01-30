@@ -24,7 +24,6 @@ const Item: React.FC<MyProps> = props => {
 
   return (
     <TouchableOpacity
-      key={it}
       activeOpacity={0.88}
       onPress={() => {
         onPress(it);
@@ -44,7 +43,6 @@ const Item: React.FC<MyProps> = props => {
           style={{
             fontSize: 16,
             color: 'white',
-            fontWeight: '500',
           }}>
           {it.f3}%
         </Text>

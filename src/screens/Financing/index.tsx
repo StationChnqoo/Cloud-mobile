@@ -3,7 +3,7 @@ import {RealTimePrice} from '@src/constants/t';
 import DfcfService from '@src/services/DfcfService';
 import {useCaches} from '@src/stores';
 import {useQueries, useQuery} from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {RefreshInterval} from '@src/constants/config';
@@ -89,6 +89,11 @@ const Financing: React.FC<MyProps> = props => {
       });
     }
   };
+
+  useEffect(() => {
+    // navigation.navigate('VnFundDetail');
+    return function () {};
+  }, [focused]);
 
   return (
     <View style={{flex: 1, backgroundColor: '#f0f0f0', position: 'relative'}}>
