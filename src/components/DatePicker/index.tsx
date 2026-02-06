@@ -9,7 +9,7 @@ import {DATE_YEAR_INIT, ITEM_HEIGHT} from './constants/c';
 import {optionsBuilder} from './constants/u';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-type DatePickerMode = 'year' | 'month' | 'date' | 'datetime';
+type DatePickerMode = 'year' | 'month' | 'date' | 'datetime' | 'time';
 
 interface MyProps {
   date?: string;
@@ -32,6 +32,10 @@ const DatePicker = (props: MyProps) => {
     if (!date) return 'date';
     const parts = date.split(' ');
     const dateParts = parts[0].split('-');
+    // 只有时间部分，没有日期部分
+    if (dateParts.length === 1 && dateParts[0].includes(':')) {
+      return 'time';
+    }
     if (dateParts.length === 1) return 'year';
     if (dateParts.length === 2) return 'month';
     if (dateParts.length === 3 && parts[1]) return 'datetime';
@@ -43,6 +47,13 @@ const DatePicker = (props: MyProps) => {
   const dateString2Array = (t: string) => {
     const value = t ?? dayjs().format('YYYY-MM-DD');
     const parts = value.split(' ');
+
+    // time 模式：只有时间部分
+    if (mode === 'time') {
+      const timeParts = parts[0].split(':');
+      return [0, 0, 0, Number(timeParts[0]), Number(timeParts[1])];
+    }
+
     const dateParts = parts[0].split('-');
     const result = [
       Number(dateParts[0]) - DATE_YEAR_INIT,
@@ -68,7 +79,7 @@ const DatePicker = (props: MyProps) => {
 
   const onShow = () => {
     const [yi, mi, di, hi, mini] = dateString2Array(
-      date || dayjs().format('YYYY-MM-DD'),
+      date || (mode === 'time' ? '00:00' : dayjs().format('YYYY-MM-DD')),
     );
     setYearIndex(yi);
     setMonthIndex(mi);
@@ -168,6 +179,8 @@ const DatePicker = (props: MyProps) => {
       return `${year}-${month}`;
     } else if (mode === 'date') {
       return `${year}-${month}-${day}`;
+    } else if (mode === 'time') {
+      return `${hour}:${minute}`;
     }
     return `${year}-${month}-${day} ${hour}:${minute}`;
   };
@@ -176,6 +189,7 @@ const DatePicker = (props: MyProps) => {
     if (mode === 'year') return '请选择年份';
     if (mode === 'month') return '请选择年月';
     if (mode === 'datetime') return '请选择日期时间';
+    if (mode === 'time') return '请选择时间';
     return '请选择日期';
   };
 
@@ -188,12 +202,14 @@ const DatePicker = (props: MyProps) => {
         </Text>
         <View style={{height: 16}} />
         <View style={{flexDirection: 'row', gap: 5, height: ITEM_HEIGHT * 6}}>
-          <ListView
-            data={yearOptions}
-            onChange={handleYearChange}
-            index={yearIndex}
-          />
-          {mode !== 'year' && (
+          {mode !== 'time' && (
+            <ListView
+              data={yearOptions}
+              onChange={handleYearChange}
+              index={yearIndex}
+            />
+          )}
+          {mode !== 'year' && mode !== 'time' && (
             <ListView
               data={monthOptions}
               onChange={handleMonthChange}
@@ -207,7 +223,7 @@ const DatePicker = (props: MyProps) => {
               index={dayIndex}
             />
           )}
-          {mode === 'datetime' && (
+          {(mode === 'datetime' || mode === 'time') && (
             <>
               <ListView
                 data={hourOptions}
