@@ -12,7 +12,7 @@ import {
 
 import {RouteProp} from '@react-navigation/native';
 import Button from '@src/components/Button';
-import DatePicker from '@src/components/DatePicker';
+import DateTimePicker from '@src/components/DateTimePicker';
 import DeleteableTags from '@src/components/DeleteableTags';
 import Flex from '@src/components/Flex';
 import InputDialog from '@src/components/InputDialog';
@@ -310,7 +310,7 @@ const EditWallet: React.FC<MyProps> = props => {
           {...inputerDialog}
           onConfirm={onAppend}
         />
-        <DatePicker
+        <DateTimePicker
           date={form?.settleOn}
           show={timePicker}
           onCancel={() => {

@@ -21,7 +21,7 @@ interface MyProps {
   show: boolean;
 }
 
-const DatePicker = (props: MyProps) => {
+const DateTimePicker = (props: MyProps) => {
   const {show, onCancel, onHide, onConfirm, date, mode: propsMode} = props;
   const {theme} = useCaches();
   const insets = useSafeAreaInsets();
@@ -269,4 +269,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DatePicker;
+export default DateTimePicker;
