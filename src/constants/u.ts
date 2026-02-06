@@ -2,6 +2,7 @@ import {Dimensions, Platform, ToastAndroid} from 'react-native';
 import {NativeModules} from 'react-native';
 
 const {Toast} = NativeModules;
+const {width} = Dimensions.get('window');
 
 export const toast = (s: string) => {
   switch (Platform.OS) {
@@ -28,6 +29,12 @@ export const hex2Rgba = (hex: string, alpha: number) => {
     16,
   )}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`;
 };
+
+export function fs(size: number) {
+  if (width >= 430) return size + 2;   // iPhone12 Plus/Pro Max
+  if (width >= 390) return size + 1;   // iPhone12/Pro
+  return size;                         // SE
+}
 
 export const dip2px = (dip: number) => {
   const scale = Dimensions.get('window').width / 375;

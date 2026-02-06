@@ -33,7 +33,9 @@ const InputDialog: React.FC<MyProps> = props => {
       onClose={onClose}
       onShow={() => {
         setText(value);
-      }}>
+        onShow?.();
+      }}
+      onHide={onHide}>
       <View style={styles.view}>
         <Text style={{color: '#333', fontWeight: '500', fontSize: 16}}>
           {title}
@@ -60,7 +62,7 @@ const InputDialog: React.FC<MyProps> = props => {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              onConfirm(text);
+              onConfirm?.(text);
             }}
             hitSlop={{bottom: 12, left: 12, top: 12, right: 12}}>
             <Text style={{color: theme, fontSize: 16}}>确认</Text>
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: 'white',
     padding: 16,
+    marginHorizontal: 12
   },
   input: {
     borderWidth: 1,

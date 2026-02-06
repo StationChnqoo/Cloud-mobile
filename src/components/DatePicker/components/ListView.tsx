@@ -44,10 +44,7 @@ const ListView = (props: MyProps) => {
           checked ? [styles.activeContainer] : [styles.inactiveContainer],
         ]}>
         <Text
-          style={[
-            {paddingHorizontal: 4},
-            checked ? [styles.activeItem] : [styles.inactiveItem],
-          ]}
+          style={[checked ? [styles.activeItem] : [styles.inactiveItem]]}
           numberOfLines={1}>
           {info.item.label}
         </Text>

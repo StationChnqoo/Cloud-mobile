@@ -1,7 +1,7 @@
 import { hex2Rgba } from '@src/constants/u';
 import React from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
-import Modal from 'react-native-modal';
+import Modal from '@src/components/Modal';
 
 interface MyProps {
   visible: boolean;

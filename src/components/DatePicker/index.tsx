@@ -1,15 +1,19 @@
 import {useCaches} from '@src/stores';
 import dayjs from 'dayjs';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import BottomSheet from '../BottomSheet';
 import Flex from '../Flex';
 import ListView from './components/ListView';
 import {DATE_YEAR_INIT, ITEM_HEIGHT} from './constants/c';
 import {optionsBuilder} from './constants/u';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+type DatePickerMode = 'year' | 'month' | 'date' | 'datetime';
 
 interface MyProps {
-  date: string;
+  date?: string;
+  mode?: DatePickerMode;
   onShow?: () => void;
   onCancel?: () => void;
   onConfirm?: (s: string) => void;
@@ -18,89 +22,205 @@ interface MyProps {
 }
 
 const DatePicker = (props: MyProps) => {
-  const {show, onCancel, onHide, onConfirm, date} = props;
-  const [array, setArray] = useState<number[]>([]);
+  const {show, onCancel, onHide, onConfirm, date, mode: propsMode} = props;
   const {theme} = useCaches();
+  const insets = useSafeAreaInsets();
 
-  const onChange = (listIndex: number, itemIndex: number) => {
-    let _array = [...array];
-    _array[listIndex] = itemIndex;
-    setArray(_array);
+  // 根据 date 格式自动判断 mode
+  const autoDetectMode = (): DatePickerMode => {
+    if (propsMode) return propsMode;
+    if (!date) return 'date';
+    const parts = date.split(' ');
+    const dateParts = parts[0].split('-');
+    if (dateParts.length === 1) return 'year';
+    if (dateParts.length === 2) return 'month';
+    if (dateParts.length === 3 && parts[1]) return 'datetime';
+    return 'date';
   };
+
+  const mode = autoDetectMode();
 
   const dateString2Array = (t: string) => {
-    let dates = (t ?? '')
-      .split('-')
-      // 偏移量
-      .map((it, i) => Number(it) - [DATE_YEAR_INIT, 1, 1][i]);
-    return dates;
+    const value = t ?? dayjs().format('YYYY-MM-DD');
+    const parts = value.split(' ');
+    const dateParts = parts[0].split('-');
+    const result = [
+      Number(dateParts[0]) - DATE_YEAR_INIT,
+      Number(dateParts[1]) - 1,
+      Number(dateParts[2]) - 1,
+    ];
+
+    if (parts[1]) {
+      const timeParts = parts[1].split(':');
+      result.push(Number(timeParts[0]), Number(timeParts[1]));
+    } else {
+      result.push(0, 0);
+    }
+
+    return result;
   };
 
+  const [yearIndex, setYearIndex] = useState(0);
+  const [monthIndex, setMonthIndex] = useState(0);
+  const [dayIndex, setDayIndex] = useState(0);
+  const [hourIndex, setHourIndex] = useState(0);
+  const [minuteIndex, setMinuteIndex] = useState(0);
+
   const onShow = () => {
-    setArray(dateString2Array(date || dayjs().format('YYYY-MM-DD')));
+    const [yi, mi, di, hi, mini] = dateString2Array(
+      date || dayjs().format('YYYY-MM-DD'),
+    );
+    setYearIndex(yi);
+    setMonthIndex(mi);
+    setDayIndex(di);
+    setHourIndex(hi);
+    setMinuteIndex(mini);
   };
 
   const isLeapYear = (year: number) => {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   };
 
-  const days = [
-    0,
-    31,
-    isLeapYear(Number(array?.[0]) || DATE_YEAR_INIT) ? 29 : 28,
-    31,
-    30,
-    31,
-    30,
-    31,
-    31,
-    30,
-    31,
-    30,
-    31,
-  ][Number(array?.[1] || 1)];
+  const days = useMemo(() => {
+    const year = yearIndex + DATE_YEAR_INIT;
+    const month = monthIndex + 1;
+    const isLeap = isLeapYear(year);
+    return [0, 31, isLeap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][
+      month
+    ];
+  }, [yearIndex, monthIndex]);
 
-  const current = () => {
-    console.log(array, options);
-    return array.map((it, i) => options?.[i]?.[it]?.value).join('-');
+  const yearOptions = useMemo(() => optionsBuilder(199, DATE_YEAR_INIT), []);
+  const monthOptions = useMemo(() => optionsBuilder(12, 1), []);
+  const dayOptions = useMemo(() => optionsBuilder(days, 1), [days]);
+  const hourOptions = useMemo(() => optionsBuilder(24, 0), []);
+  const minuteOptions = useMemo(() => optionsBuilder(60, 0), []);
+
+  const handleYearChange = (index: number) => {
+    setYearIndex(index);
   };
 
-  let options = [
-    optionsBuilder(199, DATE_YEAR_INIT),
-    optionsBuilder(12, 1),
-    optionsBuilder(days, 1),
-  ];
+  const handleMonthChange = (index: number) => {
+    const newDays = (() => {
+      const year = yearIndex + DATE_YEAR_INIT;
+      const month = index + 1;
+      const isLeap = isLeapYear(year);
+      return [0, 31, isLeap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][
+        month
+      ];
+    })();
+
+    setMonthIndex(index);
+
+    if (mode === 'date' && dayIndex >= newDays) {
+      console.log(
+        'DatePicker: 切换月份时调整日期从',
+        dayIndex + 1,
+        '到',
+        newDays,
+      );
+      setDayIndex(newDays - 1);
+    }
+  };
+
+  const handleDayChange = (index: number) => {
+    setDayIndex(index);
+  };
+
+  const handleHourChange = (index: number) => {
+    setHourIndex(index);
+  };
+
+  const handleMinuteChange = (index: number) => {
+    setMinuteIndex(index);
+  };
 
   useEffect(() => {
-    // 越界 -> 当前选择的日 > 当月总天数
-    // 例如：12-31，只切换了月份
-    if (array.length == 3 && Number(array[2]) > days) {
-      onChange(2, days);
+    if (mode === 'date' && dayIndex >= days) {
+      console.log('DatePicker: 自动调整日期从', dayIndex + 1, '到', days);
+      setDayIndex(days - 1);
     }
-    return function () {};
-  }, [array]);
+  }, [days, mode]);
+
+  const current = () => {
+    const year = yearOptions[yearIndex]?.value;
+    const month = monthOptions[monthIndex]?.value;
+    const day = dayOptions[dayIndex]?.value;
+    const hour = hourOptions[hourIndex]?.value;
+    const minute = minuteOptions[minuteIndex]?.value;
+    console.log('current:', {
+      mode,
+      year,
+      month,
+      day,
+      hour,
+      minute,
+      yearIndex,
+      monthIndex,
+      dayIndex,
+      hourIndex,
+      minuteIndex,
+    });
+
+    if (mode === 'year') {
+      return year;
+    } else if (mode === 'month') {
+      return `${year}-${month}`;
+    } else if (mode === 'date') {
+      return `${year}-${month}-${day}`;
+    }
+    return `${year}-${month}-${day} ${hour}:${minute}`;
+  };
+
+  const getTitle = () => {
+    if (mode === 'year') return '请选择年份';
+    if (mode === 'month') return '请选择年月';
+    if (mode === 'datetime') return '请选择日期时间';
+    return '请选择日期';
+  };
 
   return (
     <BottomSheet show={show} onShow={onShow} onClose={onCancel}>
-      <View style={{padding: 16, backgroundColor: '#fff', borderRadius: 12}}>
-        <View style={{height: 12}} />
+      <View style={{padding: 15, backgroundColor: '#fff'}}>
+        <View style={{height: 5}} />
         <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
-          请选择日期
+          {getTitle()}
         </Text>
         <View style={{height: 16}} />
-        <View style={{flexDirection: 'row', gap: 12, height: ITEM_HEIGHT * 6}}>
-          {array.map((it, i) => {
-            return (
+        <View style={{flexDirection: 'row', gap: 5, height: ITEM_HEIGHT * 6}}>
+          <ListView
+            data={yearOptions}
+            onChange={handleYearChange}
+            index={yearIndex}
+          />
+          {mode !== 'year' && (
+            <ListView
+              data={monthOptions}
+              onChange={handleMonthChange}
+              index={monthIndex}
+            />
+          )}
+          {(mode === 'date' || mode === 'datetime') && (
+            <ListView
+              data={dayOptions}
+              onChange={handleDayChange}
+              index={dayIndex}
+            />
+          )}
+          {mode === 'datetime' && (
+            <>
               <ListView
-                key={i}
-                data={options[i]}
-                onChange={index => {
-                  onChange(i, index);
-                }}
-                index={it}
+                data={hourOptions}
+                onChange={handleHourChange}
+                index={hourIndex}
               />
-            );
-          })}
+              <ListView
+                data={minuteOptions}
+                onChange={handleMinuteChange}
+                index={minuteIndex}
+              />
+            </>
+          )}
         </View>
         <View style={{height: 30}} />
         <Flex horizontal justify={'flex-end'}>
@@ -120,6 +240,7 @@ const DatePicker = (props: MyProps) => {
             <Text style={{color: theme, fontSize: 16}}>确认</Text>
           </TouchableOpacity>
         </Flex>
+        <View style={{height: insets.bottom}} />
       </View>
     </BottomSheet>
   );
