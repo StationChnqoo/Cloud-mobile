@@ -5,14 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  Animated,
-  BackHandler,
-  Easing,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {Animated, BackHandler, Easing, Pressable, StyleSheet, View} from 'react-native';
 
 export interface ModalProps {
   isVisible: boolean;
@@ -22,16 +15,8 @@ export interface ModalProps {
   onBackButtonPress?: () => void;
   onModalShow?: () => void;
   onModalHide?: () => void;
-  animationIn?:
-    | 'fadeIn'
-    | 'slideInUp'
-    | 'slideInDown'
-    | 'zoomIn';
-  animationOut?:
-    | 'fadeOut'
-    | 'slideOutUp'
-    | 'slideOutDown'
-    | 'zoomOut';
+  animationIn?: 'fadeIn' | 'slideInUp' | 'slideInDown' | 'zoomIn';
+  animationOut?: 'fadeOut' | 'slideOutUp' | 'slideOutDown' | 'zoomOut';
   animationInTiming?: number;
   animationOutTiming?: number;
   backdropOpacity?: number;
@@ -221,14 +206,11 @@ const Modal = forwardRef<ModalRef, ModalProps>((props, ref) => {
     }
   };
 
+  const currentAnimation = visible ? getContentAnimation() : getOutAnimation();
+  const hasOpacity = currentAnimation.hasOwnProperty('opacity');
   const contentStyle = {
-    opacity:
-      animationIn === 'zoomIn' ||
-      animationIn === 'slideInUp' ||
-      animationIn === 'slideInDown'
-        ? contentAnim
-        : undefined,
-    transform: [visible ? getContentAnimation() : getOutAnimation()],
+    opacity: hasOpacity ? currentAnimation.opacity : contentAnim,
+    transform: hasOpacity ? undefined : [currentAnimation],
   };
 
   const backdropOpacityValue = backdropAnim.interpolate({
@@ -241,16 +223,15 @@ const Modal = forwardRef<ModalRef, ModalProps>((props, ref) => {
 
     if (customBackdrop) {
       return (
-        <Animated.View style={[StyleSheet.absoluteFill, {opacity: backdropOpacityValue}]}>
+        <Animated.View
+          style={[StyleSheet.absoluteFill, {opacity: backdropOpacityValue}]}>
           {customBackdrop}
         </Animated.View>
       );
     }
 
     return (
-      <Pressable
-        style={StyleSheet.absoluteFill}
-        onPress={handleBackdropPress}>
+      <Pressable style={StyleSheet.absoluteFill} onPress={handleBackdropPress}>
         <Animated.View
           style={[
             StyleSheet.absoluteFill,

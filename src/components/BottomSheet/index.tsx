@@ -1,6 +1,13 @@
+import React, {useState, useEffect} from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+  Keyboard,
+} from 'react-native';
 import Modal from '@src/components/Modal';
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface MyProps {
   children: React.ReactNode;
@@ -11,6 +18,7 @@ interface MyProps {
 }
 const BottomSheet: React.FC<MyProps> = props => {
   const {children, show, onClose, onHide, onShow} = props;
+  const insets = useSafeAreaInsets();
 
   return (
     <Modal
@@ -19,17 +27,18 @@ const BottomSheet: React.FC<MyProps> = props => {
       onBackButtonPress={onClose}
       onShow={onShow}
       onModalHide={onHide}
-      animationIn={'slideInUp'}
-      animationOut={'slideOutDown'}
-      hideModalContentWhileAnimating={false}
-      animationInTiming={300}
-      animationOutTiming={300}
+      animationIn='slideInUp'
+      animationOut='slideOutDown'
+      backdropOpacity={0.4}
       style={{
         padding: 0,
-        justifyContent: 'flex-end',
         ...styles.view,
       }}>
-      <View>{children}</View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{flex: 1, justifyContent: 'flex-end'}}>
+        <View>{children}</View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
