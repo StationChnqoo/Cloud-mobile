@@ -27,15 +27,16 @@ const BottomSheet: React.FC<MyProps> = props => {
       onBackButtonPress={onClose}
       onShow={onShow}
       onModalHide={onHide}
-      animationIn='slideInUp'
-      animationOut='slideOutDown'
-      backdropOpacity={0.4}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      backdropOpacity={0.2}
       style={{
         padding: 0,
         ...styles.view,
       }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={0}
         style={{flex: 1, justifyContent: 'flex-end'}}>
         <View>{children}</View>
       </KeyboardAvoidingView>

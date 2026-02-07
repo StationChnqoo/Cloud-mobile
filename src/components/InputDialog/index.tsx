@@ -10,7 +10,7 @@ import Flex from '../Flex';
 import {useCaches} from '@src/stores';
 import BottomSheet from '../BottomSheet';
 import {setKeyboardMode} from '@src/native/KeyboardModule';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface MyProps {
   title: string;
