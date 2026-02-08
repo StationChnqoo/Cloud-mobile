@@ -1,12 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  View,
-  Keyboard,
-} from 'react-native';
 import Modal from '@src/components/Modal';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface MyProps {
@@ -25,21 +19,12 @@ const BottomSheet: React.FC<MyProps> = props => {
       isVisible={show}
       onBackdropPress={onClose}
       onBackButtonPress={onClose}
-      onShow={onShow}
-      onModalHide={onHide}
-      animationIn="slideInUp"
-      animationOut="slideOutDown"
       backdropOpacity={0.2}
       style={{
         padding: 0,
         ...styles.view,
       }}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={0}
-        style={{flex: 1, justifyContent: 'flex-end'}}>
-        <View>{children}</View>
-      </KeyboardAvoidingView>
+      <View>{children}</View>
     </Modal>
   );
 };

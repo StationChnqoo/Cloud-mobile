@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useFocusEffect} from '@react-navigation/native';
 import {useCaches} from '@src/stores';
 import React, {useCallback, useRef} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {RootStacksProp} from '@src/screens';
 import Wallets from '@src/screens/Wallets';
 import Home from '@src/screens/Home';
@@ -76,22 +76,6 @@ const BottomTabs = (props: MyProps) => {
 };
 
 const styles = StyleSheet.create({
-  specialButton: {
-    top: -12,
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    alignContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4, // Android 阴影
-    shadowColor: '#000', // iOS 阴影
-    shadowOffset: {width: 0, height: 0.1},
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-  },
 });
 
 export default BottomTabs;

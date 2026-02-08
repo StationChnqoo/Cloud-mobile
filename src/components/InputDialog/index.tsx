@@ -32,14 +32,6 @@ const InputDialog: React.FC<MyProps> = props => {
   const insets = useSafeAreaInsets();
   // 显示时改为 adjustPan 避免底部被遮挡，关闭时恢复 adjustResize
 
-  useEffect(() => {
-    if (show) {
-      setKeyboardMode('adjustPan');
-    } else {
-      setKeyboardMode('adjustResize');
-    }
-  }, [show]);
-
   return (
     <BottomSheet
       show={show}
@@ -89,7 +81,6 @@ const InputDialog: React.FC<MyProps> = props => {
             <Text style={{color: theme, fontSize: 16}}>确认</Text>
           </TouchableOpacity>
         </Flex>
-        <View style={{height: insets.bottom}} />
       </View>
     </BottomSheet>
   );
