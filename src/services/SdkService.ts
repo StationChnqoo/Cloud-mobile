@@ -9,9 +9,17 @@ export default class SdkService extends BaseService {
   }
 
   deleteCosFile = async (fileUrl: string) => {
-    const idx = fileUrl.indexOf('.com/');
-    if (idx === -1) return '';
-    let key = fileUrl.slice(idx + 5);
+    let key = '';
+    const cosIdx = fileUrl.indexOf('.com/'); // 上传文件时候，COS原始链接
+    const cdnIdx = fileUrl.indexOf('cdn.xiaopacai.cn/'); // 详情回显的时候，CDN加速链接
+
+    if (cosIdx !== -1) {
+      key = fileUrl.slice(cosIdx + 5);
+    } else if (cdnIdx !== -1) {
+      key = fileUrl.slice(cdnIdx + 16);
+    } else {
+      return '';
+    }
 
     const params = {
       bucket: 'cloud-1252363101',
