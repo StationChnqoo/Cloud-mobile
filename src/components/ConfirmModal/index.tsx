@@ -1,20 +1,18 @@
-
 import {useCaches} from '@src/stores';
 import {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import Button from '../Button';
-import BottomSheet from '../BottomSheet';
 import Flex from '../Flex';
-
+import Modal from '../Modal';
 interface MyProps {
-  show: boolean;
+  visible: boolean;
   onClose: () => void;
   onHide: () => void;
   onConfirm: (result: boolean) => void;
 }
 
 const ConfirmModal = (props: MyProps) => {
-  const {onHide, onConfirm} = props;
+  const {onHide, onConfirm, onClose} = props;
   const {theme} = useCaches();
   const [text, setText] = useState('');
   const [code, setCode] = useState('');
@@ -26,7 +24,11 @@ const ConfirmModal = (props: MyProps) => {
   // console.log('jiraUsedPeopleQuery: ', jiraUsedPeopleQuery.data);
 
   return (
-    <BottomSheet {...props} onShow={onShow}>
+    <Modal
+      {...props}
+      onShow={onShow}
+      onBackdropPress={onClose}
+      onDismiss={onHide}>
       <View
         style={{
           ...styles.views,
@@ -59,7 +61,7 @@ const ConfirmModal = (props: MyProps) => {
           />
         </Flex>
       </View>
-    </BottomSheet>
+    </Modal>
   );
 };
 

@@ -2,12 +2,12 @@ import {useCaches} from '@src/stores';
 import dayjs from 'dayjs';
 import {useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import BottomSheet from '../BottomSheet';
 import Flex from '../Flex';
 import ListView from './components/ListView';
 import {DATE_YEAR_INIT, ITEM_HEIGHT} from './constants/c';
 import {optionsBuilder} from './constants/u';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Modal from '../Modal';
 
 type DatePickerMode = 'year' | 'month' | 'date' | 'datetime' | 'time';
 
@@ -194,7 +194,7 @@ const DateTimePicker = (props: MyProps) => {
   };
 
   return (
-    <BottomSheet show={show} onShow={onShow} onClose={onCancel}>
+    <Modal visible={show} onShow={onShow} onBackdropPress={onCancel}>
       <View style={{padding: 15, backgroundColor: '#fff'}}>
         <View style={{height: 5}} />
         <Text style={{color: '#333', fontSize: 16, fontWeight: '500'}}>
@@ -258,7 +258,7 @@ const DateTimePicker = (props: MyProps) => {
         </Flex>
         <View style={{height: insets.bottom}} />
       </View>
-    </BottomSheet>
+    </Modal>
   );
 };
 

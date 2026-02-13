@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import Flex from '../Flex';
 import {useCaches} from '@src/stores';
-import BottomSheet from '../BottomSheet';
 import {setKeyboardMode} from '@src/native/KeyboardModule';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Modal from '../Modal';
 
 interface MyProps {
   title: string;
@@ -33,9 +33,9 @@ const InputDialog: React.FC<MyProps> = props => {
   // 显示时改为 adjustPan 避免底部被遮挡，关闭时恢复 adjustResize
 
   return (
-    <BottomSheet
-      show={show}
-      onClose={() => {
+    <Modal
+      visible={show}
+      onBackdropPress={() => {
         setKeyboardMode('adjustResize');
         onClose();
       }}
@@ -44,7 +44,7 @@ const InputDialog: React.FC<MyProps> = props => {
         input.current?.focus();
         onShow?.();
       }}
-      onHide={onHide}>
+      onDismiss={onHide}>
       <View style={[styles.view]}>
         <Text style={{color: '#333', fontWeight: '500', fontSize: 16}}>
           {title}
@@ -82,7 +82,7 @@ const InputDialog: React.FC<MyProps> = props => {
           </TouchableOpacity>
         </Flex>
       </View>
-    </BottomSheet>
+    </Modal>
   );
 };
 

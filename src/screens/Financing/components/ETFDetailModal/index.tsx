@@ -1,4 +1,4 @@
-import BottomSheet from '@src/components/BottomSheet';
+import Modal from '@src/components/Modal';
 import {RealTimePrice} from '@src/constants/t';
 import {renderUpOrDown} from '@src/constants/u';
 import React from 'react';
@@ -15,7 +15,10 @@ const ETFDetailModal: React.FC<MyProps> = props => {
   const {datas, show, onClosePress} = props;
   const insets = useSafeAreaInsets();
   return (
-    <BottomSheet show={show} onClose={onClosePress}>
+    <Modal
+      visible={show}
+      onBackdropPress={onClosePress}
+      onDismiss={onClosePress}>
       <View style={styles.view}>
         <View style={styles.items}>
           {[...datas]
@@ -33,7 +36,7 @@ const ETFDetailModal: React.FC<MyProps> = props => {
         </View>
         <View style={{height: insets.bottom}} />
       </View>
-    </BottomSheet>
+    </Modal>
   );
 };
 

@@ -6,32 +6,39 @@ import {
   View,
   Modal as RNModal,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface ModalProps {
-  isVisible: boolean;
+  visible: boolean;
   children: React.ReactNode;
   onBackdropPress?: () => void;
   onBackButtonPress?: () => void;
   backdropOpacity?: number;
   style?: any;
+  onShow?: () => void;
+  onDismiss?: () => void;
 }
 
+/**
+ * KeyboardAvoidingView -> 如果不用他包裹，iOS键盘就把Modal盖住了
+ * animationType -> slide会把黑色遮罩一起从底部顶上去
+ * @param param0 
+ * @returns 
+ */
 const Modal: React.FC<ModalProps> = ({
-  isVisible = false,
+  visible = false,
   children,
   onBackdropPress,
   onBackButtonPress,
   backdropOpacity = 0.2,
   style,
+  onShow,
+  onDismiss
 }) => {
-  const [visible, setVisible] = useState(isVisible);
   const insets = useSafeAreaInsets();
-
-  useEffect(() => {
-    setVisible(isVisible);
-  }, [isVisible]);
 
   const handleBackdropPress = () => {
     if (onBackdropPress) {
@@ -45,17 +52,22 @@ const Modal: React.FC<ModalProps> = ({
       transparent={true}
       animationType='fade'
       onRequestClose={onBackButtonPress}
+      onShow={onShow}
+      onDismiss={onDismiss}
     >
       <TouchableWithoutFeedback onPress={handleBackdropPress}>
         <View style={[styles.backdrop, {opacity: backdropOpacity}]} />
       </TouchableWithoutFeedback>
-      <View style={[styles.container, style]}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={[styles.container, style]}
+      >
         <TouchableWithoutFeedback onPress={() => {}}>
           <View style={[styles.content]}>
             {children}
           </View>
         </TouchableWithoutFeedback>
-      </View>
+      </KeyboardAvoidingView>
     </RNModal>
   );
 };
