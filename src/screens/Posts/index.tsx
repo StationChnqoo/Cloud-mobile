@@ -23,7 +23,7 @@ import {
 } from '@tanstack/react-query';
 import {RootStacksProp} from '..';
 import {Router} from '@src/navigation';
-import getFile from '@src/hooks/useFile';
+import {getFile, PicGoFileType} from '@src/constants/u';
 import {dip2px} from '@src/constants/u';
 
 interface MyProps {

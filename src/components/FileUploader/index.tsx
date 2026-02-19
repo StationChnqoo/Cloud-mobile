@@ -1,6 +1,6 @@
 import {PicGoSrc} from '@src/constants/t';
 import {toast} from '@src/constants/u';
-import getFile, {PicGoFileType} from '@src/hooks/useFile';
+import {getFile, PicGoFileType} from '@src/constants/u';
 import {usePhotoPermission} from '@src/hooks/usePhotoPermission';
 import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
 import {navigationRef} from '@src/screens';

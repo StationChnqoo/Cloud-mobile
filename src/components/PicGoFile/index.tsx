@@ -5,7 +5,7 @@ import Flex from '../Flex';
 import {useCaches} from '@src/stores';
 import {PicGoSrc} from '@src/constants/t';
 import {dip2px} from '@src/constants/u';
-import getFile from '@src/hooks/useFile';
+import {getFile, PicGoFileType} from '@src/constants/u';
 
 interface MyProps {
   src: PicGoSrc;
