@@ -1,6 +1,6 @@
 import {PicGoSrc} from '@src/constants/t';
 import {toast} from '@src/constants/u';
-import useFile, {PicGoFileType} from '@src/hooks/useFile';
+import getFile, {PicGoFileType} from '@src/hooks/useFile';
 import {usePhotoPermission} from '@src/hooks/usePhotoPermission';
 import {usePicGoUpload} from '@src/hooks/usePicGoUpload';
 import {navigationRef} from '@src/screens';
@@ -118,13 +118,13 @@ const FileUploader: React.FC<FileUploaderProps> = ({images, setImages}) => {
 
   const imagePreviewSrcs = images
     .filter(it => {
-      const {file} = useFile(it);
+      const file = getFile(it);
       return file.type == PicGoFileType.Image;
     })
     .map(it => ({uri: it.url}));
 
   const onPreview = (index: number) => {
-    const {file} = useFile(images[index]);
+    const file = getFile(images[index]);
     if (file.type == PicGoFileType.Image) {
       setSrcIndex(0);
       setIsOpenPreviewer(true);

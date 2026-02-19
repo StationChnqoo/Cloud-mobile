@@ -1,5 +1,4 @@
 import {PicGoSrc} from '@src/constants/t';
-import {useEffect, useState} from 'react';
 import {ImageRequireSource, ImageURISource} from 'react-native';
 
 export enum PicGoFileType {
@@ -13,28 +12,22 @@ interface PicGoFile {
   src: ImageRequireSource | ImageURISource;
 }
 
-const useFile = (image: PicGoSrc) => {
-  let file: PicGoFile = {
-    type: PicGoFileType.Image,
-    src: {uri: image.url},
-  };
+const getFile = (image: PicGoSrc): PicGoFile => {
   if (image.mimeType?.startsWith('image')) {
-    file = {
+    return {
       type: PicGoFileType.Image,
       src: {uri: image.url},
     };
   } else if (image.mimeType?.startsWith('video')) {
-    file = {
+    return {
       type: PicGoFileType.Video,
       src: require('@src/assets/images/common/file_video.png'),
     };
-  } else {
-    file = {
-      type: PicGoFileType.Other,
-      src: require('@src/assets/images/common/file_other.png'),
-    };
   }
-  return {file};
+  return {
+    type: PicGoFileType.Other,
+    src: require('@src/assets/images/common/file_other.png'),
+  };
 };
 
-export default useFile;
+export default getFile;

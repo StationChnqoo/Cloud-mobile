@@ -84,8 +84,7 @@ const EditPost: React.FC<MyProps> = props => {
     if (route.params?.id) {
       let result = await new Services().selectPost(route.params.id);
       _form = result.data;
-    }
-    else {
+    } else {
       _form.id = nanoid();
     }
     _form.updateAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
@@ -132,7 +131,7 @@ const EditPost: React.FC<MyProps> = props => {
         }}
       />
       <View style={{height: 1, backgroundColor: '#eee'}} />
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1}} removeClippedSubviews={true}>
         <View style={{padding: 15}}>
           <Flex horizontal justify="space-between">
             <Text style={styles.label}>是否公开</Text>

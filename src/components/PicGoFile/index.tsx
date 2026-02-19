@@ -5,7 +5,7 @@ import Flex from '../Flex';
 import {useCaches} from '@src/stores';
 import {PicGoSrc} from '@src/constants/t';
 import {dip2px} from '@src/constants/u';
-import useFile from '@src/hooks/useFile';
+import getFile from '@src/hooks/useFile';
 
 interface MyProps {
   src: PicGoSrc;
@@ -18,7 +18,7 @@ interface MyProps {
 const PicGoFile: React.FC<MyProps> = props => {
   const {src, onDelete, onPreview, onEdit, onShare} = props;
   const {theme} = useCaches();
-  const {file} = useFile(src);
+  const file = getFile(src);
 
   return (
     <Flex key={src.id} justify="space-between" horizontal style={styles.view}>

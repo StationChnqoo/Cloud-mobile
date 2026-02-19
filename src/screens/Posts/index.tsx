@@ -23,7 +23,7 @@ import {
 } from '@tanstack/react-query';
 import {RootStacksProp} from '..';
 import {Router} from '@src/navigation';
-import useFile from '@src/hooks/useFile';
+import getFile from '@src/hooks/useFile';
 import {dip2px} from '@src/constants/u';
 
 interface MyProps {
@@ -121,7 +121,7 @@ const Posts: React.FC<MyProps> = props => {
             style={{marginTop: 12}}>
             <Flex horizontal style={{gap: 4, flex: 1}} justify="flex-start">
               {item.images.slice(0, 3).map((it, i) => {
-                const {file} = useFile(it);
+                const file = getFile(it);
                 return (
                   <View key={i} style={{position: 'relative'}}>
                     <Image key={i} source={file.src} style={styles.src} />

@@ -28,7 +28,6 @@ interface MyProps {
 }
 
 // new DfcfService().selectRealtimePrice(it.value)
-
 const ContinuedTrading = (props: MyProps) => {
   const {onPress} = props;
   const {theme} = useCaches();
