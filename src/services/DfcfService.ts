@@ -168,14 +168,14 @@ export default class DfcfService extends BaseService {
     let result = await this.instance.get(`/api/qt/clist/get`, {
       params: {
         cb: '',
-        fid: 'f62',
+        fid: 'f164',
         po: 1,
         pz: 99,
         pn: 1,
         np: 1,
         fltt: 2,
         invt: 2,
-        fs: 'm:90 t:2',
+        fs: 'm:90 s:4',
         fields:
           'f12,f14,f2,f3,f62,f184,f66,f69,f72,f75,f78,f81,f84,f87,f204,f205,f124,f1,f13',
       },
